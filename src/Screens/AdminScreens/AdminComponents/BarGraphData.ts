@@ -1,0 +1,95 @@
+const BarData = [
+    {
+      "Month": "Jan",
+      "Abacus": 194,
+      "AbacusColor": "hsl(243, 70%, 50%)",
+      "Dance": 141,
+      "DanceColor": "hsl(91, 70%, 50%)",
+      "Keyboard": 107,
+      "KeyboardColor": "hsl(72, 70%, 50%)",
+      "Kuchipudi": 107,
+      "KuchipudiColor": "hsl(71, 70%, 50%)",
+      "1-5 Tution": 0,
+      "1-5 TutionColor": "hsl(284, 70%, 50%)",
+      "6-10 Tution": 100,
+      "6-10 TutionColor": "hsl(238, 70%, 50%)"
+    },
+    {
+      "Month": "Feb",
+      "Abacus": 160,
+      "AbacusColor": "hsl(67, 70%, 50%)",
+      "Dance": 59,
+      "DanceColor": "hsl(319, 70%, 50%)",
+      "Keyboard": 134,
+      "KeyboardColor": "hsl(296, 70%, 50%)",
+      "Kuchipudi": 28,
+      "KuchipudiColor": "hsl(77, 70%, 50%)",
+      "1-5 Tution": 105,
+      "1-5 TutionColor": "hsl(141, 70%, 50%)",
+      "6-10 Tution": 151,
+      "6-10 TutionColor": "hsl(147, 70%, 50%)"
+    },
+    {
+      "Month": "Mar",
+      "Abacus": 49,
+      "AbacusColor": "hsl(78, 70%, 50%)",
+      "Dance": 17,
+      "DanceColor": "hsl(151, 70%, 50%)",
+      "Keyboard": 188,
+      "KeyboardColor": "hsl(324, 70%, 50%)",
+      "Kuchipudi": 15,
+      "KuchipudiColor": "hsl(16, 70%, 50%)",
+      "1-5 Tution": 122,
+      "1-5 TutionColor": "hsl(72, 70%, 50%)",
+      "6-10 Tution": 163,
+      "6-10 TutionColor": "hsl(175, 70%, 50%)"
+    },
+    {
+      "Month": "Apr",
+      "Abacus": 174,
+      "AbacusColor": "hsl(4, 70%, 50%)",
+      "Dance": 127,
+      "DanceColor": "hsl(316, 70%, 50%)",
+      "Keyboard": 116,
+      "KeyboardColor": "hsl(229, 70%, 50%)",
+      "Kuchipudi": 130,
+      "KuchipudiColor": "hsl(286, 70%, 50%)",
+      "1-5 Tution": 195,
+      "1-5 TutionColor": "hsl(252, 70%, 50%)",
+      "6-10 Tution": 177,
+      "6-10 TutionColor": "hsl(320, 70%, 50%)"
+    },
+    {
+      "Month": "May",
+      "Abacus": 131,
+      "AbacusColor": "hsl(157, 70%, 50%)",
+      "Dance": 108,
+      "DanceColor": "hsl(288, 70%, 50%)",
+      "Keyboard": 7,
+      "KeyboardColor": "hsl(136, 70%, 50%)",
+      "Kuchipudi": 25,
+      "KuchipudiColor": "hsl(360, 70%, 50%)",
+      "1-5 Tution": 181,
+      "1-5 TutionColor": "hsl(82, 70%, 50%)",
+      "6-10 Tution": 123,
+      "6-10 TutionColor": "hsl(280, 70%, 50%)"
+    },
+    {
+      "Month": "Jun",
+      "Abacus": 55,
+      "AbacusColor": "hsl(345, 70%, 50%)",
+      "Dance": 21,
+      "DanceColor": "hsl(311, 70%, 50%)",
+      "Keyboard": 137,
+      "KeyboardColor": "hsl(12, 70%, 50%)",
+      "Kuchipudi": 157,
+      "KuchipudiColor": "hsl(188, 70%, 50%)",
+      "1-5 Tution": 114,
+      "1-5 TutionColor": "hsl(83, 70%, 50%)",
+      "6-10 Tution": 145,
+      "6-10 TutionColor": "hsl(223, 70%, 50%)"
+    }
+  ]
+
+
+export default BarData;
