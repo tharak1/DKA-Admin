@@ -1,7 +1,4 @@
-interface PerformanceModel{
-    type:string;
-    value?:string;
-}
+
 
 interface CourseModel{
     id?:string;
@@ -14,7 +11,7 @@ interface CourseModel{
     price?:string;
     image?:string;
     showActions?:boolean;
-    coursePerformance?:PerformanceModel[]
+    coursePerformance?:string[]
 }
 
-export type {CourseModel,PerformanceModel};
+export type {CourseModel };

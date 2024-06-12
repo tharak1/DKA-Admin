@@ -31,26 +31,23 @@ function App() {
     <>
       <Router>
         <Routes>
-          {/* <Route path="/write-exam" element={<WriteExamScreen/>}/>
-          <Route path="/results" element={<ResultsScreen/>}/> */}
 
           <Route path='/Login' element = {<LoginPage/>} />
-          
+
           <Route path='/admin' element = {<SideBar/>} >
-            <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
+            <Route path="/admin/online_class_management" element={<AdminOnlineManagement/>}/>
+            <Route path="/admin/upload-answers-screen" element={<UploadAnsScreen/>}/>
+            <Route path="/admin/create_question_paper" element={<CreateQuestionPaper/>}/>
+            <Route path="/admin/manage_questionPaper" element={<AdminManageQuestionPaper/>}/>
+            <Route path="/admin/employee_management" element={<AdminEployeeManagement/>}/>
             <Route path="/admin/manage_categories" element={<AdminManageCategory/>}/>
             <Route path="/admin/manage_courses" element={<AdminManageCourse/>}/>
+            <Route path="/admin/exam_reports" element={<AdminExamReports/>}/>
             <Route path="/admin/add_courses" element={<AdminAddCourseScreen/>}/>
+            <Route path="/admin/writeExam" element={<WriteExamScreen/>}/>
+            <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
             <Route path="/admin/students" element={<AdminShowStudents/>}/>
             <Route path="/admin/payments" element={<AdminShowPayments/>}/>
-            <Route path="/admin/manage_questionPaper" element={<AdminManageQuestionPaper/>}/>
-            <Route path="/admin/create_question_paper" element={<CreateQuestionPaper/>}/>
-            <Route path="/admin/employee_management" element={<AdminEployeeManagement/>}/>
-            <Route path="/admin/exam_reports" element={<AdminExamReports/>}/>
-            <Route path="/admin/online_class_management" element={<AdminOnlineManagement/>}/>
-            <Route path="/admin/writeExam" element={<WriteExamScreen/>}/>
-            <Route path="/admin/upload-answers-screen" element={<UploadAnsScreen/>}/>
-            
           </Route>
 
         </Routes>

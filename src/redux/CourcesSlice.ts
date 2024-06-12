@@ -3,6 +3,14 @@ import {CourseModel} from "../Models/CourceModel";
 import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../firebase_config";
 
+
+const convertListToObject = (list: string[]): Record<string, number> => {
+    return list.reduce((acc, item) => {
+        acc[item] = 0;
+        return acc;
+    }, {} as Record<string, number>);
+};
+
 interface CoursesState {
     Courses: CourseModel[];
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -29,23 +37,38 @@ export const fetchCourses = createAsyncThunk(
         return courses;
     }
 );
-
-export const CreateCourse = createAsyncThunk(
+  
+  export const CreateCourse = createAsyncThunk(
     'course/CreateCourse',
-    async(CourseData:CourseModel)=>{
-        const docRef = await addDoc(collection(db, "courses"),CourseData);
+    async (CourseData: CourseModel, { rejectWithValue }) => {
+      try {
+        const docRef = await addDoc(collection(db, 'courses'), CourseData);
 
-        return {id:docRef.id,...CourseData}
+        await setDoc(doc(db,'performances',docRef.id),{performanceTemplate:convertListToObject(CourseData.coursePerformance!),students:[]});
+
+        // if (courseId) {
+        //     await addDoc(collection(db, 'performances'), {
+        //         courseId: courseId,
+        //         students: []
+        //     });
+        // } else {
+        //     console.error('CourseData.id is undefined or null');
+        // }
+
+        return { id: docRef.id, ...CourseData };
+      } catch (error) {
+        console.error("Error creating course:", error);
+        return rejectWithValue(error);
+      }
     }
-);
+  );
 
 export const editCourse = createAsyncThunk(
     'course/editCourse',
     async(UpdatedCourseData:CourseModel)=>{
         const courseId = UpdatedCourseData.id; 
         const courseRef = doc(db, 'courses',courseId!);
-        setDoc(courseRef,UpdatedCourseData, { merge: true });
-
+        await setDoc(courseRef,UpdatedCourseData, { merge: true });
         return UpdatedCourseData;
     }
 );
@@ -56,7 +79,10 @@ export const deleteCourse = createAsyncThunk(
         await deleteDoc(doc(db, "courses", courseId!));
         return courseId;
     }
-)
+);
+
+
+
 
 
 

@@ -71,7 +71,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ courseDetails, showActions = fa
                 <div className="flex flex-col items-start">
                     <div className="flex flex-col">
                         <button className="m-4 ml-6 mt-0 p-3 bg-slate-300 hover:bg-slate-200 rounded-full dark:text-white dark:bg-slate-700 dark:hover:bg-slate-500" onClick={courseDelete}><DeleteForeverIcon fontSize='large' /></button>
-                        <button className="m-4 ml-6 p-3  bg-slate-300 hover:bg-slate-200 rounded-full dark:text-white dark:bg-slate-700 dark:hover:bg-slate-500" onClick={()=>{navigate(`/admin/add_courses?type=edit&Id=${encodeURIComponent(JSON.stringify(courseDetails.id))}`)}}><EditIcon fontSize='large' /></button>
+                        <button className="m-4 ml-6 p-3  bg-slate-300 hover:bg-slate-200 rounded-full dark:text-white dark:bg-slate-700 dark:hover:bg-slate-500" onClick={()=>{navigate(`/admin/add_courses?type=edit&Id=${courseDetails.id}`)}}><EditIcon fontSize='large' /></button>
                     </div>
                 </div>
             )}
