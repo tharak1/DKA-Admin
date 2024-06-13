@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import LoadingScreen from '../../components/LoadingScreen'; // Adjust the import based on your file structure
+import LoadingScreen from '../../Components/LoadingScreen'; // Adjust the import based on your file structure
+import { Questions } from '../../Models/ExamModel';
 
-interface Question {
-    questionType: string;
-    question: string;
-    options: string[];
-    correctAnswer: number[];
-    points: number;
-    visited?: boolean;
-    answered?: boolean;
-    optionsSelected?: number[];
-}
 
 interface ResultsScreenProps {
-    answers: Question[];
+    answers: Questions[];
 }
 
 const ResultsScreen: React.FC = () => {
@@ -67,7 +58,7 @@ const ResultsScreen: React.FC = () => {
                                         readOnly
                                         className="mr-2"
                                     />
-                                    <label className="text-gray-700">{option}</label>
+                                    <label className="text-gray-700">{option.value}</label>
                                 </div>
                             ))}
                         </div>

@@ -13,6 +13,8 @@ import { useSelector } from 'react-redux';
 import { Theme } from '../redux/ThemeSlice';
 import { useAppDispatch } from '../redux/PersistanceStorage';
 import { fetchCourses } from '../redux/CourcesSlice';
+import { GetUser } from '../redux/UserSlice';
+import { EmployeeModel } from '../Models/EmployeeModel';
 
 const SideBar:React.FC = () => {
     const theme = useSelector(Theme);
@@ -22,6 +24,8 @@ const SideBar:React.FC = () => {
     useEffect(()=>{
       dispatch(fetchCourses());
     },[]);
+
+    const user = useSelector(GetUser) as EmployeeModel;
 
 
     return (
@@ -34,39 +38,50 @@ const SideBar:React.FC = () => {
                         </div>
                         <span className="sans text-2xl font-bold">Divya Kala Academy</span>
                     </div>
-                    <ul className="space-y-2">
-                        <li>
-                            <Link to="/admin/dashboard" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <SpaceDashboardRoundedIcon />
-                                <span className="ml-3">Dashboard</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/admin/manage_categories" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <CategoryIcon />
-                                <span className="ml-3">Manage Categories</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/admin/manage_courses" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <ImportContactsIcon />
-                                <span className="ml-3">Manage Courses</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/admin/students" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <FolderSharedRoundedIcon />
-                                <span className="flex-1 ml-3 whitespace-nowrap">Students data</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/admin/payments" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <CurrencyRupeeIcon />
-                                <span className="flex-1 ml-3 whitespace-nowrap">Payments</span>
-                            </Link>
-                        </li>
-                    </ul>
-                    <ul className="pt-5 mt-5 space-y-2 border-t border-gray-400 dark:border-gray-700">
+
+                    {
+
+                        user.isAdmin &&(
+                            <>
+                            <ul className="space-y-2 pb-5 ">
+                            <li>
+                                <Link to="/admin/dashboard" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <SpaceDashboardRoundedIcon />
+                                    <span className="ml-3">Dashboard</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/manage_categories" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <CategoryIcon />
+                                    <span className="ml-3">Manage Categories</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/manage_courses" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <ImportContactsIcon />
+                                    <span className="ml-3">Manage Courses</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/students" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <FolderSharedRoundedIcon />
+                                    <span className="flex-1 ml-3 whitespace-nowrap">Students data</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/payments" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <CurrencyRupeeIcon />
+                                    <span className="flex-1 ml-3 whitespace-nowrap">Payments</span>
+                                </Link>
+                            </li>
+                        </ul>
+                    <span className="block w-full h-1 border-t border-gray-300 "></span>
+
+                        </>
+                        )
+                    }
+
+                    <ul className="pt-5  space-y-2 ">
                         <li>
                             <Link to="/admin/manage_questionPaper" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                                 <ContentPasteIcon />

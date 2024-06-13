@@ -29,9 +29,9 @@ const WriteExamScreen: React.FC = () => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const type = queryParams.get('type');
 
-    if (type === 'new' || type === 'edit') {
+
+  
       const id = queryParams.get('id');
       const foundObj = tempQP.find((obj: QuestionPaper) => obj.id === id);
       if (foundObj) {
@@ -40,9 +40,7 @@ const WriteExamScreen: React.FC = () => {
         console.error('Question paper not found');
         setLoading(false);
       }
-    } else {
       setLoading(false);
-    }
   }, [location.search, tempQP]);
 
   useEffect(() => {

@@ -1,12 +1,14 @@
 import * as React from 'react';
 // import { useNavigate } from 'react-router-dom';
-import { QuestionPaper } from '../Models/ExamModel';
+
 import { useSelector } from 'react-redux';
-import { GetCourses } from '../redux/CourcesSlice';
-import { CourseModel } from '../Models/CourceModel';
-import { RootState, useAppDispatch } from '../redux/PersistanceStorage';
-import { replaceTempQuestionPaperById, uploadQuestionPaper } from '../redux/QuestionPaperSlice';
+
 import { useNavigate } from 'react-router-dom';
+import { QuestionPaper } from '../../../Models/ExamModel';
+import { RootState, useAppDispatch } from '../../../redux/PersistanceStorage';
+import { GetCourses } from '../../../redux/CourcesSlice';
+import { replaceTempQuestionPaperById, uploadQuestionPaper } from '../../../redux/QuestionPaperSlice';
+import { CourseModel } from '../../../Models/CourceModel';
 
 interface SideBarForAdminProps{
     questionPaper: QuestionPaper;
@@ -75,20 +77,37 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
 
    
 
-                    <label className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">Date: </label>
+                    <label className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">Start Date: </label>
                     <input
                     type="date"
-                    value={questionPaper.date}
-                    onChange={(event)=>{setQuestionPaper({...questionPaper,date : event.target.value})}}
+                    value={questionPaper.startDate}
+                    onChange={(event)=>{setQuestionPaper({...questionPaper,startDate : event.target.value})}}
                     className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     />
 
                 
-                    <label className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">Time: </label>
+                    <label className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">Strat Time: </label>
                     <input
                     type="time"
-                    value={questionPaper.time}
-                    onChange={(event)=>{setQuestionPaper({...questionPaper,time : event.target.value})}}
+                    value={questionPaper.startTime}
+                    onChange={(event)=>{setQuestionPaper({...questionPaper,startTime : event.target.value})}}
+                    className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    />
+
+                    <label className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">End Date: </label>
+                    <input
+                    type="date"
+                    value={questionPaper.endDate}
+                    onChange={(event)=>{setQuestionPaper({...questionPaper,endDate : event.target.value})}}
+                    className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    />
+
+                
+                    <label className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">End Time: </label>
+                    <input
+                    type="time"
+                    value={questionPaper.endTime}
+                    onChange={(event)=>{setQuestionPaper({...questionPaper,endTime : event.target.value})}}
                     className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     />
 
@@ -113,7 +132,7 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
            {loading?"Uploading...":"Upload Paper"}
         </button>
 
-        <button  className="bg-green-500 px-4 py-1 rounded-md ml-4 mt-4" onClick={()=>{navigate(`/admin/writeExam?type=edit&id=${questionPaper.id}`)}}>
+        <button  className="bg-green-500 px-4 py-1 rounded-md ml-4 mt-4" onClick={()=>{navigate(`/admin/writeExam?id=${questionPaper.id}`)}}>
            Write Demo exam
         </button>
         </div>

@@ -5,6 +5,8 @@ import themeReducer from "./ThemeSlice";
 import categoryReducer from './CategorySlice'
 import courseReducer from './CourcesSlice'
 import questionPaperReducer from './QuestionPaperSlice'
+import employeesReducer from './EmployeeSlice'
+import userReducer from './UserSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 
@@ -18,7 +20,9 @@ const reducer = combineReducers({
     theme:themeReducer,
     course:courseReducer,
     categories:categoryReducer,
-    questionPaper:questionPaperReducer
+    questionPaper:questionPaperReducer,
+    employees:employeesReducer,
+    user:userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig,reducer);

@@ -28,8 +28,10 @@ interface QuestionPaper{
     uploadedPdfURL?:string,
     course:string,
     for:string,
-    date:string,
-    time:string,
+    startDate:string,
+    startTime:string,
+    endDate:string,
+    endTime:string,
     duration:string,
     totalMarks:number,
     questions : Questions[];

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MyResponsiveBar:React.FC = () => {
+const MarksEntryPage:React.FC = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const MyResponsiveBar:React.FC = () => {
   )
 }
 
-export default MyResponsiveBar
+export default MarksEntryPage

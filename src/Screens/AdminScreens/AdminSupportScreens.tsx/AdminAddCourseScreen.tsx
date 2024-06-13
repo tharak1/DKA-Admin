@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { CourseModel,} from '../../Models/CourceModel';
+import { CourseModel,} from '../../../Models/CourceModel';
 import { useSelector } from 'react-redux';
-import { Categories } from '../../redux/CategorySlice';
-import CategoryModel from '../../Models/CategoryModel';
-import { useAppDispatch } from '../../redux/PersistanceStorage';
-import { CreateCourse, GetCourses, editCourse } from '../../redux/CourcesSlice';
+import { Categories } from '../../../redux/CategorySlice';
+import CategoryModel from '../../../Models/CategoryModel';
+import { useAppDispatch } from '../../../redux/PersistanceStorage';
+import { CreateCourse, GetCourses, editCourse } from '../../../redux/CourcesSlice';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { databaseStorage } from '../../firebase_config';
+import { databaseStorage } from '../../../firebase_config';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation } from 'react-router-dom';
-import LoadingScreen from '../../Components/LoadingScreen';
+import LoadingScreen  from '../../../Components/LoadingScreen';
+
 
 const uploadImage = async (image: File, name: string, folder: string): Promise<string> => {
   if (!image) return '';

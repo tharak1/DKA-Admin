@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import QuestionForm from '../../Components/QuestionForm';
-import SideBarForAdmin from '../../Components/SideBarForAdminExams';
-import { ImagePreview, QuestionPaper } from '../../Models/ExamModel';
+import QuestionForm from '../../../Components/QuestionForm';
+import { ImagePreview, QuestionPaper } from '../../../Models/ExamModel';
 import { useLocation } from 'react-router-dom';
-import LoadingScreen from '../../Components/LoadingScreen';
-import { useAppDispatch } from '../../redux/PersistanceStorage';
-import { GetTempQP, replaceTempQuestionPaperById } from '../../redux/QuestionPaperSlice';
+import LoadingScreen from '../../../Components/LoadingScreen';
+import { useAppDispatch } from '../../../redux/PersistanceStorage';
+import { GetTempQP, replaceTempQuestionPaperById } from '../../../redux/QuestionPaperSlice';
 import { deleteObject, ref } from 'firebase/storage';
-import { databaseStorage } from '../../firebase_config';
+import { databaseStorage } from '../../../firebase_config';
 import { useSelector } from 'react-redux';
-import uploadImage from '../../hooks/UploadImage';
+import uploadImage from '../../../hooks/UploadImage';
+import SideBarForAdmin from '../AdminComponents/SideBarForAdminExams';
 
 
 const baseUrl = "https://firebasestorage.googleapis.com/v0/b/divya-kala-academy.appspot.com/o/";
@@ -32,8 +32,10 @@ const CreateQuestionPaper: React.FC = () => {
     course: '',
     for: '',
     examType:'',
-    date: '',
-    time: '00:00',
+    startDate: '',
+    startTime: '00:00',
+    endDate: '',
+    endTime: '00:00',
     duration: '',
     totalMarks: 0,
     questions: [],

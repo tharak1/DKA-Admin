@@ -32,8 +32,8 @@ const ExamDraftCard:React.FC<ExamDraftCardProps> = ({QP}) => {
     <div className='relative'>
         <div className="max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:text-white">
             <h5 className="mb-2 font-bold tracking-tight text-gray-900 dark:text-white">{QP.course}</h5>
-                <p>Date: {QP.date}</p>
-                <p>Time: {QP.time} (IST)</p>
+                <p>Date: {QP.startDate}</p>
+                <p>Time: {QP.startTime} (IST)</p>
                 <p>Total marks : {QP.totalMarks}</p>
                 <p>Published for : {QP.for}</p>
                 <p className='text-red-300'>{QP.examType}</p>

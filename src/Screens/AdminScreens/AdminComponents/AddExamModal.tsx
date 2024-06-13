@@ -17,8 +17,10 @@ const AddExamModal:React.FC = () => {
         course:"",
         examType:'',
         for:"",
-        date:"",
-        time:"00:00",
+        startDate:"",
+        startTime:"00:00",
+        endDate:"",
+        endTime:"00:00",
         duration:"",
         totalMarks:0,
         questions : [],
@@ -83,9 +85,10 @@ const AddExamModal:React.FC = () => {
                                             <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0">
                                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                                                     <form className="space-y-4 md:space-y-6" action="#">
+
                                                         <div>
-                                                        <label htmlFor="courseType" className="max-w-xs block mb-2 text-sm font-medium text-gray-900 ">Select a course</label>
-                                                            <select id="courseType" value={questionPaper.course} onChange={(event)=>{setQuestionPaper({...questionPaper,course: event.target.value})}} className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                        <label htmlFor="courseType" className=" block mb-2 text-sm font-medium text-gray-900 ">Select a course</label>
+                                                            <select id="courseType" value={questionPaper.course} onChange={(event)=>{setQuestionPaper({...questionPaper,course: event.target.value})}} className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                                             <option value="">-- Select course --</option>
                                                                 {
                                                                     courses.map((obj:CourseModel)=>(
@@ -94,9 +97,10 @@ const AddExamModal:React.FC = () => {
                                                                 }
                                                             </select>
                                                         </div>
+
                                                         <div>
-                                                            <label htmlFor="publishType" className="max-w-xs block mb-2 text-sm font-medium text-gray-900 ">Select publish for</label>
-                                                            <select id="publishType" value={questionPaper.for} onChange={(event)=>{setQuestionPaper({...questionPaper,for: event.target.value})}} className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                            <label htmlFor="publishType" className=" block mb-2 text-sm font-medium text-gray-900 ">Select publish for</label>
+                                                            <select id="publishType" value={questionPaper.for} onChange={(event)=>{setQuestionPaper({...questionPaper,for: event.target.value})}} className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                                             <option value="">-- Select course --</option>
                                                                 
                                                                 <option value="All Students">All Students</option>
@@ -104,9 +108,10 @@ const AddExamModal:React.FC = () => {
                                                                 <option value="Offline Students">Offline Students</option>
                                                             </select>
                                                         </div>
+
                                                         <div>
-                                                            <label htmlFor="ExamType" className="max-w-xs block mb-2 text-sm font-medium text-gray-900 ">Select exam type</label>
-                                                            <select id="ExamType" value={questionPaper.examType} onChange={(event)=>{setQuestionPaper({...questionPaper,examType: event.target.value})}} className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                            <label htmlFor="ExamType" className=" block mb-2 text-sm font-medium text-gray-900 ">Select exam type</label>
+                                                            <select id="ExamType" value={questionPaper.examType} onChange={(event)=>{setQuestionPaper({...questionPaper,examType: event.target.value})}} className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                                             <option value="">-- Select Type --</option>
                                                                 
                                                                 <option value="create question paper">Create question paper</option>
@@ -115,43 +120,65 @@ const AddExamModal:React.FC = () => {
                                                         </div>
 
                                                         <div>
-                                                            <label htmlFor="minutes" className="max-w-xs block mb-2 text-sm font-medium text-gray-900">Enter number of minutes</label>
+                                                            <label htmlFor="minutes" className=" block mb-2 text-sm font-medium text-gray-900">Enter number of minutes</label>
                                                             <input
                                                                 id="minutes"
                                                                 type="number"
                                                                 value={questionPaper.duration}
                                                                 onChange={(event)=>{setQuestionPaper({...questionPaper,duration : event.target.value})}}
-                                                                className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                                className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                                             />
                                                         </div>
 
-                                                        <div>
-                                                            <label className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">Date: </label>
-                                                            <input
-                                                            type="date"
-                                                            value={questionPaper.date}
-                                                            onChange={(event)=>{setQuestionPaper({...questionPaper,date : event.target.value})}}
-                                                            className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                            />
+                                                        <div className='flex justify-start '>
+                                                            
+                                                                <div className='flex flex-col w-full'>
+                                                                    <label className="w-full block mt-2 mb-2 text-sm font-medium text-gray-900">Start Date: </label>
+                                                                    <input
+                                                                    type="date"
+                                                                    value={questionPaper.startDate}
+                                                                    onChange={(event)=>{setQuestionPaper({...questionPaper,startDate : event.target.value})}}
+                                                                    className="w-full  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5"
+                                                                    />
+                                                                </div>
 
-                                                        
-                                                            <label className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">Time: </label>
-                                                            <input
-                                                            type="time"
-                                                            value={questionPaper.time}
-                                                            onChange={(event)=>{setQuestionPaper({...questionPaper,time : event.target.value})}}
-                                                            className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                            />
+                                                                <div className='flex flex-col'>
+                                                                    <label className="w-full  block mt-2 mb-2 text-sm font-medium text-gray-900">Start Time: </label>
+                                                                    <input
+                                                                    type="time"
+                                                                    value={questionPaper.startTime}
+                                                                    onChange={(event)=>{setQuestionPaper({...questionPaper,startTime : event.target.value})}}
+                                                                    className=" w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5"
+                                                                    />
+                                                                </div>
+
                                                         </div>
 
+                                                        <div className='flex justify-start '>
 
+                                                                <div className='flex flex-col w-full'>
+                                                                    <label className="w-full block mt-2 mb-2 text-sm font-medium text-gray-900">End Date: </label>
+                                                                    <input
+                                                                    type="date"
+                                                                    value={questionPaper.endDate}
+                                                                    onChange={(event)=>{setQuestionPaper({...questionPaper,endDate : event.target.value})}}
+                                                                    className="w-full  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5"
+                                                                    />
+                                                                </div>
 
+                                                                <div className='flex flex-col'>
+                                                                    <label className="w-full  block mt-2 mb-2 text-sm font-medium text-gray-900">End Time: </label>
+                                                                    <input
+                                                                    type="time"
+                                                                    value={questionPaper.endTime}
+                                                                    onChange={(event)=>{setQuestionPaper({...questionPaper,endTime : event.target.value})}}
+                                                                    className=" w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5"
+                                                                    />
+                                                                </div>
 
-
+                                                        </div>
 
                                                     </form>
-
-
 
                                                     <button
                                                         onClick={()=>{
