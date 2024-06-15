@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import LoadingScreen from '../../Components/LoadingScreen'; // Adjust the import based on your file structure
+import LoadingScreen from '../../Components/LoadingScreen';
 import { Questions } from '../../Models/ExamModel';
-
 
 interface ResultsScreenProps {
     answers: Questions[];

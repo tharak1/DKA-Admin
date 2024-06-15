@@ -11,7 +11,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 
 const persistConfig = {
-    key:"root",
+    key:"clientRoot",
     version:1,
     storage
 }
