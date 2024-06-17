@@ -1,59 +1,12 @@
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import SideBar from './Screens/SideBar';
-// import AdminDashboard from './Screens/AdminScreens/AdminDashboard';
-// import AdminManageCategory from './Screens/AdminScreens/AdminManageCategory';
-// import AdminManageCourse from './Screens/AdminScreens/AdminManageCourse';
-// import AdminAddCourseScreen from './Screens/AdminScreens/AdminAddCourseScreen';
-// import AdminShowStudents from './Screens/AdminScreens/AdminShowStudents';
-// import AdminShowPayments from './Screens/AdminScreens/AdminShowPayments';
-// import AdminManageQuestionPaper from './Screens/AdminScreens/AdminManageQuestionPaper';
-// import CreateQuestionPaper from './Screens/AdminScreens/AdminCreateQuestionPaper';
-// import AdminEployeeManagement from './Screens/AdminScreens/AdminEployeeManagement';
-// import AdminExamReports from './Screens/AdminScreens/AdminExamReports';
-// import AdminOnlineManagement from './Screens/AdminScreens/AdminOnlineManagement';
-// import WriteExamScreen from './Screens/Client_screens/WriteExamScreen';
-// import UploadAnsScreen from './Components/UploadAnsScreen';
-// import LoginScreen from './Screens/LoginScreen';
-
-// function App() {
-
-//   return (
-//     <>
-//       <Router>
-//         <Routes>
-
-//           <Route path='/' element = {<LoginScreen/>} />
-
-//           <Route path='/admin' element = {<SideBar/>} >
-//             <Route path="/admin/online_class_management" element={<AdminOnlineManagement/>}/>
-//             <Route path="/admin/upload-answers-screen" element={<UploadAnsScreen/>}/>
-//             <Route path="/admin/create_question_paper" element={<CreateQuestionPaper/>}/>
-//             <Route path="/admin/manage_questionPaper" element={<AdminManageQuestionPaper/>}/>
-//             <Route path="/admin/employee_management" element={<AdminEployeeManagement/>}/>
-//             <Route path="/admin/manage_categories" element={<AdminManageCategory/>}/>
-//             <Route path="/admin/manage_courses" element={<AdminManageCourse/>}/>
-//             <Route path="/admin/exam_reports" element={<AdminExamReports/>}/>
-//             <Route path="/admin/add_courses" element={<AdminAddCourseScreen/>}/>
-//             <Route path="/admin/writeExam" element={<WriteExamScreen/>}/>
-//             <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
-//             <Route path="/admin/students" element={<AdminShowStudents/>}/>
-//             <Route path="/admin/payments" element={<AdminShowPayments/>}/>
-//           </Route>
-
-//         </Routes>
-//       </Router>
-//     </>
-//   )
-// }
-
-// export default App
-
-
 import { Suspense, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { GetUser } from './redux/UserSlice';
 import { EmployeeModel } from './Models/EmployeeModel';
+import AdminViewFullPerformance from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminViewFullPerformance';
+import AdminShowPendingPayments from './Screens/AdminScreens/AdminShowPendingPayments';
+import AdminMarksScreen from './Screens/AdminScreens/AdminMarksScreen';
+import ResultsScreen from './Screens/Client_screens/ResultsScreen';
 
 // Lazy load the components
 const SideBar = lazy(() => import('./Screens/SideBar'));
@@ -82,7 +35,7 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path='/' element={<LoginScreen />} />
-
+            <Route path='/results' element={<ResultsScreen/>}/>
 
             {
               user!=null&&(
@@ -93,8 +46,10 @@ function App() {
                 <Route path="/admin/manage_questionPaper" element={<AdminManageQuestionPaper />} />
                 <Route path="/admin/exam_reports" element={<AdminExamReports />} />
                 <Route path="/admin/writeExam" element={<WriteExamScreen />} />
+                <Route path='/admin/pending_payments' element={<AdminShowPendingPayments/>}/>
+                <Route path='/admin/detailPerformance' element={<AdminViewFullPerformance/>}/>
+                <Route path="/admin/marks_entry" element={<AdminMarksScreen />} />
 
-                
                 {user.isAdmin && (
                   <>
                     <Route path="/admin/employee_management" element={<AdminEployeeManagement />} />

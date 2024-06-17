@@ -87,24 +87,19 @@ const WriteExamScreen: React.FC = () => {
   };
 
   const handleSaveAndNextQuestion = () => {
-    const selectedOptionIndex = processedQuestions[questionIndex].options.findIndex((_option, index) => {
-      const optionElement = document.getElementById(`option${questionIndex}${index}`) as HTMLInputElement;
-      return optionElement.checked;
-    });
-
-    const isAnswered = selectedOptionIndex !== -1;
+    const isAnswered = (processedQuestions![questionIndex]!.optionsSelected!.length)>0 ?true:false;
 
     const updatedQuestions = [...processedQuestions];
     updatedQuestions[questionIndex] = {
       ...updatedQuestions[questionIndex],
       visited: true,
       answered: isAnswered,
-      optionsSelected: isAnswered ? [selectedOptionIndex] : [],
+      optionsSelected: isAnswered ? processedQuestions[questionIndex].optionsSelected : [],
     };
 
     setProcessedQuestions(updatedQuestions);
-    setAnswered(answered + (isAnswered ? 1 : 0));
-    setNotAnswered(notAnswered - (isAnswered ? 1 : 0));
+    setAnswered(answered<processedQuestions.length?answered + (isAnswered ? 1 : 0):answered);
+    setNotAnswered(answered<processedQuestions.length?notAnswered - (isAnswered ? 1 : 0):notAnswered );
     handleNextQuestion();
   };
 
@@ -116,6 +111,11 @@ const WriteExamScreen: React.FC = () => {
       setNotVisited(notVisited - 1);
     }
   };
+
+const handleTimerFinish = () => {
+  navigate('/results', { state: { answers: processedQuestions } });
+
+}
 
   return (
     <>
@@ -129,7 +129,7 @@ const WriteExamScreen: React.FC = () => {
             <div className="flex justify-around items-center">
               <h1 className="m-5">Duration: {finalObj?.duration} min</h1>
               <div className="mr-5">
-                <Timer duration={parseInt(finalObj?.duration || '0') * 60} />
+                <Timer duration={parseInt(finalObj?.duration || '0') * 60}  onTimerFinish={handleTimerFinish}/>
               </div>
               <div className="flex flex-col">
                 <h1>Sai Tharak Reddy</h1>

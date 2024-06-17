@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
@@ -13,13 +13,15 @@ import { useSelector } from 'react-redux';
 import { Theme } from '../redux/ThemeSlice';
 import { useAppDispatch } from '../redux/PersistanceStorage';
 import { fetchCourses } from '../redux/CourcesSlice';
-import { GetUser } from '../redux/UserSlice';
+import { GetUser, logoutUser } from '../redux/UserSlice';
 import { EmployeeModel } from '../Models/EmployeeModel';
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 const SideBar:React.FC = () => {
     const theme = useSelector(Theme);
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(()=>{
       dispatch(fetchCourses());
@@ -74,6 +76,12 @@ const SideBar:React.FC = () => {
                                     <span className="flex-1 ml-3 whitespace-nowrap">Payments</span>
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/admin/employee_management" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                                    <ManageAccountsRoundedIcon />
+                                    <span className="ml-3">Employee Management</span>
+                                </Link>
+                            </li>
                         </ul>
                     <span className="block w-full h-1 border-t border-gray-300 "></span>
 
@@ -101,12 +109,21 @@ const SideBar:React.FC = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/admin/employee_management" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
-                                <ManageAccountsRoundedIcon />
-                                <span className="ml-3">Employee Management</span>
+                            <Link to="/admin/pending_payments" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                                <FaMoneyBillTransfer size={24} />
+                                <span className="ml-3">Pending Payments</span>
                             </Link>
                         </li>
+
+                        <li>
+                            <Link to="/admin/marks_entry" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                                <FaMoneyBillTransfer size={24} />
+                                <span className="ml-3">Marks Entry</span>
+                            </Link>
+                        </li>
+
                     </ul>
+                    <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={()=>{dispatch(logoutUser());navigate('/')}}>Red</button>
                 </div>
                 <div className="dark:bg-gray-900 col-span-4 row-start-1 row-span-1 overflow-auto">
                     <Outlet />

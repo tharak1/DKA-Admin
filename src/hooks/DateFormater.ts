@@ -28,4 +28,28 @@ const formatDate = (date: Date): string => {
 
 
 
-export {formatDate,formatWeekday};
+
+
+  const formatDateString = (dateString:string) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+    const dayOfWeek = date.toLocaleString('default', { weekday: 'long' });
+  
+    const getDayWithSuffix = (day:any) => {
+      if (day > 3 && day < 21) return day + 'th';
+      switch (day % 10) {
+        case 1: return day + 'st';
+        case 2: return day + 'nd';
+        case 3: return day + 'rd';
+        default: return day + 'th';
+      }
+    };
+  
+    return `${getDayWithSuffix(day)} ${month}, ${year}; ${dayOfWeek}`;
+  };
+
+
+
+export {formatDate,formatWeekday,formatDateString};

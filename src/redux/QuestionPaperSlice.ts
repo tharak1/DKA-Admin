@@ -57,6 +57,7 @@ export const uploadQuestionPaper = createAsyncThunk(
     'questionPaper/uploadQuestionPaper',
     async(QP:QuestionPaper)=>{
         await setDoc(doc(db, "Question-Paper", QP.id!), {...QP,editing:false});
+        await setDoc(doc(db, "Online-exam-results", QP.id!),{course:QP.course,startDate:QP.startDate,startTime:QP.startTime,endDate:QP.endDate,endTime:QP.endTime,duration:QP.duration,totalMarks:QP.totalMarks,examType:QP.examType,noOfQuestions:QP.noOfQuestions,students:[]})
         return QP;
     }
 )
@@ -79,6 +80,7 @@ export const editFetchedPaper = createAsyncThunk(
     'questionPaper/editFetchedPaper',
     async(QP:QuestionPaper)=>{
         await deleteDoc(doc(db, "Question-Paper", QP.id!));
+        await deleteDoc(doc(db, "Online-exam-results", QP.id!));
         return QP;
     }
 )
@@ -174,7 +176,7 @@ const QuestionPaperSlice = createSlice({
             state.status = 'succeeded';
             const exists = state.TempQuestionPapers.some(questionPaper => questionPaper.id === action.payload.id);
             if (!exists) {
-                state.TempQuestionPapers.push({...action.payload, editing:true});
+                state.TempQuestionPapers.push({...action.payload, editing:true,uploaded:false});
             }
             state.QuestionPapers = state.QuestionPapers.filter(questionPaper => questionPaper.id !== action.payload.id);
             state.error = "Null";

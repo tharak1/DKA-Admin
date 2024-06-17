@@ -47,7 +47,13 @@ const ResultsScreen: React.FC = () => {
             <div>
                 {answers.map((question, index) => (
                     <div key={index} className="mb-6">
-                        <h3 className="text-lg font-semibold mb-2">{question.question}</h3>
+                        {
+                            answers[index].questionFormat === 'image'?(
+                                <img src={question.question} alt="question" className="mb-2" />
+                            ):(
+                                <h3 className="text-lg font-semibold mb-2">{question.question}</h3>
+                            )
+                        }
                         <div>
                             {question.options.map((option, idx) => (
                                 <div key={idx} className="flex items-center mb-1">
@@ -57,19 +63,31 @@ const ResultsScreen: React.FC = () => {
                                         readOnly
                                         className="mr-2"
                                     />
-                                    <label className="text-gray-700">{option.value}</label>
+                                    {
+                                        answers[index].questionType.includes("image")?(
+                                            <img src={option.image} alt="" />
+                                        ):(
+                                            <label className="text-gray-700">{option.value}</label>
+                                        )
+                                    }
                                 </div>
                             ))}
                         </div>
                         <div className="mt-2">
                             <p className="text-sm text-gray-500">
-                                Correct Answer(s): {question.correctAnswer.map(ans => question.options[ans]).join(', ')}
+                                Correct Answer(s): {question.correctAnswer.map(ans => answers[index].questionType==="numerical"?ans:ans+1).join(', ')}
                             </p>
                         </div>
                         <div className="mt-2">
-                            <p className={`text-sm ${JSON.stringify(question.optionsSelected?.sort()) === JSON.stringify(question.correctAnswer.sort()) ? 'text-green-500' : 'text-red-500'}`}>
-                                {JSON.stringify(question.optionsSelected?.sort()) === JSON.stringify(question.correctAnswer.sort()) ? 'Correct' : 'Incorrect'}
-                            </p>
+                            {
+                                answers[index].optionsSelected?.length === 0 ?(
+                                    <p>Unanswered</p>
+                                ):(
+                                    <p className={`text-sm ${JSON.stringify(question.optionsSelected?.sort()) === JSON.stringify(question.correctAnswer.sort()) ? 'text-green-500' : 'text-red-500'}`}>
+                                        {JSON.stringify(question.optionsSelected?.sort()) === JSON.stringify(question.correctAnswer.sort()) ? 'Correct' : 'Incorrect'}
+                                    </p>
+                                )
+                            }
                         </div>
                     </div>
                 ))}

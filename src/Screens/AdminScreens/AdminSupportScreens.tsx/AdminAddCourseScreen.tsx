@@ -32,7 +32,7 @@ const AdminAddCourseScreen: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [sessions, setSessions] = useState<string[]>([]);
-  const [performance, setPerformance] = useState<string[]>([]);
+  const [performance, setPerformance] = useState<string[]>(["Grade","TotalClassesAttended","TotalClassesTaken","totalMarks","totalMarksObtained","startDate","endDate"]);
   const [initialValues, setInitialValues] = useState<CourseModel>({
     category: '',
     courseName: '',

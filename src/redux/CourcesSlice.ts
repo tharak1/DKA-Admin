@@ -4,11 +4,16 @@ import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from "firebase/fi
 import { db } from "../firebase_config";
 
 
-const convertListToObject = (list: string[]): Record<string, number> => {
+const convertListToObject = (list: string[]): Record<string, string> => {
     return list.reduce((acc, item) => {
-        acc[item] = 0;
+        if(item === "Grade"){
+            acc[item] = "";
+        }
+        else{
+            acc[item] = "0";
+        }
         return acc;
-    }, {} as Record<string, number>);
+    }, {} as Record<string, string>);
 };
 
 interface CoursesState {
@@ -45,15 +50,7 @@ export const fetchCourses = createAsyncThunk(
         const docRef = await addDoc(collection(db, 'courses'), CourseData);
 
         await setDoc(doc(db,'performances',docRef.id),{performanceTemplate:convertListToObject(CourseData.coursePerformance!),students:[]});
-
-        // if (courseId) {
-        //     await addDoc(collection(db, 'performances'), {
-        //         courseId: courseId,
-        //         students: []
-        //     });
-        // } else {
-        //     console.error('CourseData.id is undefined or null');
-        // }
+        await setDoc(doc(db,'regStuByCourse',docRef.id),{couseName:CourseData.courseName,students:[]})
 
         return { id: docRef.id, ...CourseData };
       } catch (error) {
