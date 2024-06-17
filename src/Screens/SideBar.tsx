@@ -128,7 +128,7 @@ const SideBar:React.FC = () => {
                 <div className="dark:bg-gray-900 col-span-4 row-start-1 row-span-1 overflow-auto">
                     <Outlet />
                 </div>
-            </div>s
+            </div>
         </div>
     );
 }
