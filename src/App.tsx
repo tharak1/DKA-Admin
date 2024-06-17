@@ -10,7 +10,6 @@ import ResultsScreen from './Screens/Client_screens/ResultsScreen';
 import AdminOnlineExamViewPort from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminOnlineExamViewPort';
 import AdminEvaluationScreen from './Screens/AdminScreens/AdminEvaluationScreen';
 
-// Lazy load the components
 const SideBar = lazy(() => import('./Screens/SideBar'));
 const AdminDashboard = lazy(() => import('./Screens/AdminScreens/AdminDashboard'));
 const AdminManageCategory = lazy(() => import('./Screens/AdminScreens/AdminManageCategory'));
@@ -80,3 +79,5 @@ function App() {
 }
 
 export default App;
+
+
