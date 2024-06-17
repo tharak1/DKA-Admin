@@ -27,12 +27,15 @@ const WriteExamScreen = lazy(() => import('./Screens/Client_screens/WriteExamScr
 const UploadAnsScreen = lazy(() => import('./Components/UploadAnsScreen'));
 const LoginScreen = lazy(() => import('./Screens/LoginScreen'));
 const AddAdminAddEmployeeScreen = lazy(() => import('./Screens/AdminScreens/AdminSupportScreens.tsx/AdminAddEmployeeScreen'));
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 
 function App() {
   const user = useSelector(GetUser) as EmployeeModel;
   return (
     <>
+          <SpeedInsights />
+
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
