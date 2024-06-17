@@ -123,12 +123,12 @@ const SideBar:React.FC = () => {
                         </li>
 
                     </ul>
-                    <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={()=>{dispatch(logoutUser());navigate('/')}}>Red</button>
+                    <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={()=>{dispatch(logoutUser());navigate('/')}}>Log Out</button>
                 </div>
                 <div className="dark:bg-gray-900 col-span-4 row-start-1 row-span-1 overflow-auto">
                     <Outlet />
                 </div>
-            </div>
+            </div>s
         </div>
     );
 }

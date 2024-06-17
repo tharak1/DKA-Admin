@@ -56,6 +56,8 @@ export const deleteTempQuestionPaperById = createAsyncThunk(
 export const uploadQuestionPaper = createAsyncThunk(
     'questionPaper/uploadQuestionPaper',
     async(QP:QuestionPaper)=>{
+        console.log(QP);
+        
         await setDoc(doc(db, "Question-Paper", QP.id!), {...QP,editing:false});
         await setDoc(doc(db, "Online-exam-results", QP.id!),{course:QP.course,startDate:QP.startDate,startTime:QP.startTime,endDate:QP.endDate,endTime:QP.endTime,duration:QP.duration,totalMarks:QP.totalMarks,examType:QP.examType,noOfQuestions:QP.noOfQuestions,students:[]})
         return QP;
@@ -80,7 +82,6 @@ export const editFetchedPaper = createAsyncThunk(
     'questionPaper/editFetchedPaper',
     async(QP:QuestionPaper)=>{
         await deleteDoc(doc(db, "Question-Paper", QP.id!));
-        await deleteDoc(doc(db, "Online-exam-results", QP.id!));
         return QP;
     }
 )

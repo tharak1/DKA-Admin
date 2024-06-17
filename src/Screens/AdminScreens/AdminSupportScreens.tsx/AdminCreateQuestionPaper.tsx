@@ -114,30 +114,20 @@ const CreateQuestionPaper: React.FC = () => {
       ...prevqp,
       questionsImages: prevqp.questionsImages!.filter((_, i) => i !== index),
     }));
+
     setDeleting(false);
 
   }
 
-  // const handleUploadImages = async() => {
-  //   setUploading(true);
-  
-  //   const uploadPromises = questionPaper.questionsImages!.map(async (img: ImagePreview, index) => {
-  //     img.preview = await uploadImage(img.file, `qp${index}`, 'questionpaper');
-  //     return img;
-  //   });
-  
-  //   await Promise.all(uploadPromises);
-
-  //   setUploading(false);
-
-  // };
-
   const handleUploadImages = async () => {
     setUploading(true);
+
+    console.log(questionPaper.questionsImages);
+    
   
     const updatedImages = await Promise.all(imagePreviews.map(async (img: ImagePreview, index) => {
       const newPreview = await uploadImage(img.file!, `qp${index}`, 'questionpaper');
-      return { ...img, preview: newPreview }; // Create a new object with the updated preview
+      return { preview: newPreview }; // Create a new object with the updated preview
     }));
   
     setQuestionPaper(prevqp => ({
@@ -154,7 +144,6 @@ const CreateQuestionPaper: React.FC = () => {
   const addQuestionForm = () => {
     setQuestionPaper(prevQuestionPaper => ({
       ...prevQuestionPaper,
-
       questions: [
         ...prevQuestionPaper.questions,
         {
@@ -175,7 +164,6 @@ const CreateQuestionPaper: React.FC = () => {
 
   useEffect(() => {
     if (questionPaper.examType !== "upload question Paper" && questionPaper.examType !== "" ) {
-      
       const points = questionPaper.questions.reduce((sum, question) => sum + question.points, 0);
       setQuestionPaper(prev => ({ ...prev, totalMarks: points ,noOfQuestions : prev.questions.length}));
     }
@@ -276,15 +264,6 @@ const CreateQuestionPaper: React.FC = () => {
             )
             
             :(
-
-
-          
-
-
-
-
-
-
           <div className="col-span-3 w-full pl-9 pr-9 pt-4 pb-4 row-span-8 overflow-auto">
             {questionPaper.questions.map((_question, index) => (
               <div key={index} className="mb-4">

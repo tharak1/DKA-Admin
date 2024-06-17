@@ -7,6 +7,8 @@ import AdminViewFullPerformance from './Screens/AdminScreens/AdminSupportScreens
 import AdminShowPendingPayments from './Screens/AdminScreens/AdminShowPendingPayments';
 import AdminMarksScreen from './Screens/AdminScreens/AdminMarksScreen';
 import ResultsScreen from './Screens/Client_screens/ResultsScreen';
+import AdminOnlineExamViewPort from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminOnlineExamViewPort';
+import AdminEvaluationScreen from './Screens/AdminScreens/AdminEvaluationScreen';
 
 // Lazy load the components
 const SideBar = lazy(() => import('./Screens/SideBar'));
@@ -49,6 +51,9 @@ function App() {
                 <Route path='/admin/pending_payments' element={<AdminShowPendingPayments/>}/>
                 <Route path='/admin/detailPerformance' element={<AdminViewFullPerformance/>}/>
                 <Route path="/admin/marks_entry" element={<AdminMarksScreen />} />
+                <Route path="/admin/online_exam_viewport" element={<AdminOnlineExamViewPort />} />
+                <Route path="/admin/online_exam_evaluation" element={<AdminEvaluationScreen />} />
+
 
                 {user.isAdmin && (
                   <>

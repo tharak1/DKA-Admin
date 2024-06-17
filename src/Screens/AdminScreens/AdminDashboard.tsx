@@ -1,13 +1,17 @@
 import React from 'react'
 import StatsCard from '../../Components/StatsCard'
 import Navbar from './AdminComponents/Navbar';
+import { useSelector } from 'react-redux';
+import { GetEmployees } from '../../redux/EmployeeSlice';
 
 
 
 
 const AdminDashboard:React.FC = () => {
 
+    const employees = useSelector(GetEmployees);
 
+    
 
 
 
@@ -25,7 +29,7 @@ const AdminDashboard:React.FC = () => {
             <StatsCard name= {"Total courses"} count = {20}/>
             <StatsCard name= {"Total Visits"} count = {20}/>
             <StatsCard name= {"Total Feedbacks"} count = {20}/>
-            <StatsCard name= {"Total Employees"} count = {20}/>
+            <StatsCard name= {"Total Employees"} count = {employees.length}/>
             <StatsCard name= {"Total Branches"} count = {20}/>
 
 

@@ -28,7 +28,7 @@ const dispatch = useAppDispatch();
         </div>
         
         <div className='row-span-2 col-span-1'>
-        <StatsCard name='Toatal employees' count={1} />
+        <StatsCard name='Toatal employees' count={employees.length} />
         </div>
 
         <div className='row-start-4 row-span-1 col-span-4 w-full'>

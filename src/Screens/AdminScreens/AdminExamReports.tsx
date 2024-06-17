@@ -5,6 +5,7 @@ import { GetCourses } from '../../redux/CourcesSlice';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase_config';
 import Navbar from './AdminComponents/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const AdminExamReports:React.FC = () => {
   const [courseName, setCourseName] = useState<string>("");
@@ -13,6 +14,9 @@ const AdminExamReports:React.FC = () => {
   const courses = useSelector(GetCourses);
   const [examDetailsList, setExamDetailsList] = useState<ExamDetails[]>([]);
   const [regStuCourse,setRegStuCourse] = useState<regStuByCourse>();
+
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -28,10 +32,7 @@ const AdminExamReports:React.FC = () => {
         courseName: doc.data().courseName,
         students: doc.data().students
       }));
-
-      console.log(regStuByCourse[0]);
-      
-      
+    
       setRegStuCourse(regStuByCourse[0]);
 
       const fetchedExamDetails: ExamDetails[] = [];
@@ -48,7 +49,9 @@ const AdminExamReports:React.FC = () => {
               studentName: studentData.studentName,
               unanswered: studentData.unanswered
             } as CreateQuestionPaperPerformance;
-          } else if (data.examType === "upload question paper") {
+          } else if (data.examType === "upload question Paper") {
+            console.log(studentData);
+            
             return {
               evaluated: studentData.evaluated,
               marksObtained: studentData.marksObtained,
@@ -76,8 +79,10 @@ const AdminExamReports:React.FC = () => {
 
         fetchedExamDetails.push(examDetails);
       });
+      console.log(fetchedExamDetails);
 
       setExamDetailsList(fetchedExamDetails);
+      
 
     } catch (error) {
       console.error("Error fetching documents: ", error);
@@ -87,6 +92,8 @@ const AdminExamReports:React.FC = () => {
       setLoading(false);
     }
   };
+
+
 
 
   return (
@@ -159,8 +166,10 @@ const AdminExamReports:React.FC = () => {
           </div>
           {examDetailsList.map((obj,index) => (
             <div
-              className='w-full grid grid-cols-6 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600 hover:cursor-pointer'
-              key={index}
+              className='w-full grid grid-cols-6 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600 hover:cursor-pointer' onClick={()=>{
+                navigate('/admin/online_exam_viewport', { state: { examDetails:examDetailsList[index],regStu:regStuCourse } });
+              }}
+              key={obj.id}
             >
               <div className='col-span-2 flex flex-col justify-start'>
                 <h2>ID : {obj.id}</h2>
