@@ -9,6 +9,7 @@ import { formatDateString } from '../../../hooks/DateFormater';
 import { CourseModel } from '../../../Models/CourceModel';
 import Navbar from '../AdminComponents/Navbar';
 import { useLocation } from 'react-router-dom';
+import AddCashCourse from '../AdminComponents/AddCashCourse';
 
 const AdminViewFullPaymentHistory:React.FC = () => {
     const location = useLocation();
@@ -39,7 +40,7 @@ const AdminViewFullPaymentHistory:React.FC = () => {
         ...doc.data(),
       })) as Payment[];
       setPayments(paymentsData);
-      setFilteredPayments(paymentsData);
+      setFilteredPayments(paymentsData);  
       setLoading(false);
     } catch (error) {
       console.error('Error loading payments:', error);
@@ -127,6 +128,11 @@ const AdminViewFullPaymentHistory:React.FC = () => {
             >
               Clear Filter
             </button>
+
+            <div>
+              <AddCashCourse />
+            </div>
+
           </div>
         </form>
       </div>
