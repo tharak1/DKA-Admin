@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from './AdminComponents/Navbar';
-import Payment from '../../Models/PaymentModel';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase_config';
-import { useAppDispatch } from '../../redux/PersistanceStorage';
-import { GetCourses, fetchCourses } from '../../redux/CourcesSlice';
+import React, { useEffect, useState } from 'react'
+import Payment from '../../../Models/PaymentModel';
+import { useAppDispatch } from '../../../redux/PersistanceStorage';
 import { useSelector } from 'react-redux';
-import { CourseModel } from '../../Models/CourceModel';
-import { formatDateString } from '../../hooks/DateFormater';
+import { GetCourses, fetchCourses } from '../../../redux/CourcesSlice';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../../firebase_config';
+import { formatDateString } from '../../../hooks/DateFormater';
+import { CourseModel } from '../../../Models/CourceModel';
+import Navbar from '../AdminComponents/Navbar';
+import { useLocation } from 'react-router-dom';
 
-const AdminShowPayments: React.FC = () => {
-  const [payments, setPayments] = useState<Payment[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [filteredPayments, setFilteredPayments] = useState<Payment[] | null>(null);
-  const [filters, setFilters] = useState({
-    courseName: '',
-    studentSearch: '',
-    date: '',
-    status: ''
-  });
+const AdminViewFullPaymentHistory:React.FC = () => {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const studentId = searchParams.get('studentId');
+    const [payments, setPayments] = useState<Payment[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [filteredPayments, setFilteredPayments] = useState<Payment[] | null>(null);
+    const [filters, setFilters] = useState({
+        courseName: '',
+        studentSearch: '',
+        date: '',
+        status: ''
+    });
 
   const dispatch = useAppDispatch();
   const courses = useSelector(GetCourses);
@@ -30,7 +34,7 @@ const AdminShowPayments: React.FC = () => {
   const loadPayments = async () => {
     setLoading(true);
     try {
-      const paymentsSnapshot = await getDocs(collection(db, 'payments'));
+      const paymentsSnapshot = await getDocs(query(collection(db, 'payments'),where("studentId","==",studentId!)));
       const paymentsData: Payment[] = paymentsSnapshot.docs.map((doc) => ({
         ...doc.data(),
       })) as Payment[];
@@ -45,7 +49,7 @@ const AdminShowPayments: React.FC = () => {
 
   useEffect(() => {
     loadPayments();
-  }, []);
+  }, [location]);
 
   useEffect(() => {
     if (payments) {
@@ -90,38 +94,7 @@ const AdminShowPayments: React.FC = () => {
       <div className='col-span-2 row-span-2 flex items-end h-full w-full rounded-lg'>
         <form className='w-full' onSubmit={handleFilterSubmit}>
           <div className='flex w-full justify-between'>
-            <div className='flex'>
-            <label htmlFor='courseName' className='sr-only'>
-              Filter by Course
-            </label>
-            <select
-              id='courseName'
-              name='courseName'
-              value={filters.courseName}
-              onChange={handleFilterChange}
-              className='flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none'
-            >
-              <option value=''>All Courses</option>
-              {courses.map((obj: CourseModel) => (
-                <option value={obj.courseName} key={obj.id}>
-                  {obj.courseName}
-                </option>
-              ))}
-            </select>
-           
-
-            <div className='relative w-96'>
-              <input
-                type='search'
-                id='studentSearch'
-                name='studentSearch'
-                value={filters.studentSearch}
-                onChange={handleFilterChange}
-                className='block p-2.5 w-full h-full z-20 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-r-lg placeholder-gray-400 focus:placeholder-gray-600'
-                placeholder='Student ID or Name'
-              />
-            </div>
-            </div>
+            
 
             <div className='relative w-48'>
               <input
@@ -241,6 +214,6 @@ const AdminShowPayments: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
-export default AdminShowPayments;
+export default AdminViewFullPaymentHistory

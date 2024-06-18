@@ -27,6 +27,7 @@ const UploadAnsScreen = lazy(() => import('./Components/UploadAnsScreen'));
 const LoginScreen = lazy(() => import('./Screens/LoginScreen'));
 const AddAdminAddEmployeeScreen = lazy(() => import('./Screens/AdminScreens/AdminSupportScreens.tsx/AdminAddEmployeeScreen'));
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import AdminViewFullPaymentHistory from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminViewFullPaymentHistory';
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/admin/marks_entry" element={<AdminMarksScreen />} />
                 <Route path="/admin/online_exam_viewport" element={<AdminOnlineExamViewPort />} />
                 <Route path="/admin/online_exam_evaluation" element={<AdminEvaluationScreen />} />
+                <Route path="/admin/view_all_payments" element={<AdminViewFullPaymentHistory />} />
 
 
                 {user.isAdmin && (
