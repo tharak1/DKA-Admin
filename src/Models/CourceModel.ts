@@ -11,7 +11,8 @@ interface CourseModel{
     price?:string;
     image?:string;
     showActions?:boolean;
-    coursePerformance?:string[]
+    coursePerformance?:string[];
+    ageLimit:string
 }
 
 export type {CourseModel };

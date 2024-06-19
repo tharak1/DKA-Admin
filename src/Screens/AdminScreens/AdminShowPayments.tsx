@@ -7,7 +7,6 @@ import { useAppDispatch } from '../../redux/PersistanceStorage';
 import { GetCourses, fetchCourses } from '../../redux/CourcesSlice';
 import { useSelector } from 'react-redux';
 import { CourseModel } from '../../Models/CourceModel';
-import { formatDateString } from '../../hooks/DateFormater';
 
 const AdminShowPayments: React.FC = () => {
   const [payments, setPayments] = useState<Payment[] | null>(null);
@@ -55,7 +54,7 @@ const AdminShowPayments: React.FC = () => {
           (filters.studentSearch === '' || 
             payment.studentId.toLowerCase().includes(filters.studentSearch.toLowerCase()) || 
             payment.studentName.toLowerCase().includes(filters.studentSearch.toLowerCase())) &&
-          (filters.date === '' || payment.date.includes(formatDateString(filters.date))) &&
+          (filters.date === '' || payment.date.includes(filters.date)) &&
           (filters.status === '' || payment.status === filters.status)
         );
       });
@@ -82,7 +81,7 @@ const AdminShowPayments: React.FC = () => {
   };
 
   return (
-    <div className='grid grid-cols-2 grid-rows-12 gap-y-10 gap-x-3 w-full h-screen p-6 bg-slate-200 dark:bg-slate-900 dark:text-white'>
+    <div className='grid grid-cols-2 grid-rows-12 gap-y-10 gap-x-3 w-full h-screen p-6'>
       <div className='col-span-2 row-span-1'>
         <Navbar name='Payments' />
       </div>
@@ -146,6 +145,8 @@ const AdminShowPayments: React.FC = () => {
               <option value='Success'>Success</option>
               <option value='Pending'>Pending</option>
               <option value='Failed'>Failed</option>
+              <option value='Cash'>Cash</option>
+
             </select>
             </div>
             <button
@@ -213,7 +214,7 @@ const AdminShowPayments: React.FC = () => {
                   <span className='text-xs text-gray-600 dark:text-gray-400'>Payment ID :</span> {obj.paymentId}
                 </h2>
                 <h2>
-                  <span className='text-xs text-gray-600 dark:text-gray-400'>Payment Date :</span> {obj.date}
+                  <span className='text-xs text-gray-600 dark:text-gray-400'>Payment Date :</span> {new Date(obj.date).toLocaleDateString('en-IN')}
                 </h2>
               </div>
               <div className={`col-span-1 flex flex-col justify-center items-center border-l-2`}>
@@ -223,6 +224,8 @@ const AdminShowPayments: React.FC = () => {
                       ? 'bg-green-500'
                       : obj.status.toLowerCase() === 'pending'
                       ? 'bg-orange-400'
+                      : obj.status.toLowerCase() === 'cash'
+                      ? 'bg-green-500'
                       : 'bg-red-500 '
                   }`}
                 >

@@ -15,8 +15,8 @@ const AdminEvaluationScreen:React.FC = () => {
     const {stuSubmission,QpId,noOfQuestions} = location.state as AdminEvaluationScreenProps;
 
   return (
-    <div className='w-full h-screen grid grid-cols-4 grid-rows-10 bg-slate-200 dark:bg-slate-900' >
-      <div className='col-span-3 row-span-10 overflow-auto h-full w-full bg-white dark:bg-slate-700 flex flex-col space-y-5 justify-center items-center'>
+    <div className='w-full h-screen grid grid-cols-4 grid-rows-10 ' >
+      <div className='col-span-3 row-span-10 overflow-auto h-full w-full flex flex-col space-y-5 justify-center items-center'>
         {
             stuSubmission.uploadedPagesUrl.map((image,index)=>(
                 <div className='w-1/2 flex flex-col'>

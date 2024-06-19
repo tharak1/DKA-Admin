@@ -38,7 +38,7 @@ const AdminOnlineExamViewPort:React.FC = () => {
 
     
   return (
-    <div className='grid grid-cols-1 grid-rows-10 bg-slate-200 dark:bg-slate-900 w-full h-screen p-6'>
+    <div className='grid grid-cols-1 grid-rows-10 w-full h-screen p-6'>
       <div className='col-span-1 row-span-1'>
         <Navbar name='Online Exam'/>
       </div>

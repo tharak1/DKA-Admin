@@ -2,9 +2,9 @@ import React from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
-import { CourseModel } from '../Models/CourceModel';
-import { useAppDispatch } from '../redux/PersistanceStorage';
-import { deleteCourse } from '../redux/CourcesSlice';
+import { CourseModel } from '../../../Models/CourceModel';
+import { useAppDispatch } from '../../../redux/PersistanceStorage';
+import { deleteCourse } from '../../../redux/CourcesSlice';
 import { useNavigate } from 'react-router-dom';
 ;
 
@@ -49,7 +49,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ courseDetails, showActions = fa
                             <p className="text-gray-700 dark:text-white mt-2 ">{courseDetails.description}</p>
                         </div>
                         <p className="mt-4"><strong>Classes availability :</strong>{courseDetails.offline && courseDetails.online ? "Online & Offline" : courseDetails.online ? "Online" : courseDetails.offline ? "Offline" : "online & offlline"}</p>
-                        <p className="mt-1"><strong>Class Timings :</strong> {courseDetails.sessions?.length! > 0 ? courseDetails.sessions?.map((session) => (<span>{session} &nbsp;</span>)) : "session 1 : 7am - 8am"}</p>
+                        <p className="mt-1"><strong>Class Timings :</strong> {courseDetails.sessions?.length! > 0 ? courseDetails.sessions?.map((session,index) => (<span>{`${index+1}) ${session}`} &nbsp;</span>)) : "session 1 : 7am - 8am"}</p>
                     </div>
 
                     <div className="flex justify-between items-center mt-4 w-full">

@@ -1,13 +1,15 @@
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
 import React, { Fragment, useState } from 'react'
 import { QuestionPaper } from '../../../Models/ExamModel';
-import { GetCourses } from '../../../redux/CourcesSlice';
-import { CourseModel } from '../../../Models/CourceModel';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
 import { addTempQuestionPaper } from '../../../redux/QuestionPaperSlice';
 import { useSelector } from 'react-redux';
+import { GetUser } from '../../../redux/UserSlice';
+import { EmployeeModel } from '../../../Models/EmployeeModel';
+
+
 const AddExamModal:React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -27,7 +29,9 @@ const AddExamModal:React.FC = () => {
         questionsImages:[],
 
     })
-    const courses = useSelector(GetCourses);
+    const user = useSelector(GetUser) as EmployeeModel;
+    const courses = user.coursesTaught;
+    
     const closeModal = () => {
         setIsOpen(false);
     };
@@ -91,8 +95,8 @@ const AddExamModal:React.FC = () => {
                                                             <select id="courseType" value={questionPaper.course} onChange={(event)=>{setQuestionPaper({...questionPaper,course: event.target.value})}} className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                                             <option value="">-- Select course --</option>
                                                                 {
-                                                                    courses.map((obj:CourseModel)=>(
-                                                                        <option value={obj.courseName} key={obj.id}>{obj.courseName}</option>
+                                                                    courses.map((obj:string)=>(
+                                                                        <option value={obj} key={obj}>{obj}</option>
                                                                     ))
                                                                 }
                                                             </select>

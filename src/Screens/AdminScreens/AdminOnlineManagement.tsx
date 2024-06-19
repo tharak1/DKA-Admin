@@ -12,9 +12,7 @@ const AdminOnlineManagement:React.FC = () => {
   const [classLink,setClassLink] = useState<string>("");
   const user = useSelector(GetUser) as EmployeeModel;
   const [selectedCourse, setSelectedCourse] = useState("");
-
-
-
+  
   const uploadClassLink = async() =>{
     setLoading(true);
     if (selectedCourse) {
@@ -30,12 +28,12 @@ const AdminOnlineManagement:React.FC = () => {
     setLoading(false)
   }
   return (
-    <div className="grid grid-cols-3 grid-rows-10 p-5 bg-slate-200 h-screen">
+    <div className="grid grid-cols-3 grid-rows-10 p-6 h-screen">
       <div className="col-span-3 ">
         <Navbar name='Online Class Management'/>
       </div>
 
-      <div className='col-span-1 p-5 bg-white row-span-4 rounded-lg'>
+      <div className='col-span-1 p-5 bg-white row-span-4 dark:bg-slate-700 rounded-lg'>
       <form className="max-w-sm mx-auto ">
         <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Your course</label>
         <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -59,7 +57,7 @@ const AdminOnlineManagement:React.FC = () => {
                 type="text"
                 value={classLink}
                 onChange={(event)=>{setClassLink(event.target.value)}}
-                className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className=" bg-gray-50  dark:bg-gray-700 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
         </div>
 

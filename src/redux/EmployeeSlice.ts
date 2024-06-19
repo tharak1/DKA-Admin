@@ -45,12 +45,10 @@ export const createEmployee = createAsyncThunk(
     async (employeeData: EmployeeModel) => {
       let employeeId = generateEmployeeId();
   
-      // Check if the generated employeeId already exists
       while (await doesEmployeeIdExist(employeeId)) {
-        employeeId = generateEmployeeId(); // Generate a new ID if it exists
+        employeeId = generateEmployeeId(); 
       }
   
-      // Add the employee to Firestore with the final unique ID
       const userCredential = await createUserWithEmailAndPassword(auth,employeeData.email, employeeData.password);
       await setDoc(doc(db, "employees",employeeId), {
         ...employeeData,
@@ -152,6 +150,8 @@ const EmployeeSlice = createSlice({
 
 // Selector function to get employees from state
 export const GetEmployees = (state:any) => state.employees.employees;
+
+export const employeeLoading = (state:any) => state.employees.status;
 
 // Export the reducer
 export default EmployeeSlice.reducer;

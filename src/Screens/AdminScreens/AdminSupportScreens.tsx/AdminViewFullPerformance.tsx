@@ -12,17 +12,19 @@ const AdminViewFullPerformance:React.FC= () => {
   
   return (
     <>
-        <div className='pt-20 px-20 w-full h-screen bg-slate-100  overflow-auto '>
+        <div className='pt-20 px-20 w-full h-screen overflow-auto '>
             <div className=' w-full flex flex-col items-start mb-4'>
                 <h1 className='text-2xl font-bold '>{student.id}</h1>
                 <p className='font-poppins'>{student.name}</p>
             </div>  
 
-            {
+          <div className='space-y-5 mb-7'>
+          {
                 performances.map((obj:any,index:number)=>(
                   <PerformanceCard performance={obj} course={student.registeredCourses[index]} key={index}/>
                 )) 
             }
+          </div>
 
         </div>
 

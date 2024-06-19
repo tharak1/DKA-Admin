@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import Payment from '../../../Models/PaymentModel';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
-import { useSelector } from 'react-redux';
-import { GetCourses, fetchCourses } from '../../../redux/CourcesSlice';
+import { fetchCourses } from '../../../redux/CourcesSlice';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../firebase_config';
-import { formatDateString } from '../../../hooks/DateFormater';
-import { CourseModel } from '../../../Models/CourceModel';
 import Navbar from '../AdminComponents/Navbar';
 import { useLocation } from 'react-router-dom';
 import AddCashCourse from '../AdminComponents/AddCashCourse';
+import { UserModel } from '../../../Models/UserModel';
+
+interface AdminViewFullPaymentHistoryProps{
+  user:UserModel;
+}
 
 const AdminViewFullPaymentHistory:React.FC = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const studentId = searchParams.get('studentId');
+    const {user} = location.state as AdminViewFullPaymentHistoryProps;
+
     const [payments, setPayments] = useState<Payment[] | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [filteredPayments, setFilteredPayments] = useState<Payment[] | null>(null);
@@ -26,7 +30,6 @@ const AdminViewFullPaymentHistory:React.FC = () => {
     });
 
   const dispatch = useAppDispatch();
-  const courses = useSelector(GetCourses);
 
   useEffect(() => {
     dispatch(fetchCourses());
@@ -60,7 +63,7 @@ const AdminViewFullPaymentHistory:React.FC = () => {
           (filters.studentSearch === '' || 
             payment.studentId.toLowerCase().includes(filters.studentSearch.toLowerCase()) || 
             payment.studentName.toLowerCase().includes(filters.studentSearch.toLowerCase())) &&
-          (filters.date === '' || payment.date.includes(formatDateString(filters.date))) &&
+          (filters.date === '' || payment.date.includes(filters.date)) &&
           (filters.status === '' || payment.status === filters.status)
         );
       });
@@ -86,8 +89,21 @@ const AdminViewFullPaymentHistory:React.FC = () => {
     })
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsOpen(false);
+    loadPayments();
+
+};
+
+const openModal = () => {
+    setIsOpen(true);
+};
+
+
   return (
-    <div className='grid grid-cols-2 grid-rows-12 gap-y-10 gap-x-3 w-full h-screen p-6 bg-slate-200 dark:bg-slate-900 dark:text-white'>
+    <div className='grid grid-cols-2 grid-rows-12 gap-y-10 gap-x-3 w-full h-screen p-6'>
       <div className='col-span-2 row-span-1'>
         <Navbar name='Payments' />
       </div>
@@ -120,6 +136,8 @@ const AdminViewFullPaymentHistory:React.FC = () => {
               <option value='Success'>Success</option>
               <option value='Pending'>Pending</option>
               <option value='Failed'>Failed</option>
+              <option value='Cash'>Cash</option>
+
             </select>
             </div>
             <button
@@ -130,7 +148,16 @@ const AdminViewFullPaymentHistory:React.FC = () => {
             </button>
 
             <div>
-              <AddCashCourse />
+            <div className="text-center rounded-lg text-white font-bold">
+                <button
+                    type="button"
+                    onClick={openModal}
+                    className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2"
+                >
+                    Add Course
+                </button>
+            </div>
+              <AddCashCourse user={user} isOpen={isOpen} closeModal={closeModal}/>
             </div>
 
           </div>
@@ -192,7 +219,7 @@ const AdminViewFullPaymentHistory:React.FC = () => {
                   <span className='text-xs text-gray-600 dark:text-gray-400'>Payment ID :</span> {obj.paymentId}
                 </h2>
                 <h2>
-                  <span className='text-xs text-gray-600 dark:text-gray-400'>Payment Date :</span> {obj.date}
+                  <span className='text-xs text-gray-600 dark:text-gray-400'>Payment Date :</span> {new Date(obj.date).toLocaleDateString('en-IN')}
                 </h2>
               </div>
               <div className={`col-span-1 flex flex-col justify-center items-center border-l-2`}>
@@ -202,6 +229,8 @@ const AdminViewFullPaymentHistory:React.FC = () => {
                       ? 'bg-green-500'
                       : obj.status.toLowerCase() === 'pending'
                       ? 'bg-orange-400'
+                      : obj.status.toLowerCase() === 'cash'
+                      ? 'bg-green-500'
                       : 'bg-red-500 '
                   }`}
                 >
@@ -223,3 +252,4 @@ const AdminViewFullPaymentHistory:React.FC = () => {
 }
 
 export default AdminViewFullPaymentHistory
+

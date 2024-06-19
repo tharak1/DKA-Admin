@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
@@ -13,15 +13,15 @@ import { useSelector } from 'react-redux';
 import { Theme } from '../redux/ThemeSlice';
 import { useAppDispatch } from '../redux/PersistanceStorage';
 import { fetchCourses } from '../redux/CourcesSlice';
-import { GetUser, logoutUser } from '../redux/UserSlice';
+import { GetUser } from '../redux/UserSlice';
 import { EmployeeModel } from '../Models/EmployeeModel';
 import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
 
 const SideBar:React.FC = () => {
     const theme = useSelector(Theme);
 
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
     useEffect(()=>{
       dispatch(fetchCourses());
@@ -32,7 +32,7 @@ const SideBar:React.FC = () => {
 
     return (
         <div className={theme}>
-            <div className="grid grid-cols-5 grid-rows-1 h-screen overflow-auto">
+            <div className="grid grid-cols-5 grid-rows-1 h-screen overflow-auto dark:text-white font-poppins">
                 <div className="overflow-y-auto py-5 px-3 h-screen bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 col-span-1 row-start-1 row-span-1">
                     <div className="w-full flex flex-row justify-around items-center mb-4 dark:text-white">
                         <div className="h-12">
@@ -117,15 +117,15 @@ const SideBar:React.FC = () => {
 
                         <li>
                             <Link to="/admin/marks_entry" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
-                                <FaMoneyBillTransfer size={24} />
+                                <BsFileEarmarkSpreadsheet size={24} />
                                 <span className="ml-3">Marks Entry</span>
                             </Link>
                         </li>
 
                     </ul>
-                    <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={()=>{dispatch(logoutUser());navigate('/')}}>Log Out</button>
+                    
                 </div>
-                <div className="dark:bg-gray-900 col-span-4 row-start-1 row-span-1 overflow-auto">
+                <div className="bg-slate-200 dark:bg-slate-900 dark:text-white col-span-4 row-start-1 row-span-1 overflow-auto">
                     <Outlet />
                 </div>
             </div>

@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
-import { CourseModel } from '../../Models/CourceModel';
 import { useSelector } from 'react-redux';
-import { GetCourses } from '../../redux/CourcesSlice';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase_config';
 import Navbar from './AdminComponents/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { GetUser } from '../../redux/UserSlice';
+import { EmployeeModel } from '../../Models/EmployeeModel';
 
 const AdminExamReports:React.FC = () => {
   const [courseName, setCourseName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const courses = useSelector(GetCourses);
   const [examDetailsList, setExamDetailsList] = useState<ExamDetails[]>([]);
   const [regStuCourse,setRegStuCourse] = useState<regStuByCourse>();
 
@@ -93,11 +92,14 @@ const AdminExamReports:React.FC = () => {
     }
   };
 
+  const user = useSelector(GetUser) as EmployeeModel;
+  const courses = user.coursesTaught;
+
 
 
 
   return (
-    <div className='grid grid-cols-2 grid-rows-10 w-full h-screen bg-slate-200 dark:bg-slate-900 p-6 gap-4 dark:text-white'>
+    <div className='grid grid-cols-2 grid-rows-10 p-6 w-full h-screen'>
       <div className='col-span-2 row-span-1 w-full h-full'>
         <Navbar name='Exam Reports'/>
       </div>
@@ -111,9 +113,9 @@ const AdminExamReports:React.FC = () => {
             className='flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-2 focus:outline-none'
           >
             <option value=''>Select Course</option>
-            {courses.map((obj: CourseModel) => (
-              <option value={obj.courseName} key={obj.id}>
-                {obj.courseName}
+            {courses.map((obj) => (
+              <option value={obj} key={obj}>
+                {obj}
               </option>
             ))}
           </select>

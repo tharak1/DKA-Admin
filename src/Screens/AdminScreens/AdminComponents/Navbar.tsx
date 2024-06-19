@@ -1,30 +1,21 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Theme, toggleTheme } from '../../../redux/ThemeSlice';
-import Badge, { BadgeProps } from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import { GetUser, logoutUser } from '../../../redux/UserSlice';
+import { EmployeeModel } from '../../../Models/EmployeeModel';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../redux/PersistanceStorage';
 
-
-
-
-const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-    '& .MuiBadge-badge': {
-      right: 0,
-      top: 5,
-      border: `2px solid ${theme.palette.background.paper}`,
-      padding: '0 4px',
-    },
-  }));
 
   interface Navbarprops{
     name:string
   }
 const Navbar:React.FC<Navbarprops> = ({name}) => {
+    const [openm,setOpenm] = useState<boolean>(false);
+    const user = useSelector(GetUser) as EmployeeModel;
     const theme = useSelector(Theme);
-    const dispatch = useDispatch();
-
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const handleToggleTheme = () => {
         dispatch(toggleTheme());
     };
@@ -46,7 +37,7 @@ function formatDate(date:Date) {
 
 
   return (
-    <div className=" flex flex-row justify-between items-center">
+    <div className=" flex flex-row justify-between items-center space-x-2 rounded-lg bg-white dark:bg-slate-700 px-4 py-1" >
     <div>
         <h1 className='dark:text-white'>
             {name}
@@ -55,24 +46,32 @@ function formatDate(date:Date) {
             {formatDate(new Date())}
         </p>
     </div>
-    <div className="flex flex-row dark:text-white">
+    <div className="flex flex-row dark:text-white space-x-5">
         
         <label className="inline-flex items-center cursor-pointer">
         <input type="checkbox" value="" className="sr-only peer" checked={theme === 'dark'} onChange={handleToggleTheme}/>
         <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-        <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Dark Mode</span>
+        <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-400">Dark Mode</span>
         </label>
+        <div className="relative flex justify-between items-center hover:cursor-pointer"onClick={()=>{setOpenm(!openm)}}>
+            <img src={user.profileImage} alt="user image" className="h-10 w-10 rounded-full object-cover bg-slate-50 border-2 mr-2"/>
+            <h1>{user.employeeName}</h1>
 
 
-        <IconButton aria-label="cart">
-            <StyledBadge badgeContent={4} color="secondary">
-                <NotificationsNoneIcon  fontSize='large' />
-            </StyledBadge>
-        </IconButton>
 
-        <div className="flex justify-between items-center">
-            <img src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png" alt="user image" className="h-10 w-10 rounded-full bg-slate-50 border-2"/>
-            <h1>Sai Tharak</h1>
+            <div className={`absolute top-[65px] right-[-10px] ${openm?"":"hidden"} w-[300px] z-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-5`}>
+                <div className="w-full flex flex-col items-center justify-center pb-10">
+                    <img className="w-24 h-24 object-cover mb-3 rounded-full shadow-lg" src={user.profileImage} alt="Bonnie image" />
+                    <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user.employeeName}</h5>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">{user.email}</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">{user.phone}</span>
+
+                    <div className="flex justify-center items-center mt-4 md:mt-6">                            
+                        <button className="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-red-400 rounded-lg border border-gray-200 hover:bg-red-600 hover:text-black-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-red-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-red-700" onClick={()=>{dispatch(logoutUser());navigate('/')}}>LogOut</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -11,9 +11,8 @@ import { CreateCourse, GetCourses, editCourse } from '../../../redux/CourcesSlic
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { databaseStorage } from '../../../firebase_config';
 import { v4 as uuidv4 } from 'uuid';
-import { useLocation } from 'react-router-dom';
-import LoadingScreen  from '../../../Components/LoadingScreen';
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import NotificationModal from '../AdminComponents/NotificationModal';
 
 const uploadImage = async (image: File, name: string, folder: string): Promise<string> => {
   if (!image) return '';
@@ -24,9 +23,34 @@ const uploadImage = async (image: File, name: string, folder: string): Promise<s
 };
 
 const AdminAddCourseScreen: React.FC = () => {
+
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const encodedProduct = searchParams.get('type');
+
+
+  let [isOpen, setIsOpen] = useState(false)
+
+  function open() {
+    setIsOpen(true)
+  }
+
+  function close() {
+    setIsOpen(false)
+  }
+
+
+  let [isOpenSubmit, setIsOpenSubmit] = useState(false)
+
+  function openSubmit() {
+    setIsOpenSubmit(true)
+  }
+
+  function closeSubmit() {
+    setIsOpenSubmit(false)
+    navigate('/admin/manage_courses');
+  }
 
   const categories = useSelector(Categories);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -40,6 +64,7 @@ const AdminAddCourseScreen: React.FC = () => {
     online: false,
     offline: false,
     price: '',
+    ageLimit: '',
     image: '',
     sessions: [],
     showActions: false,
@@ -76,13 +101,16 @@ const AdminAddCourseScreen: React.FC = () => {
     const formValues = { ...values, sessions: sessions, coursePerformance: performance };
 
     if(encodedProduct==='edit'){
-    console.log(initialValues);
+      console.log(initialValues);
       setLoading(true);
       await dispatch(editCourse({ ...formValues, image: initialValues.image  }))
       setLoading(false);
+      openSubmit();
+
     }
     else{
       if (sessions.length === 0) {
+        open();
         console.log("fill sessions");
         return;
       }
@@ -90,7 +118,7 @@ const AdminAddCourseScreen: React.FC = () => {
       const imageUrl = await uploadImage(imageFile!, values.courseName!, "courses");
       await dispatch(CreateCourse({ ...formValues, image: imageUrl }));
       setLoading(false);
-
+      openSubmit();
     }
   };
 
@@ -119,7 +147,9 @@ const AdminAddCourseScreen: React.FC = () => {
     const inputElement = document.getElementById('performance') as HTMLInputElement;
     if (inputElement) {
       const newPerformance = inputElement.value;
-      setPerformance([...performance, newPerformance]);
+      if (!performance.includes(newPerformance)) {
+        setPerformance([...performance, newPerformance]);
+      }
       inputElement.value = "";
     }
   };
@@ -135,10 +165,15 @@ const AdminAddCourseScreen: React.FC = () => {
   return (
     <>
       {screenLoading ? (
-        <LoadingScreen />
+        <div className="w-full h-full flex justify-center items-center mx-auto p-6 rounded shadow-md lg:px-24">
+          <svg aria-hidden="true" className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+          </svg>
+        </div>
       ) : (
-        <div className="w-full h-full overflow-auto mx-auto p-6 bg-white rounded shadow-md lg:px-24">
-          <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">Create New Course</h1>
+        <div className="w-full h-full overflow-auto mx-auto p-6 rounded shadow-md lg:px-24">
+          <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">{encodedProduct==='edit'?"Edit Course":"Create New Course"}</h1>
           <Formik
             onSubmit={handleFormSubmit}
             initialValues={initialValues}
@@ -264,7 +299,7 @@ const AdminAddCourseScreen: React.FC = () => {
                   </div>
                   <div className='flex flex-col'>
                     {performance.map((perf, index) => (
-                      <div className='flex flex-row m-2'>
+                      <div className='flex flex-row m-2' key={index}>
                         <p className="mr-4">{perf}</p>
                         <button className="hover:bg-slate-200 rounded-full" onClick={() => { handleDeletePerformance(index) }}><DeleteForeverIcon color='warning' fontSize='small' /></button>
                       </div>
@@ -283,6 +318,19 @@ const AdminAddCourseScreen: React.FC = () => {
                     className={`p-2 border rounded-md ${touched.price && errors.price ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {touched.price && errors.price && <div className="text-red-500 text-sm mt-1">{errors.price}</div>}
+                </div>
+                <div className="flex flex-col">
+                  <label htmlFor="ageLimit" className="font-semibold">Age Limit</label>
+                  <input
+                    type="text"
+                    id="ageLimit"
+                    name="ageLimit"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.ageLimit}
+                    className={`p-2 border rounded-md ${touched.ageLimit && errors.ageLimit ? 'border-red-500' : 'border-gray-300'}`}
+                  />
+                  {touched.ageLimit && errors.ageLimit && <div className="text-red-500 text-sm mt-1">{errors.ageLimit}</div>}
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="image" className="font-semibold ">Upload Image</label>
@@ -318,13 +366,18 @@ const AdminAddCourseScreen: React.FC = () => {
                   </div>
                 )}
                 <div className="flex justify-end">
-                  <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-md shadow">{loading ? "Creating..." : "Create New Course"}</button>
+                  <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-md shadow">{loading ? `${encodedProduct==='edit'?"Updating...":"Creating..."}` : `${encodedProduct==='edit'?"Edit Course":"Create New Course"}`}</button>
                 </div>
               </form>
             )}
           </Formik>
         </div>
       )}
+
+
+          <NotificationModal isOpen={isOpen} onClose={close} heading='Missing Sessions' body='Please enter atleast one session to create a course.' type='none'/>
+        
+          <NotificationModal isOpen={isOpenSubmit} onClose={closeSubmit} heading={encodedProduct==="edit"?"Edit Complete":'Course Created'} body={encodedProduct==="edit"?"Course has been edited successfully.":'New Course has been created successfully.'} type='none'/>
     </>
   );
 };
@@ -336,6 +389,7 @@ const checkoutSchema = yup.object().shape({
   online: yup.boolean(),
   offline: yup.boolean(),
   price: yup.number().required('required').positive('must be a positive number'),
+  ageLimit: yup.string().required('required'),
   image: yup.mixed().required('required'),
 });
 
