@@ -48,30 +48,30 @@ function App() {
             {
               user!=null&&(
                 <Route path='/admin' element={<SideBar />}>
+
                 <Route path="/admin/online_class_management" element={<AdminOnlineManagement />} />
+                <Route path="/admin/online_exam_evaluation" element={<AdminEvaluationScreen />} />
                 <Route path="/admin/upload-answers-screen" element={<UploadAnsScreen />} />
                 <Route path="/admin/create_question_paper" element={<CreateQuestionPaper />} />
-                <Route path="/admin/manage_questionPaper" element={<AdminManageQuestionPaper />} />
-                <Route path="/admin/exam_reports" element={<AdminExamReports />} />
-                <Route path="/admin/writeExam" element={<WriteExamScreen />} />
-                <Route path='/admin/pending_payments' element={<AdminShowPendingPayments/>}/>
-                <Route path='/admin/detailPerformance' element={<AdminViewFullPerformance/>}/>
-                <Route path="/admin/marks_entry" element={<AdminMarksScreen />} />
                 <Route path="/admin/online_exam_viewport" element={<AdminOnlineExamViewPort />} />
-                <Route path="/admin/online_exam_evaluation" element={<AdminEvaluationScreen />} />
+                <Route path="/admin/manage_questionPaper" element={<AdminManageQuestionPaper />} />
+                <Route path='/admin/detailPerformance' element={<AdminViewFullPerformance/>}/>
                 <Route path="/admin/view_all_payments" element={<AdminViewFullPaymentHistory />} />
-
+                <Route path='/admin/pending_payments' element={<AdminShowPendingPayments/>}/>
+                <Route path="/admin/exam_reports" element={<AdminExamReports />} />
+                <Route path="/admin/marks_entry" element={<AdminMarksScreen />} />
+                <Route path="/admin/writeExam" element={<WriteExamScreen />} /> 
 
                 {user.isAdmin && (
                   <>
                     <Route path="/admin/employee_management" element={<AdminEmployeeManagement />} />
                     <Route path="/admin/manage_categories" element={<AdminManageCategory />} />
                     <Route path="/admin/manage_courses" element={<AdminManageCourse />} />
+                    <Route path="/admin/add_employee" element={<AddAdminAddEmployeeScreen />} />
                     <Route path="/admin/add_courses" element={<AdminAddCourseScreen />} />
                     <Route path="/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/admin/students" element={<AdminShowStudents />} />
                     <Route path="/admin/payments" element={<AdminShowPayments />} />
-                    <Route path="/admin/add_employee" element={<AddAdminAddEmployeeScreen />} />
                   </>
                 )}
               </Route>
