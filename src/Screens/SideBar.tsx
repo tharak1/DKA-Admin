@@ -82,6 +82,12 @@ const SideBar:React.FC = () => {
                                     <span className="ml-3">Employee Management</span>
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/admin/other" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                                    <ManageAccountsRoundedIcon />
+                                    <span className="ml-3">Other</span>
+                                </Link>
+                            </li>
                         </ul>
                     <span className="block w-full h-1 border-t border-gray-300 "></span>
 

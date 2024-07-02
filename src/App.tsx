@@ -27,6 +27,7 @@ import AdminDashboard from './Screens/AdminScreens/AdminDashboard';
 import AdminShowStudents from './Screens/AdminScreens/AdminShowStudents';
 import AdminShowPayments from './Screens/AdminScreens/AdminShowPayments';
 import AddAdminAddEmployeeScreen from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminAddEmployeeScreen';
+import AdminOtherThings from './Screens/AdminScreens/AdminOtherThings';
 
 function App() {
   const user = useSelector(GetUser) as EmployeeModel;
@@ -72,6 +73,9 @@ function App() {
                     <Route path="/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/admin/students" element={<AdminShowStudents />} />
                     <Route path="/admin/payments" element={<AdminShowPayments />} />
+                    <Route path="/admin/other" element={<AdminOtherThings />} />
+
+                    
                   </>
                 )}
               </Route>
