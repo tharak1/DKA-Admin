@@ -7,6 +7,7 @@ import courseReducer from './CourcesSlice'
 import questionPaperReducer from './QuestionPaperSlice'
 import employeesReducer from './EmployeeSlice'
 import userReducer from './UserSlice';
+import drawerReducer from './DrawerSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 
@@ -23,6 +24,7 @@ const reducer = combineReducers({
     questionPaper:questionPaperReducer,
     employees:employeesReducer,
     user:userReducer,
+    drawer:drawerReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig,reducer);

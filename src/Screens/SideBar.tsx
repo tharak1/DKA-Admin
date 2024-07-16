@@ -9,14 +9,15 @@ import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded
 import DescriptionIcon from '@mui/icons-material/Description';
 import SpaceDashboardRoundedIcon from '@mui/icons-material/SpaceDashboardRounded';
 import CategoryIcon from '@mui/icons-material/Category';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Theme } from '../redux/ThemeSlice';
-import { useAppDispatch } from '../redux/PersistanceStorage';
+import { AppDispatch, RootState, useAppDispatch } from '../redux/PersistanceStorage';
 import { fetchCourses } from '../redux/CourcesSlice';
 import { GetUser } from '../redux/UserSlice';
 import { EmployeeModel } from '../Models/EmployeeModel';
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
+import { toggleDrawer } from '../redux/DrawerSlice';
 
 const SideBar:React.FC = () => {
     const theme = useSelector(Theme);
@@ -29,11 +30,18 @@ const SideBar:React.FC = () => {
 
     const user = useSelector(GetUser) as EmployeeModel;
 
+    const isOpen = useSelector((state: RootState) => state.drawer.isOpen);
+  
+    const handleToggle = () => {
+      dispatch(toggleDrawer());
+    };
+
 
     return (
         <div className={theme}>
             <div className="grid grid-cols-5 grid-rows-1 h-screen overflow-auto dark:text-white font-poppins">
-                <div className="overflow-y-auto py-5 px-3 h-screen bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 col-span-1 row-start-1 row-span-1">
+
+                <div className={`overflow-y-auto py-5 px-3 h-screen bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 col-span-1 row-start-1 row-span-1 ${isOpen?"":"max-sm:hidden"}`} >
                     <div className="w-full flex flex-row justify-around items-center mb-4 dark:text-white">
                         <div className="h-12">
                             {/* <img className="h-full" src={logo_no_background} alt="logo" /> */}
@@ -131,7 +139,7 @@ const SideBar:React.FC = () => {
                     </ul>
                     
                 </div>
-                <div className="bg-slate-200 dark:bg-slate-900 dark:text-white col-span-4 row-start-1 row-span-1 overflow-auto">
+                <div className="bg-slate-200 dark:bg-slate-900 dark:text-white col-span-4 max-sm:col-span-5 row-start-1 row-span-1 overflow-auto">
                     <Outlet />
                 </div>
             </div>

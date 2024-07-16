@@ -50,24 +50,36 @@ const AdminDashboard:React.FC = () => {
 
         {
             !loading?(
-                <div className="grid grid-cols-12 grid-rows-10 gap-5 h-screen w-full p-6 ">
+                <div className="grid max-sm:grid-cols-2 sm:grid-cols-12 sm:grid-rows-10 gap-5 max-sm:grid-rows-12 sm:h-screen w-full p-6">
                 {/* col-span-12 */}
-                <div className='col-span-12 row-span-1'>
+                <div className='sm:col-span-12 max-sm:col-span-2 row-span-1'>
                     <Navbar name='Dashboard'/>
                 </div>
         
-                    <StatsCard name= {"Total students"} count = {info.noOfStudents} />
-                    <StatsCard name= {"courses sold"} count = {info.payments}/>
-                    <StatsCard name= {"Total Categories"} count = {categories.length}/>
-                    <StatsCard name= {"Total courses"} count = {courses.length}/>
-                    <StatsCard name= {"Total Visits"} count = {20}/>
-                    <StatsCard name= {"Total Feedbacks"} count = {20}/>
-                    <StatsCard name= {"Total Employees"} count = {employees.length}/>
-                    <StatsCard name= {"Total Branches"} count = {20}/>
-        
-        
-        
-        
+                
+                        <StatsCard name= {"Total students"} count = {info.noOfStudents} />
+                    
+            
+                        <StatsCard name= {"courses sold"} count = {info.payments}/>
+                    
+                
+                        <StatsCard name= {"Total Categories"} count = {categories.length}/>
+                    
+                
+                        <StatsCard name= {"Total courses"} count = {courses.length}/>
+                    
+                
+                        <StatsCard name= {"Total Visits"} count = {20}/>
+                    
+                
+                        <StatsCard name= {"Total Feedbacks"} count = {20}/>
+                    
+                
+                        <StatsCard name= {"Total Employees"} count = {employees.length}/>
+                    
+                
+                        <StatsCard name= {"Total Branches"} count = {20}/>
+                    
         
                     <div className="bg-white shadow sm:rounded-lg dark:bg-gray-800 col-span-8 row-start-6 row-span-6 overflow-auto scrollbar-rounded">
                         <h1 className="mt-4 ml-4">Sales Last 6 months</h1>
@@ -81,7 +93,7 @@ const AdminDashboard:React.FC = () => {
                     </div>
                 </div>
             ):(
-                <div className="grid grid-cols-12 grid-rows-12 gap-5 h-screen justify-center items-center w-full p-6 bg-slate-100 dark:bg-gray-900">
+                <div className="sm:grid sm:grid-cols-12 grid-rows-12 gap-5 h-screen justify-center items-center w-full p-6 bg-slate-100 dark:bg-gray-900">
                     <div className='col-span-12 row-span-12 w-full h-full flex justify-center items-center'>
                         <svg aria-hidden="true" className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
