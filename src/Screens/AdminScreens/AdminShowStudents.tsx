@@ -6,7 +6,6 @@ import { db } from '../../firebase_config';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
-import { blueGrey } from '@mui/material/colors';
 
 const AdminShowStudents: React.FC = () => {
   const [searchKey, setSearchKey] = useState<string>('');
