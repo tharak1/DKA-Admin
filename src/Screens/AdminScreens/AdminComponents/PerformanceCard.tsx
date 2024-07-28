@@ -1,6 +1,7 @@
 import React from 'react'
 import { MyCourseModal } from '../../../Models/UserModel'
 
+
 interface PerformanceCardProps{
     performance:any
     course:MyCourseModal
@@ -24,7 +25,7 @@ const PerformanceCard:React.FC<PerformanceCardProps> = ({performance,course}) =>
         <div className="mb-4">
             <h2 className="text-lg font-semibold">{performance.studentName}</h2>
         </div>
-        <div className="grid grid-cols-3 mb-4 gap-36">
+        <div className="grid grid-cols-3 max-sm:grid-cols-1 mb-4 gap-36 max-sm:gap-5">
             <div className='bg-blue-300 p-2 rounded-md flex items-center justify-center'>
                 <p className="text-gray-700 text-xl">No. of classes taken</p>
                 <div className="ml-5 text-xl">{performance.TotalClassesTaken}</div>
@@ -38,7 +39,7 @@ const PerformanceCard:React.FC<PerformanceCardProps> = ({performance,course}) =>
                 <div className="ml-5 text-xl">{performance.totalMarks}</div>
             </div>
         </div>
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mb-4">
 
         {Object.entries(performance).map(([key, val]) => (
             <>

@@ -19,15 +19,15 @@ const AdminManageQuestionPaper:React.FC = () => {
     
 
   return (
-    <div className='h-full overflow-auto p-6'>
+    <div className='h-screen overflow-auto sm:p-6'>
         <Navbar name='Manage Question Paper'/>
 
 
-        <div className='col-span-1 mt-4 mb-5 flex flex-row'>
+        <div className='col-span-1 mt-4 mb-5 flex flex-row max-sm:mt-24 max-sm:px-3'>
             <AddExamModal/>
         </div>
-        <h1 className='dark:text-white mb-4'>Drafted Question Papers</h1>
-        <div className='w-full grid grid-cols-4 items-start gap-3'>
+        <h1 className='dark:text-white mb-4 max-sm:ml-3'>Drafted Question Papers</h1>
+        <div className='w-full grid grid-cols-4 max-sm:grid-cols-1 items-start gap-3 max-sm:overflow-auto max-sm:p-3'>
             {
                 draftQP.length===0?(
                     <div className='w-full h-full flex justify-center items-center text-center rounded-lg p-10 bg-white dark:bg-slate-700'>
@@ -42,8 +42,8 @@ const AdminManageQuestionPaper:React.FC = () => {
         </div>
 
 
-        <h1 className=' my-4'>Uploaded Question Papers</h1>
-        <div className='w-full grid grid-cols-4 items-start gap-3'>
+        <h1 className=' my-4 max-sm:ml-3'>Uploaded Question Papers</h1>
+        <div className='w-full grid grid-cols-4 max-sm:grid-cols-1 items-start gap-3 max-sm:overflow-auto max-sm:p-3'>
             {
                 Qp.length===0?(
                     <div className='w-full h-full flex justify-center items-center text-center rounded-lg p-10 bg-white'>

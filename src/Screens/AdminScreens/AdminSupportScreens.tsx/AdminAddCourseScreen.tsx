@@ -69,6 +69,8 @@ const AdminAddCourseScreen: React.FC = () => {
     sessions: [],
     showActions: false,
     coursePerformance: [],
+    courseCountry:"",
+    coursesSold:0
   });
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(false);
@@ -333,6 +335,24 @@ const AdminAddCourseScreen: React.FC = () => {
                   {touched.ageLimit && errors.ageLimit && <div className="text-red-500 text-sm mt-1">{errors.ageLimit}</div>}
                 </div>
                 <div className="flex flex-col">
+                    <label htmlFor="courseCountry" className="font-semibold">Select Course Country</label>
+                    <select
+                      id="courseCountry"
+                      name="courseCountry"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.courseCountry}
+                      className={`p-2 border rounded-md ${touched.courseCountry && errors.courseCountry ? 'border-red-500' : 'border-gray-300'}`}
+                    >
+                      <option value="">Select Country</option>
+                      <option value="all">All</option>
+                      <option value="India">India</option>
+                      <option value="other">Other</option>
+                    </select>
+                    {touched.courseCountry && errors.courseCountry && <div className="text-red-500 text-sm mt-1">{errors.courseCountry}</div>}
+                  </div>
+
+                <div className="flex flex-col">
                   <label htmlFor="image" className="font-semibold ">Upload Image</label>
                   <input
                     type="file"
@@ -391,6 +411,7 @@ const checkoutSchema = yup.object().shape({
   price: yup.number().required('required').positive('must be a positive number'),
   ageLimit: yup.string().required('required'),
   image: yup.mixed().required('required'),
+  courseCountry: yup.string().required('required'),
 });
 
 export default AdminAddCourseScreen;

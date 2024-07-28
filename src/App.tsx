@@ -31,6 +31,8 @@ import AdminOtherThings from './Screens/AdminScreens/AdminOtherThings';
 import ViewReviewScreen from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewReviewScreen';
 import ViewCharityDonationsScreen from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewCharityDonations';
 import ViewCharityUploads from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewCharityUploads';
+import ViewAchievementsUploads from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewAchievementsUpload';
+import ViewStudentDataInformation from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewStudentINformation';
 
 function App() {
   const user = useSelector(GetUser) as EmployeeModel;
@@ -65,12 +67,14 @@ function App() {
                 <Route path="/admin/exam_reports" element={<AdminExamReports />} />
                 <Route path="/admin/marks_entry" element={<AdminMarksScreen />} />
                 <Route path="/admin/writeExam" element={<WriteExamScreen />} /> 
-                <Route path="/admin/reviews" element={<ViewReviewScreen />} /> 
-                <Route path="/admin/charity_donations" element={<ViewCharityDonationsScreen />} /> 
-                <Route path="/admin/charity_uploads" element={<ViewCharityUploads />} /> 
+
 
                 {user.isAdmin && (
                   <>
+                    <Route path="/admin/reviews" element={<ViewReviewScreen />} /> 
+                    <Route path="/admin/charity_donations" element={<ViewCharityDonationsScreen />} /> 
+                    <Route path="/admin/charity_uploads" element={<ViewCharityUploads />} /> 
+                    <Route path="/admin/achievements_uploads" element={<ViewAchievementsUploads />} /> 
                     <Route path="/admin/employee_management" element={<AdminEmployeeManagement />} />
                     <Route path="/admin/manage_categories" element={<AdminManageCategory />} />
                     <Route path="/admin/manage_courses" element={<AdminManageCourse />} />
@@ -80,6 +84,8 @@ function App() {
                     <Route path="/admin/students" element={<AdminShowStudents />} />
                     <Route path="/admin/payments" element={<AdminShowPayments />} />
                     <Route path="/admin/other" element={<AdminOtherThings />} />
+                    <Route path="/admin/view_student_details" element={<ViewStudentDataInformation />} />
+
 
                     
                   </>

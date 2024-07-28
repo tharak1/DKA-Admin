@@ -23,7 +23,7 @@ const MarksEntryCard:React.FC<MarksEntryCardProps> = ({performance,index,student
       <h2>Total classes Taken : {performance.TotalClassesTaken}</h2>
       <h2>Total Marks : {performance.totalMarks}</h2>
     </div>
-    <div className='grid grid-cols-3 mb-3'>
+    <div className='grid grid-cols-3 max-sm:grid-cols-2 mb-3'>
       {Object.entries(performance).map(([key, val]) => (
         key !== 'studentName' && key !== 'studentId' && key !== 'startDate' && key !== 'endDate' && key !== 'TotalClassesTaken' && key !== 'TotalClassesAttended' && key !== 'Grade' && key !== 'totalMarks' && key !== 'totalMarksObtained'  && (
           <div className="text-center flex justify-start items-center px-5 my-1" key={key}>
@@ -36,7 +36,7 @@ const MarksEntryCard:React.FC<MarksEntryCardProps> = ({performance,index,student
                 setStudentPerformances(newPerformances);
               }}
               type='text'
-              className="text-xl font-bold bg-gray-100 rounded-md border-2 border-gray-400 flex items-center justify-center dark:text-black"
+              className="text-xl font-bold bg-gray-100 rounded-md border-2 border-gray-400 flex items-center justify-center dark:text-black w-full"
             />
           </div>
         )

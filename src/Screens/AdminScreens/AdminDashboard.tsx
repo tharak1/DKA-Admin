@@ -4,10 +4,11 @@ import Navbar from './AdminComponents/Navbar';
 import { useSelector } from 'react-redux';
 import { GetEmployees, fetchEmployees } from '../../redux/EmployeeSlice';
 import { useAppDispatch } from '../../redux/PersistanceStorage';
-import { Categories, fetchCategories } from '../../redux/CategorySlice';
+import { fetchCategories } from '../../redux/CategorySlice';
 import { GetCourses, fetchCourses } from '../../redux/CourcesSlice';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase_config';
+import MyResponsivePie from './AdminComponents/PieChart';
 
 
 
@@ -17,17 +18,24 @@ const AdminDashboard:React.FC = () => {
     const [loading,setloading] = useState<boolean>(false);
     const [info,setInfo] = useState({
         noOfStudents:0,
-        payments:0
+        payments:0,
+        foreignStudents:0
     })
 
-    const getInfo=async()=>{
+    const getInfo = async () => {
+
         const querySnapshot1 = await getDocs(collection(db, 'students'));
+    
         const querySnapshot2 = await getDocs(collection(db, 'payments'));
+
+        const foreignStudentsCount = querySnapshot1.docs.filter(doc => doc.data().country !== 'India').length;
+    
         setInfo({
-            noOfStudents:querySnapshot1.size,
-            payments:querySnapshot2.size
-        })
-    }
+            noOfStudents: querySnapshot1.size,
+            payments: querySnapshot2.size,
+            foreignStudents: foreignStudentsCount
+        });
+    };
 
     useEffect(()=>{
         setloading(true);
@@ -40,7 +48,6 @@ const AdminDashboard:React.FC = () => {
 
     const employees = useSelector(GetEmployees);
     const courses = useSelector(GetCourses);
-    const categories = useSelector(Categories);
     
 
 
@@ -50,46 +57,47 @@ const AdminDashboard:React.FC = () => {
 
         {
             !loading?(
-                <div className="grid max-sm:grid-cols-2 sm:grid-cols-12 sm:grid-rows-10 gap-5 max-sm:grid-rows-12 sm:h-screen w-full p-6">
+                <div className=" grid max-sm:flex max-sm:flex-col sm:grid-cols-12 sm:grid-rows-10 gap-5 sm:h-screen w-full sm:p-6">
                 {/* col-span-12 */}
-                <div className='sm:col-span-12 max-sm:col-span-2 row-span-1'>
+                <div className='sm:col-span-12 max-sm:col-span-2 sm:row-span-1 max-sm:w-full'>
                     <Navbar name='Dashboard'/>
                 </div>
         
-                
-                        <StatsCard name= {"Total students"} count = {info.noOfStudents} />
-                    
-            
+
+                    <div className='max-sm:mt-20 max-sm:grid max-sm:grid-cols-2 max-sm:w-full max-sm:gap-2 max-sm:p-3'>
+                        <StatsCard name= {"Total students"} count = {info.noOfStudents}  />
+
+                                            
+                        <StatsCard name= {"Foreign Strudents"} count = {info.foreignStudents}/>
+
+
                         <StatsCard name= {"courses sold"} count = {info.payments}/>
-                    
-                
-                        <StatsCard name= {"Total Categories"} count = {categories.length}/>
-                    
-                
+                                        
+
                         <StatsCard name= {"Total courses"} count = {courses.length}/>
-                    
-                
+
+
                         <StatsCard name= {"Total Visits"} count = {20}/>
-                    
-                
+
+
                         <StatsCard name= {"Total Feedbacks"} count = {20}/>
-                    
-                
+
+
                         <StatsCard name= {"Total Employees"} count = {employees.length}/>
-                    
-                
+
+
                         <StatsCard name= {"Total Branches"} count = {20}/>
-                    
+                    </div>
         
-                    <div className="bg-white shadow sm:rounded-lg dark:bg-gray-800 col-span-8 row-start-6 row-span-6 overflow-auto scrollbar-rounded">
+                    <div className="bg-white shadow rounded-lg dark:bg-gray-800 col-span-8 row-start-6 row-span-6 overflow-auto scrollbar-rounded max-sm:h-[45vh] max-sm:mx-3">
                         <h1 className="mt-4 ml-4">Sales Last 6 months</h1>
                         {/* <MyResponsiveBar/> */}
                     </div>
         
         
-                    <div className="bg-white overflow-hidden shadow sm:rounded-lg dark:bg-gray-800 col-start-9 col-span-4 row-start-2 row-span-7">
+                    <div className="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800 sm:col-start-9 sm:col-span-4 sm:row-start-2 sm:row-span-7 max-sm:h-[45vh] max-sm:mx-3 max-sm:mb-4">
                         <h1 className="mt-4 ml-4">Students-Courses Contribution :</h1>
-                        {/* <MyResponsivePie/> */}
+                        <MyResponsivePie/>
                     </div>
                 </div>
             ):(

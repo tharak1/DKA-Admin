@@ -12,7 +12,9 @@ interface CourseModel{
     image?:string;
     showActions?:boolean;
     coursePerformance?:string[];
-    ageLimit:string
+    ageLimit:string;
+    courseCountry:string;
+    coursesSold?:number;
 }
 
 export type {CourseModel };

@@ -94,7 +94,7 @@ const AdminShowPendingPayments: React.FC = () => {
     }
 
     return (
-        <div className='w-full h-screen grid grid-cols-2 grid-rows-10 gap-3 p-6 '>
+        <div className='w-full h-screen grid grid-cols-2 grid-rows-10 gap-3 sm:p-6 '>
             <div className='col-span-2 row-span-1'>
                 <Navbar name='Pending Payments' />
             </div>

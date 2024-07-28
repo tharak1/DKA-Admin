@@ -6,6 +6,8 @@ import Navbar from './AdminComponents/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { GetUser } from '../../redux/UserSlice';
 import { EmployeeModel } from '../../Models/EmployeeModel';
+import { GetCourses } from '../../redux/CourcesSlice';
+import { CourseModel } from '../../Models/CourceModel';
 
 const AdminExamReports:React.FC = () => {
   const [courseName, setCourseName] = useState<string>("");
@@ -93,13 +95,14 @@ const AdminExamReports:React.FC = () => {
   };
 
   const user = useSelector(GetUser) as EmployeeModel;
-  const courses = user.coursesTaught;
+  const courses = user.isAdmin? useSelector(GetCourses).map((obj:CourseModel)=>obj.courseName!) : user.coursesTaught;
+
 
 
 
 
   return (
-    <div className='grid grid-cols-2 grid-rows-10 p-6 w-full h-screen'>
+    <div className='grid grid-cols-2 grid-rows-10 sm:p-6 w-full h-screen'>
       <div className='col-span-2 row-span-1 w-full h-full'>
         <Navbar name='Exam Reports'/>
       </div>
@@ -113,7 +116,7 @@ const AdminExamReports:React.FC = () => {
             className='flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-2 focus:outline-none'
           >
             <option value=''>Select Course</option>
-            {courses.map((obj) => (
+            {courses.map((obj:string) => (
               <option value={obj} key={obj}>
                 {obj}
               </option>
@@ -171,7 +174,7 @@ const AdminExamReports:React.FC = () => {
               className='w-full grid grid-cols-6 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600 hover:cursor-pointer' onClick={()=>{
                 navigate('/admin/online_exam_viewport', { state: { examDetails:examDetailsList[index],regStu:regStuCourse } });
               }}
-              key={obj.id}
+              key={obj.id} 
             >
               <div className='col-span-2 flex flex-col justify-start'>
                 <h2>ID : {obj.id}</h2>

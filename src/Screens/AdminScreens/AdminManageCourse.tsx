@@ -38,13 +38,13 @@ const AdminManageCourse: React.FC = () => {
 
   return (
    
-    <div className='grid grid-cols-1 grid-rows-10  gap-y-4 items-start p-6 h-full overflow-auto'>
+    <div className='grid grid-cols-1 grid-rows-10  gap-y-4 items-start sm:p-6 h-screen overflow-auto'>
       <div className="col-span-1 row-span-1 mb-5">
         <Navbar name='Manage Courses' />
       </div>
 
-      <div className='col-span-1 mb-5 flex flex-row '>
-        <button className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2 mr-3" onClick={handleAddButtonClick}>
+      <div className='col-span-1 max-sm:row-span-2 mb-5 flex flex-row max-sm:flex-col max-sm:p-3'>
+        <button className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2 mr-3 max-sm:mr-0 max-sm:mb-8" onClick={handleAddButtonClick}>
           <AddIcon /> Add Course
         </button>
         <form className="col-span-1 ">

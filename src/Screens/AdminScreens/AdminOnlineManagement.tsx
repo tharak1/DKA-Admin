@@ -5,6 +5,8 @@ import { GetUser } from '../../redux/UserSlice';
 import { EmployeeModel } from '../../Models/EmployeeModel';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase_config';
+import { GetCourses } from '../../redux/CourcesSlice';
+import { CourseModel } from '../../Models/CourceModel';
 
 const AdminOnlineManagement:React.FC = () => {
 
@@ -27,13 +29,16 @@ const AdminOnlineManagement:React.FC = () => {
 
     setLoading(false)
   }
+
+  const courses = user.isAdmin? useSelector(GetCourses).map((obj:CourseModel)=>obj.courseName!) : user.coursesTaught;
+
   return (
-    <div className="grid grid-cols-3 grid-rows-10 p-6 h-screen">
+    <div className="grid grid-cols-3 grid-rows-10 sm:p-6 h-screen">
       <div className="col-span-3 ">
         <Navbar name='Online Class Management'/>
       </div>
 
-      <div className='col-span-1 p-5 bg-white row-span-4 dark:bg-slate-700 rounded-lg'>
+      <div className='col-span-1 max-sm:col-span-3 p-5 bg-white row-span-4 dark:bg-slate-700 rounded-lg max-sm:m-3'>
       <form className="max-w-sm mx-auto ">
         <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Your course</label>
         <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -42,8 +47,8 @@ const AdminOnlineManagement:React.FC = () => {
         >
           <option selected>Choose a course</option>
           {
-            user.coursesTaught.map((obj,index)=>(
-            <option value={obj} key={index}>{obj}</option>
+            courses.map((obj:string)=>(
+            <option value={obj} key={obj}>{obj}</option>
             ))
           }
         </select>

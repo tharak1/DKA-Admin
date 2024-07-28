@@ -34,7 +34,6 @@ export const CreateCategory = createAsyncThunk(
     'categories/CreateCategory',
     async(CategoryData:CategoryModel)=>{
         const docRef = await addDoc(collection(db, "categories"),CategoryData);
-
         return {id:docRef.id,...CategoryData}
     }
 );

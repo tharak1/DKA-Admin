@@ -16,7 +16,7 @@ const ViewCharityDonationsScreen:React.FC = () => {
 
   const getReviews = async() => {
     setLoading(true);
-    const querySnapshot = await getDocs(collection(db,"Review"));
+    const querySnapshot = await getDocs(collection(db,"Charity"));
     const reviews: CharityModel[] = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -27,14 +27,14 @@ const ViewCharityDonationsScreen:React.FC = () => {
 
 
   return (
-    <div className='w-full h-screen overflow-auto grid grid-cols-1 grid-rows-8 gap-3 p-6'>
+    <div className='w-full h-screen overflow-auto grid grid-cols-1 grid-rows-8 gap-3 sm:p-6'>
         <div className="col-span-1 row-span-1">
             <Navbar name='Online Class Management'/>
         </div>
 
         <div className='col-span-1 row-span-7 rounded-lg w-full h-full flex flex-col overflow-auto bg-white dark:bg-slate-700 p-4 space-y-5'>
           <div className='w-full grid grid-cols-6 py-5'>
-            <div className='col-span-2 flex flex-col justify-start'>
+            <div className='col-span-2 max-sm:col-span-3 flex flex-col justify-start'>
               <div>Name & Purpose & date</div>
             </div>
             <div className='col-span-2 flex flex-col justify-center items-center'>
@@ -43,7 +43,7 @@ const ViewCharityDonationsScreen:React.FC = () => {
             <div className='col-span-1 flex flex-col justify-center items-center'>
               <div>Amount</div>
             </div>
-            <div className='col-span-1 flex flex-col justify-center items-center'>
+            <div className='max-sm:hidden col-span-1 flex flex-col justify-center items-center'>
               <div>Action</div>
             </div>
           </div>

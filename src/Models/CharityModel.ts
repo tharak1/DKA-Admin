@@ -12,8 +12,15 @@ interface CharityUploadModel{
     description: string;
     date: string;
     image: string;
-    id: string;
+    id?: string;
+}
+
+interface AchievementsUploadModel{
+    description: string;
+    date: string;
+    image: string;
+    id?: string;
 }
 
 
-export type {CharityModel,CharityUploadModel};
+export type {CharityModel,CharityUploadModel,AchievementsUploadModel};

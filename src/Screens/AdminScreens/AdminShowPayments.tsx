@@ -81,14 +81,14 @@ const AdminShowPayments: React.FC = () => {
   };
 
   return (
-    <div className='grid grid-cols-2 grid-rows-12 gap-y-10 gap-x-3 w-full h-screen p-6'>
+    <div className='grid grid-cols-2 grid-rows-12 gap-y-10 gap-x-3 w-full h-screen sm:p-6'>
       <div className='col-span-2 row-span-1'>
         <Navbar name='Payments' />
       </div>
 
-      <div className='col-span-2 row-span-2 flex items-end h-full w-full rounded-lg'>
-        <form className='w-full' onSubmit={handleFilterSubmit}>
-          <div className='flex w-full justify-between'>
+      <div className='col-span-2 row-span-2 flex max-sm:flex-col items-end h-full w-full rounded-lg max-sm:mt-4'>
+        <form className='w-full flex max-sm:flex-col' onSubmit={handleFilterSubmit}>
+          <div className='w-full flex max-sm:flex-col max-sm:space-y-3 justify-between'>
             <div className='flex'>
             <label htmlFor='courseName' className='sr-only'>
               Filter by Course
@@ -121,7 +121,7 @@ const AdminShowPayments: React.FC = () => {
               />
             </div>
             </div>
-
+            <div className='flex'>
             <div className='relative w-48'>
               <input
                 type='date'
@@ -151,10 +151,11 @@ const AdminShowPayments: React.FC = () => {
             </div>
             <button
               type='submit'
-              className='ml-2 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300'
+              className='ml-2 sm:px-4 sm:py-2 py-1 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300'
             >
               Clear Filter
             </button>
+            </div>
           </div>
         </form>
       </div>
@@ -181,35 +182,35 @@ const AdminShowPayments: React.FC = () => {
           </div>
         </div>
       ) : filteredPayments !== null ? (
-        <div className='col-span-2 row-span-11 h-full w-full rounded-lg bg-white dark:bg-slate-700 overflow-auto p-3 space-y-5'>
-          <div className='w-full grid grid-cols-6 py-5'>
-            <div className='col-span-2 flex flex-col justify-start'>
+        <div className=' col-span-2 row-span-11 h-full w-full rounded-lg bg-white dark:bg-slate-700 overflow-auto p-3 space-y-5'>
+          <div className='max-sm:hidden w-full grid grid-cols-6 max-sm:grid-cols-2 max-sm:grid-rows-2 py-5'>
+            <div className='col-span-2  max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-start'>
               <div>Purchase</div>
             </div>
-            <div className='col-span-1 flex flex-col justify-center items-center'>
+            <div className='col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center items-center'>
               <div>Amount</div>
             </div>
-            <div className='col-span-2 flex flex-col justify-center items-center'>
+            <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center items-center'>
               <div>Payment Date</div>
             </div>
-            <div className='col-span-1 flex flex-col justify-center items-center'>
+            <div className='col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center items-center'>
               <div>Payment Status</div>
             </div>
           </div>
           {filteredPayments.map((obj) => (
             <div
-              className='w-full grid grid-cols-6 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600'
+              className='w-full grid grid-cols-6 max-sm:grid-cols-2 max-sm:grid-rows-2 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600'
               key={obj.paymentId}
             >
-              <div className='col-span-2 flex flex-col justify-start'>
+              <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-start'>
                 <h2>{obj.courseName}</h2>
                 <h2>{obj.studentName}</h2>
                 <h2>{obj.studentId}</h2>
               </div>
-              <div className='col-span-1 flex flex-col justify-center border-l-2 items-center'>
-                <h2>{obj.courseAmount}</h2>
+              <div className='col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center border-l-2 items-center'>
+              <span className='text-xs text-gray-600 dark:text-gray-400'> Amount :</span><h2>{obj.courseAmount}</h2>
               </div>
-              <div className='col-span-2 flex flex-col justify-center items-center border-l-2'>
+              <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-start items-start border-l-2'>
                 <h2>
                   <span className='text-xs text-gray-600 dark:text-gray-400'>Payment ID :</span> {obj.paymentId}
                 </h2>
@@ -217,7 +218,7 @@ const AdminShowPayments: React.FC = () => {
                   <span className='text-xs text-gray-600 dark:text-gray-400'>Payment Date :</span> {new Date(obj.date).toLocaleDateString('en-IN')}
                 </h2>
               </div>
-              <div className={`col-span-1 flex flex-col justify-center items-center border-l-2`}>
+              <div className={`col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center items-center border-l-2`}>
                 <span
                   className={`px-4 py-2 rounded-lg bg-blend-lighten ${
                     obj.status.toLowerCase() === 'success'

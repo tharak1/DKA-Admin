@@ -4,22 +4,24 @@ import { formatDate } from '../../../hooks/DateFormater';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { databaseStorage } from '../../../firebase_config';
 import { v4 as uuidv4 } from 'uuid';
-import { CharityUploadModel } from '../../../Models/CharityModel';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
-import { createCharityUpload, editCharityUpload } from '../../../redux/CharityUploadSlice';
+import { createAchievementsUpload, editAchievementsUpload, selectAchievementsUploads } from '../../../redux/AchievementsUploadSlice';
+import { AchievementsUploadModel } from '../../../Models/CharityModel';
+import { useSelector } from 'react-redux';
 
 interface ModalProps {
   type: string;
-  charityData?: CharityUploadModel;
+  achievementsData?: AchievementsUploadModel;
 }
 
-const CharityUploadModal: React.FC<ModalProps> = ({ type, charityData }) => {
+const AchievementsUploadModal: React.FC<ModalProps> = ({ type, achievementsData }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [charity, setCharity] = useState<{ description: string; image: File | null }>({ description: '', image: null });
+  const [achievement, setAchievement] = useState<{ description: string; image: File | null }>({ description: '', image: null });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
+  const achievements = useSelector(selectAchievementsUploads);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -29,7 +31,7 @@ const CharityUploadModal: React.FC<ModalProps> = ({ type, charityData }) => {
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
-      setCharity((prev) => ({ ...prev, image: file }));
+      setAchievement((prev) => ({ ...prev, image: file }));
     }
   };
 
@@ -42,54 +44,54 @@ const CharityUploadModal: React.FC<ModalProps> = ({ type, charityData }) => {
   };
 
   const uploadImage = async (): Promise<string> => {
-    if (!charity.image) return '';
-    const imageRef = ref(databaseStorage, `charities/${uuidv4()}`);
-    const snapshot = await uploadBytes(imageRef, charity.image);
+    if (!achievement.image) return '';
+    const imageRef = ref(databaseStorage, `achievements/${uuidv4()}`);
+    const snapshot = await uploadBytes(imageRef, achievement.image);
     return await getDownloadURL(snapshot.ref);
   };
 
-  const saveCharity = async () => {
+  const saveAchievement = async () => {
     setLoading(true);
     const imageUrl = await uploadImage();
     const obj = {
-      description: charity.description,
+      description: achievement.description,
       date: formatDate(new Date()),
       image: imageUrl,
     };
-    // await addDoc(collection(db,"charityUpload"),obj);
-    dispatch(createCharityUpload(obj));
+    dispatch(createAchievementsUpload(obj));
     setLoading(false);
-    setCharity({ description: '', image: null });
+    setAchievement({ description: '', image: null });
     setImagePreview(null);
     closeModal();
   };
 
-  const updateCharity = async () => {
+  const updateAchievement = async () => {
     setLoading(true);
     const obj = {
-      description: charity.description,
+      description: achievement.description,
       date: formatDate(new Date()),
-      image: charityData?.image || '',
-      id: charityData?.id,
+      image: achievementsData?.image || '',
+      id: achievementsData?.id,
     };
-    dispatch(editCharityUpload(obj));
+    dispatch(editAchievementsUpload(obj));
     setLoading(false);
-    setCharity({ description: '', image: null });
+    setAchievement({ description: '', image: null });
     setImagePreview(null);
     closeModal();
   };
 
   return (
     <>
-      <div className="text-center rounded-lg text-white font-bold">
-        <button
-          type="button"
-          onClick={openModal}
-          className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2"
-        >
-          {type === 'create' ? "Add Charity" : "Update Charity"}
-        </button>
-      </div>
+    <div className="text-center rounded-lg text-white font-bold">
+      <button
+        type="button"
+        onClick={openModal}
+        className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2"
+        disabled={achievements.length >= 5}
+      >
+        {achievements.length >= 5 ? "Limit Met" : (type === 'create' ? "Add Achievement" : "Update Achievement")}
+      </button>
+    </div>
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -123,27 +125,35 @@ const CharityUploadModal: React.FC<ModalProps> = ({ type, charityData }) => {
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                           <form className="space-y-4 md:space-y-6" action="#">
                             <div>
-                              <label htmlFor="charityDescription" className="block mb-2 text-sm font-medium text-gray-900">
-                                Charity Description
+                              <label htmlFor="achievementDescription" className="block mb-2 text-sm font-medium text-gray-900">
+                                Achievement Description
                               </label>
-                              <textarea
-                                value={charity.description}
-                                onChange={(e) => setCharity((prev) => ({ ...prev, description: e.target.value }))}
-                                name="charityDescription"
-                                id="charityDescription"
+{                             
+ type === 'update'?<textarea
+ value={achievementsData?.description}
+ onChange={(e) => setAchievement((prev) => ({ ...prev, description: e.target.value }))}
+ name="achievementDescription"
+ id="achievementDescription"
+ className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
+ required
+/>:<textarea
+                                value={achievement.description}
+                                onChange={(e) => setAchievement((prev) => ({ ...prev, description: e.target.value }))}
+                                name="achievementDescription"
+                                id="achievementDescription"
                                 className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
                                 required
-                              />
+                              />}
                             </div>
                             <div>
-                              <label htmlFor="charityImage" className="block mb-2 text-sm font-medium text-gray-900">
-                                Charity Image
+                              <label htmlFor="achievementImage" className="block mb-2 text-sm font-medium text-gray-900">
+                                Achievement Image
                               </label>
                               <input
                                 onChange={handleImageChange}
                                 type="file"
-                                name="charityImage"
-                                id="charityImage"
+                                name="achievementImage"
+                                id="achievementImage"
                                 accept="image/*"
                                 className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
                                 required
@@ -151,24 +161,24 @@ const CharityUploadModal: React.FC<ModalProps> = ({ type, charityData }) => {
                             </div>
                             {type === 'create' && imagePreview && (
                               <div>
-                                <img src={imagePreview} alt="Charity Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
+                                <img src={imagePreview} alt="Achievement Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
                               </div>
                             )}
-                            {type === 'update' && charityData?.image && (
+                            {type === 'update' && achievementsData?.image && (
                               <div>
-                                <img src={charityData.image} alt="Charity Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
+                                <img src={achievementsData.image} alt="Achievement Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
                               </div>
                             )}
                           </form>
                           <button
                             onClick={() => {
-                              type === 'create' ? saveCharity() : updateCharity();
+                              type === 'create' ? saveAchievement() : updateAchievement();
                             }}
                             type="button"
                             className={`focus:outline-none w-full text-white bg-violet-600 hover:bg-violet-800 outline-0 font-medium rounded-lg text-sm px-5 py-2.5 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                             disabled={loading}
                           >
-                            {type === 'create' ? (loading ? "Loading..." : "Save Charity") : (loading ? "Loading..." : "Update Charity")}
+                            {type === 'create' ? (loading ? "Loading..." : "Save Achievement") : (loading ? "Loading..." : "Update Achievement")}
                           </button>
                         </div>
                       </div>
@@ -184,4 +194,4 @@ const CharityUploadModal: React.FC<ModalProps> = ({ type, charityData }) => {
   );
 }
 
-export default CharityUploadModal;
+export default AchievementsUploadModal;

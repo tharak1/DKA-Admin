@@ -8,7 +8,7 @@ interface AdminOnlineExamViewPortProps{
     regStu:regStuByCourse;
 }
 
-const AdminOnlineExamViewPort:React.FC = () => {
+const AdminOnlineExamViewPort:React.FC = () => { 
     const location = useLocation();
     const { examDetails , regStu } = location.state as AdminOnlineExamViewPortProps;
     console.log( examDetails , regStu);

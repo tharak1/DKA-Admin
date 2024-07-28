@@ -15,8 +15,6 @@ interface AdminViewFullPaymentHistoryProps{
 
 const AdminViewFullPaymentHistory:React.FC = () => {
     const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const studentId = searchParams.get('studentId');
     const {user} = location.state as AdminViewFullPaymentHistoryProps;
 
     const [payments, setPayments] = useState<Payment[] | null>(null);
@@ -38,12 +36,15 @@ const AdminViewFullPaymentHistory:React.FC = () => {
   const loadPayments = async () => {
     setLoading(true);
     try {
-      const paymentsSnapshot = await getDocs(query(collection(db, 'payments'),where("studentId","==",studentId!)));
+      const paymentsSnapshot = await getDocs(query(collection(db, 'payments'),where("studentId","==",user.id)));
       const paymentsData: Payment[] = paymentsSnapshot.docs.map((doc) => ({
         ...doc.data(),
       })) as Payment[];
       setPayments(paymentsData);
       setFilteredPayments(paymentsData);  
+      console.log('====================================');
+      console.log(paymentsData);
+      console.log('====================================');
       setLoading(false);
     } catch (error) {
       console.error('Error loading payments:', error);
@@ -59,11 +60,11 @@ const AdminViewFullPaymentHistory:React.FC = () => {
     if (payments) {
       const filtered = payments.filter((payment) => {
         return (
-          (filters.courseName === '' || payment.courseName.includes(filters.courseName)) &&
+          (filters.courseName === '' || payment.courseName === filters.courseName) &&
           (filters.studentSearch === '' || 
-            payment.studentId.toLowerCase().includes(filters.studentSearch.toLowerCase()) || 
-            payment.studentName.toLowerCase().includes(filters.studentSearch.toLowerCase())) &&
-          (filters.date === '' || payment.date.includes(filters.date)) &&
+            payment.studentId.toLowerCase()===filters.studentSearch.toLowerCase() || 
+            payment.studentName.toLowerCase() === filters.studentSearch.toLowerCase()) &&
+          (filters.date === '' || payment.date === filters.date) &&
           (filters.status === '' || payment.status === filters.status)
         );
       });
@@ -72,10 +73,16 @@ const AdminViewFullPaymentHistory:React.FC = () => {
   }, [filters, payments]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    console.log('====================================');
+    console.log(e.target.value);
+    console.log('====================================');
     setFilters({
       ...filters,
       [e.target.name]: e.target.value,
     });
+    console.log('====================================');
+    console.log(filters);
+    console.log('====================================');
   };
 
   const handleFilterSubmit = (e: React.FormEvent) => {

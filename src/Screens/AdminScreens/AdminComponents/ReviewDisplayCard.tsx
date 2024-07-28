@@ -15,7 +15,7 @@ const ReviewDisplayCard:React.FC<ReviewDisplayCardProps> = ({reviewObj,onDelete}
         setDeleting(true);
         await deleteDoc(doc(db,"Review",reviewObj.id));
         setDeleting(false);
-        onDelete;
+        onDelete(reviewObj.id);
     }
   return (
     <div
@@ -36,7 +36,7 @@ const ReviewDisplayCard:React.FC<ReviewDisplayCardProps> = ({reviewObj,onDelete}
         {reviewObj.rating}
     </div>
     <div className={`col-span-1 flex flex-col justify-center items-center border-l-2`}>
-        <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={deleteReview}>
+        <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 max-sm:px-2 max-sm:py-1 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onClick={deleteReview}>
             {
                 deleting?(
                     <svg aria-hidden="true" className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

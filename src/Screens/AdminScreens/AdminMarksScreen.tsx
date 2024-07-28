@@ -6,6 +6,8 @@ import { GetCourses } from '../../redux/CourcesSlice';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase_config';
 import MarksEntryCard from './AdminComponents/MarksEntryCard';
+import { GetUser } from '../../redux/UserSlice';
+import { EmployeeModel } from '../../Models/EmployeeModel';
 
 const AdminMarksScreen: React.FC = () => {
   const [courseName, setCourseName] = useState<string>("");
@@ -19,7 +21,12 @@ const AdminMarksScreen: React.FC = () => {
     totalMarks:''
   });
 
-  const courses = useSelector(GetCourses);
+  const user = useSelector(GetUser) as EmployeeModel;
+
+  const allCourses = useSelector(GetCourses);
+  const userCourses = user.coursesTaught;
+  const courses = user.isAdmin ? allCourses : allCourses.filter((course:CourseModel) => userCourses.includes(course.courseName!));
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,12 +77,12 @@ const AdminMarksScreen: React.FC = () => {
   
 
   return (
-    <div className='h-screen w-full grid grid-cols-3 grid-rows-10 overflow-auto p-6'>
+    <div className='h-screen w-full grid grid-cols-3 grid-rows-10 overflow-auto sm:p-6'>
       <div className='col-span-3 row-span-1 w-full h-full'>
         <Navbar name='Marks Entry' />
       </div>
 
-      <div className='col-span-3 row-span-1 w-full'>
+      <div className='col-span-3 row-span-1 w-full max-sm:p-3'>
         <form className='flex flex-row' onSubmit={handleSubmit}>
           <select
             id='courseName'
@@ -100,8 +107,9 @@ const AdminMarksScreen: React.FC = () => {
         </form>
 
         {fetched && (
-          <div className='col-span-3 row-span-1 w-full'>
-            <form onSubmit={handleUpdate} className='flex flex-row justify-between dark:text-white'>
+          <div className='col-span-3 row-span-1 max-sm:row-span-2  w-full max-sm:p-3'>
+            <form onSubmit={handleUpdate} className='flex flex-row max-sm:flex-col justify-between dark:text-white'>
+            <div className='flex flex-row justify-between'>
               <div className='flex flex-col'>
                 <label className="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Date: </label>
                 <input
@@ -120,6 +128,8 @@ const AdminMarksScreen: React.FC = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                 />
               </div>
+            </div>
+            <div className='flex flex-row justify-between space-x-2'>
               <div>
                 <label htmlFor="totalNoOfClasses" className="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-white">Total no of classes</label>
                 <input
@@ -143,13 +153,14 @@ const AdminMarksScreen: React.FC = () => {
               <div className='flex justify-center items-end mb-1'>
                 <button type="submit" className="h-10 bg-blue-400 hover:bg-blue-500 rounded-lg py-2 px-4">Update</button>
               </div>
+            </div>
 
             </form>
           </div>
         )}
       </div>
 
-      <div className='col-span-3 row-start-4 row-span-7 w-full h-full bg-white dark:bg-slate-700 rounded-lg p-3 overflow-auto'>
+      <div className='col-span-3 row-start-5 row-span-6 w-full h-full bg-white dark:bg-slate-700 rounded-lg p-3 overflow-auto space-y-5 '>
         {loading ? (
           <div className='w-full h-full flex justify-center items-center'>
             <div>

@@ -8,6 +8,8 @@ import { addTempQuestionPaper } from '../../../redux/QuestionPaperSlice';
 import { useSelector } from 'react-redux';
 import { GetUser } from '../../../redux/UserSlice';
 import { EmployeeModel } from '../../../Models/EmployeeModel';
+import { GetCourses } from '../../../redux/CourcesSlice';
+import { CourseModel } from '../../../Models/CourceModel';
 
 
 const AddExamModal:React.FC = () => {
@@ -30,7 +32,7 @@ const AddExamModal:React.FC = () => {
 
     })
     const user = useSelector(GetUser) as EmployeeModel;
-    const courses = user.coursesTaught;
+    const courses = user.isAdmin? useSelector(GetCourses).map((obj:CourseModel)=>obj.courseName!) : user.coursesTaught;
     
     const closeModal = () => {
         setIsOpen(false);

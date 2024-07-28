@@ -1,52 +1,47 @@
-import React, { useState } from 'react';
-import CategoryModel from '../../../Models/CategoryModel';
+import React, { useState } from 'react'
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
-import { deleteCategory } from '../../../redux/CategorySlice';
-import Modal from './AddCategoryModal'
+import { CharityUploadModel } from '../../../Models/CharityModel';
+import { deleteCharityUpload } from '../../../redux/CharityUploadSlice';
+import CharityUploadModal from './AddCharityUploadModal';
 import NotificationModal from './NotificationModal';
 
-interface CategoryCardProps{
-  CategorryData:CategoryModel
+interface CharityUploadCardProps{
+    CharityUploadData: CharityUploadModel;
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({CategorryData}) => {
-  const [delet, setDelete] = useState<boolean>(false);
+const CharityUploadCard:React.FC<CharityUploadCardProps> = ({CharityUploadData}) => {
+    const [delet, setDelete] = useState<boolean>(false);
 
 
 
-  const dispatch = useAppDispatch();
-
-  const categoryDelete = async() =>{
-    close();
-    setDelete(true);
-    console.log(CategorryData.id);
-    await dispatch(deleteCategory(CategorryData.id!));
-    setDelete(false);
-  }
-
-  let [isOpen, setIsOpen] = useState(false)
-
-  function open() {
-    setIsOpen(true)
-  }
-
-  function close() {
-    setIsOpen(false)
-  }
-
-
-
-
-
+    const dispatch = useAppDispatch();
+  
+    const categoryDelete = async() =>{
+      close();
+      setDelete(true);
+      console.log(CharityUploadData.id);
+      await dispatch(deleteCharityUpload(CharityUploadData.id!));
+      setDelete(false);
+    }
+  
+    let [isOpen, setIsOpen] = useState(false)
+  
+    function open() {
+      setIsOpen(true)
+    }
+  
+    function close() {
+      setIsOpen(false)
+    }
   return (
-    <div className="card h-[370px] bg-white dark:bg-slate-700 dark:text-white rounded-md p-4 flex flex-col justify-center items-start">
+    <div className="card h-[370px] relative bg-white dark:bg-slate-700 dark:text-white rounded-md p-4 flex flex-col justify-center items-start">
       <div>
-        <h2 className="text-lg font-bold">{CategorryData.name}</h2>
-        <p className="text-sm">Date Created : {CategorryData.date}</p>
+        <h2 className="text-lg font-bold">{CharityUploadData.description}</h2>
+        <p className="text-sm">Date Created : {CharityUploadData.date}</p>
       </div>
 
       <div className="h-1/2 w-full flex justify-center mt-4 rounded-md ">
-        <img src={CategorryData.image} loading="lazy" alt="" className="rounded-md w-full object-cover"/>
+        <img src={CharityUploadData.image} loading="lazy" alt="" className="rounded-md w-full object-cover"/>
       </div>
 
       <div className="flex justify-between items-center gap-4 p-4">
@@ -62,11 +57,11 @@ const CategoryCard: React.FC<CategoryCardProps> = ({CategorryData}) => {
             )
           }
         </button>
-        <Modal type='update' categoryData={CategorryData} />
+        <CharityUploadModal type='update' charityData={CharityUploadData} />
       </div>
       <NotificationModal isOpen={isOpen} onClose={close} heading='Category' body='Do You want to delete category permanently !' type='delete'  ActionFunction={categoryDelete}/>
     </div>
-  );
-};
+  )
+}
 
-export default CategoryCard;
+export default CharityUploadCard
