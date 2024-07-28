@@ -6,25 +6,6 @@ import { db } from '../../firebase_config';
 import useAddExtraDays from '../../hooks/AddExtraDaysHook';
 import { formatDate } from '../../hooks/DateFormater';
 
-function parseFormattedDate(dateString: string): Date {
-    // Define a regex pattern to match the date components
-    const regex = /(\d+)(?:st|nd|rd|th)?\s(\w+),\s(\d{4})/;
-    const match = dateString.match(regex);
-    
-    if (!match) {
-        throw new Error('Invalid date format');
-    }
-    
-    const [ , day, month, year] = match;
-
-    // Map month names to month indices
-    const monthIndex = new Date(`${month} 1`).getMonth();
-
-    // Construct the Date object
-    const date = new Date(Number(year), monthIndex, Number(day));
-    
-    return date;
-}
 
 const AdminShowPendingPayments: React.FC = () => {
     const [PendingStudents, setPendingStudents] = useState<FilteredCourse[] | null>(null);
@@ -72,7 +53,7 @@ const AdminShowPendingPayments: React.FC = () => {
         users.forEach(user => {
             if (user.registeredCourses && Array.isArray(user.registeredCourses)) {
                 user.registeredCourses.forEach(course => {
-                    if (parseFormattedDate(course.endDate) < new Date()) {
+                    if (new Date(course.endDate) < new Date()) {
                         result.push({
                             id: user.id,
                             name: user.name,

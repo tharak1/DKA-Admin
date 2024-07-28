@@ -7,7 +7,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
 import { GetCourses } from '../../../redux/CourcesSlice';
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { databaseStorage, db } from '../../../firebase_config';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -26,6 +26,7 @@ const uploadImage = async (image: File, name: string, folder: string): Promise<s
 };
 
 const AdminAddEmployeeScreen: React.FC = () => {
+  const baseUrl = "https://firebasestorage.googleapis.com/v0/b/divya-kala-academy.appspot.com/o/";
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const encodedProduct = searchParams.get('type');
@@ -88,7 +89,18 @@ const AdminAddEmployeeScreen: React.FC = () => {
       const querySnapshot =  await getDocs(query(collection(db,"employees"),where("email","==",formValues.email)))
       if(querySnapshot.size===1){
         console.log("ffffffffffffffffffuuuuuuuuuuuuuccccccccccckkkkkkkkkkkkkk");
-        await dispatch(editEmployee({ ...formValues, profileImage: initialValues.profileImage }))
+        if(imageFile){
+          
+          const filePath = decodeURIComponent(initialValues.profileImage!.split(baseUrl)[1].split("?")[0]);
+          const desertRef = ref(databaseStorage, filePath);
+          console.log(filePath);
+          await deleteObject(desertRef);
+
+          const imageUrl = await uploadImage(imageFile!, values.employeeName!, "employees");
+          await dispatch(editEmployee({ ...formValues, profileImage: imageUrl }))
+        }else{
+          await dispatch(editEmployee({ ...formValues, profileImage: initialValues.profileImage }))
+        }
         openSubmit();
       }else{
         setError("Email already Exists");

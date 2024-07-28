@@ -62,15 +62,15 @@ const AdminViewFullPaymentHistory:React.FC = () => {
         return (
           (filters.courseName === '' || payment.courseName === filters.courseName) &&
           (filters.studentSearch === '' || 
-            payment.studentId.toLowerCase()===filters.studentSearch.toLowerCase() || 
-            payment.studentName.toLowerCase() === filters.studentSearch.toLowerCase()) &&
+            payment.studentId.toLowerCase().includes(filters.studentSearch.toLowerCase()) || 
+            payment.studentName.toLowerCase().includes(filters.studentSearch.toLowerCase())) &&
           (filters.date === '' || payment.date === filters.date) &&
           (filters.status === '' || payment.status === filters.status)
         );
       });
       setFilteredPayments(filtered);
     }
-  }, [filters, payments]);
+  }, [filters]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     console.log('====================================');
@@ -110,17 +110,17 @@ const openModal = () => {
 
 
   return (
-    <div className='grid grid-cols-2 grid-rows-12 gap-y-10 gap-x-3 w-full h-screen sm:p-6'>
+    <div className='grid grid-cols-2 grid-rows-12 sm:grid-rows-8 gap-y-3 gap-x-3 w-full h-screen sm:p-6'>
       <div className='col-span-2 row-span-1'>
         <Navbar name='Payments' />
       </div>
 
-      <div className='col-span-2 row-span-2 flex max-sm:flex-col items-end h-full w-full rounded-lg max-sm:mt-6'>
-        <form className='w-full flexmax-sm:flex-col' onSubmit={handleFilterSubmit}>
+      <div className='col-span-2 sm:row-span-1 max-sm:row-span-2 flex max-sm:flex-col max-sm:items-end h-full w-full rounded-lg max-sm:mt-6'>
+        <form className='w-full flex max-sm:flex-col' onSubmit={handleFilterSubmit}>
           <div className='flex w-full max-sm:flex-col justify-between'>
             
           <div className='flex '>
-            <div className='relative w-48'>
+            <div className=' w-48'>
               <input
                 placeholder='Select Date'
                 type='date'
@@ -150,16 +150,16 @@ const openModal = () => {
             </div>
             </div>
 
-            <div className='max-sm:flex max-sm:w-full   max-sm:mt-4'>
+            <div className='flex max-sm:w-full   max-sm:mt-4'>
             <button
               type='submit'
-              className='ml-2 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300'
+              className='px-3 py-2 text-center rounded-lg h-10 text-white font-bold p-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300'
             >
               Clear Filter
             </button>
 
             <div>
-            <div className="text-center rounded-lg text-white font-bold ml-3">
+            <div className=" text-center rounded-lg text-white font-bold ml-3">
                 <button
                     type="button"
                     onClick={openModal}

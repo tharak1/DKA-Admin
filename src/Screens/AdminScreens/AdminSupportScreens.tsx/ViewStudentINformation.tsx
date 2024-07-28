@@ -117,6 +117,10 @@ const ViewStudentDataInformation: React.FC = () => {
         <div className='absolute top-[-30px] left-1'>
           <h2>Parent feedback:</h2>
         </div>
+
+        <div className='h-full w-full'>
+          <p>{studentData.feedback!}</p>
+        </div>
       </div>
 
       <div className='relative col-span-1 row-span-4 bg-white dark:bg-slate-700 rounded-lg p-3 dark:text-white'>

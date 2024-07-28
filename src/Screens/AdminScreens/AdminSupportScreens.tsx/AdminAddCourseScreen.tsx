@@ -8,7 +8,7 @@ import { Categories } from '../../../redux/CategorySlice';
 import CategoryModel from '../../../Models/CategoryModel';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
 import { CreateCourse, GetCourses, editCourse } from '../../../redux/CourcesSlice';
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { databaseStorage } from '../../../firebase_config';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -52,6 +52,7 @@ const AdminAddCourseScreen: React.FC = () => {
     navigate('/admin/manage_courses');
   }
 
+  const baseUrl = "https://firebasestorage.googleapis.com/v0/b/divya-kala-academy.appspot.com/o/";
   const categories = useSelector(Categories);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -105,7 +106,19 @@ const AdminAddCourseScreen: React.FC = () => {
     if(encodedProduct==='edit'){
       console.log(initialValues);
       setLoading(true);
-      await dispatch(editCourse({ ...formValues, image: initialValues.image  }))
+      if (imageFile){
+        
+        const filePath = decodeURIComponent(initialValues.image!.split(baseUrl)[1].split("?")[0]);
+        const desertRef = ref(databaseStorage, filePath);
+        console.log(filePath);
+        await deleteObject(desertRef);
+
+        const imageUrl = await uploadImage(imageFile!, values.courseName!, "courses");
+        await dispatch(editCourse({ ...formValues, image: imageUrl  }))
+      }
+      else{
+        await dispatch(editCourse({ ...formValues, image: initialValues.image  }))
+      }
       setLoading(false);
       openSubmit();
 

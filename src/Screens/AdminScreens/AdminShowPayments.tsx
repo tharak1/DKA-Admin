@@ -50,24 +50,18 @@ const AdminShowPayments: React.FC = () => {
     if (payments) {
       const filtered = payments.filter((payment) => {
         return (
-          (filters.courseName === '' || payment.courseName.includes(filters.courseName)) &&
+          (filters.courseName === '' || payment.courseName === filters.courseName) &&
           (filters.studentSearch === '' || 
-            payment.studentId.toLowerCase().includes(filters.studentSearch.toLowerCase()) || 
+            payment.studentId.toLowerCase().includes(filters.studentSearch.toLowerCase()) ||
             payment.studentName.toLowerCase().includes(filters.studentSearch.toLowerCase())) &&
-          (filters.date === '' || payment.date.includes(filters.date)) &&
+          (filters.date === '' || payment.date === filters.date) &&
           (filters.status === '' || payment.status === filters.status)
         );
-      });
+      });      
       setFilteredPayments(filtered);
     }
-  }, [filters, payments]);
+  }, [filters]);
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFilters({
-      ...filters,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleFilterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,7 +91,10 @@ const AdminShowPayments: React.FC = () => {
               id='courseName'
               name='courseName'
               value={filters.courseName}
-              onChange={handleFilterChange}
+              onChange={(e)=>{    setFilters({
+                ...filters,
+                courseName: e.target.value,
+              });}}
               className='flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none'
             >
               <option value=''>All Courses</option>
@@ -115,7 +112,10 @@ const AdminShowPayments: React.FC = () => {
                 id='studentSearch'
                 name='studentSearch'
                 value={filters.studentSearch}
-                onChange={handleFilterChange}
+                onChange={(e)=>{    setFilters({
+                  ...filters,
+                  studentSearch: e.target.value,
+                });}}
                 className='block p-2.5 w-full h-full z-20 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-r-lg placeholder-gray-400 focus:placeholder-gray-600'
                 placeholder='Student ID or Name'
               />
@@ -129,7 +129,10 @@ const AdminShowPayments: React.FC = () => {
                 id='date'
                 name='date'
                 value={filters.date}
-                onChange={handleFilterChange}
+                onChange={(e)=>{    setFilters({
+                  ...filters,
+                  date: e.target.value,
+                });}}
                 className='sm:ml-2 block p-2.5 w-full z-10 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg placeholder-gray-400 focus:placeholder-gray-600'
               />
             </div>
@@ -139,7 +142,10 @@ const AdminShowPayments: React.FC = () => {
               id='status'
               name='status'
               value={filters.status}
-              onChange={handleFilterChange}
+              onChange={(e)=>{    setFilters({
+                ...filters,
+                status: e.target.value,
+              });}}
               className='ml-2 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-2 focus:outline-none'
             >
               <option value=''>All Statuses</option>
@@ -198,10 +204,10 @@ const AdminShowPayments: React.FC = () => {
               <div>Payment Status</div>
             </div>
           </div>
-          {filteredPayments.map((obj) => (
+          {filteredPayments.map((obj,index) => (
             <div
               className='w-full grid grid-cols-6 max-sm:grid-cols-3 max-sm:grid-rows-2 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600'
-              key={obj.paymentId}
+              key={index}
             >
               <div className='col-span-2 max-sm:col-span-2 max-sm:row-span-1 flex flex-col justify-start'>
                 <h2>{obj.courseName}</h2>
@@ -211,7 +217,7 @@ const AdminShowPayments: React.FC = () => {
               <div className='col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center border-l-2 items-center'>
               <span className='text-xs text-gray-600 dark:text-gray-400'> Amount :</span><h2>{obj.courseAmount}</h2>
               </div>
-              <div className='col-span-2 max-sm:col-span-2 max-sm:row-span-1 flex flex-col justify-start items-start sm:border-l-2'>
+              <div className='col-span-2 max-sm:col-span-2 max-sm:row-span-1 flex flex-col justify-start items-center max-sm:items-start sm:border-l-2'>
                 <h2>
                   <span className='text-xs text-gray-600 dark:text-gray-400'>Payment ID :</span> {obj.paymentId}
                 </h2>
