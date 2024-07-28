@@ -191,7 +191,7 @@ const AdminAddCourseScreen: React.FC = () => {
               handleSubmit,
               setFieldValue,
             }) => (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6 ">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col">
                     <label htmlFor="category" className="font-semibold">Category</label>
@@ -201,7 +201,7 @@ const AdminAddCourseScreen: React.FC = () => {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.category}
-                      className={`p-2 border rounded-md ${touched.category && errors.category ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md  dark:text-gray-600 ${touched.category && errors.category ? 'border-red-500' : 'border-gray-300'}`}
                     >
                       <option value="">Select Category</option>
                       {categories.map((obj: CategoryModel) => (
@@ -219,7 +219,7 @@ const AdminAddCourseScreen: React.FC = () => {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.courseName}
-                      className={`p-2 border rounded-md ${touched.courseName && errors.courseName ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md dark:text-gray-600 ${touched.courseName && errors.courseName ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {touched.courseName && errors.courseName && <div className="text-red-500 text-sm mt-1">{errors.courseName}</div>}
                   </div>
@@ -233,7 +233,7 @@ const AdminAddCourseScreen: React.FC = () => {
                     onChange={handleChange}
                     value={values.description}
                     rows={4}
-                    className={`p-2 border rounded-md ${touched.description && errors.description ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`p-2 border rounded-md dark:text-gray-600 ${touched.description && errors.description ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {touched.description && errors.description && <div className="text-red-500 text-sm mt-1">{errors.description}</div>}
                 </div>
@@ -246,7 +246,7 @@ const AdminAddCourseScreen: React.FC = () => {
                         name="online"
                         checked={values.online}
                         onChange={handleChange}
-                        className="mr-2 h-4 w-4 rounded-xl"
+                        className="mr-2 h-4 w-4 rounded-xl dark:text-gray-600"
                       />
                       <label className="font-semibold">Online</label>
                     </div>
@@ -256,7 +256,7 @@ const AdminAddCourseScreen: React.FC = () => {
                         name="offline"
                         checked={values.offline}
                         onChange={handleChange}
-                        className="mr-2 h-4 w-4"
+                        className="mr-2 h-4 w-4 dark:text-gray-600"
                       />
                       <label className="font-semibold">Offline</label>
                     </div>
@@ -270,7 +270,7 @@ const AdminAddCourseScreen: React.FC = () => {
                       id="session"
                       name="session"
                       onBlur={handleBlur}
-                      className={`p-2 border rounded-md border-gray-400 ${touched.sessions && errors.sessions ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md dark:text-gray-600 border-gray-400 ${touched.sessions && errors.sessions ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     <button className="py-2 px-4 rounded-md border-2 border-blue-300 bg-blue-400 hover:bg-blue-200 ml-4" onClick={handleAddSessions} type='button'>
                       ADD
@@ -293,7 +293,7 @@ const AdminAddCourseScreen: React.FC = () => {
                       id="performance"
                       name="performance"
                       onBlur={handleBlur}
-                      className={`p-2 border rounded-md border-gray-400`}
+                      className={`p-2 border rounded-md border-gray-400 dark:text-gray-600`}
                     />
                     <button className="py-2 px-4 rounded-md border-2 border-blue-300 bg-blue-400 hover:bg-blue-200 ml-4" onClick={handleAddPerformance} type='button'>
                       ADD
@@ -303,7 +303,7 @@ const AdminAddCourseScreen: React.FC = () => {
                     {performance.map((perf, index) => (
                       <div className='flex flex-row m-2' key={index}>
                         <p className="mr-4">{perf}</p>
-                        <button className="hover:bg-slate-200 rounded-full" onClick={() => { handleDeletePerformance(index) }}><DeleteForeverIcon color='warning' fontSize='small' /></button>
+                        <button className="hover:bg-slate-200 rounded-full dark:text-gray-600" onClick={() => { handleDeletePerformance(index) }}><DeleteForeverIcon color='warning' fontSize='small' /></button>
                       </div>
                     ))}
                   </div>
@@ -317,7 +317,7 @@ const AdminAddCourseScreen: React.FC = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.price}
-                    className={`p-2 border rounded-md ${touched.price && errors.price ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`p-2 border rounded-md dark:text-gray-600 ${touched.price && errors.price ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {touched.price && errors.price && <div className="text-red-500 text-sm mt-1">{errors.price}</div>}
                 </div>
@@ -330,7 +330,7 @@ const AdminAddCourseScreen: React.FC = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.ageLimit}
-                    className={`p-2 border rounded-md ${touched.ageLimit && errors.ageLimit ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`p-2 border rounded-md dark:text-gray-600 ${touched.ageLimit && errors.ageLimit ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {touched.ageLimit && errors.ageLimit && <div className="text-red-500 text-sm mt-1">{errors.ageLimit}</div>}
                 </div>
@@ -342,7 +342,7 @@ const AdminAddCourseScreen: React.FC = () => {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.courseCountry}
-                      className={`p-2 border rounded-md ${touched.courseCountry && errors.courseCountry ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md dark:text-gray-600 ${touched.courseCountry && errors.courseCountry ? 'border-red-500' : 'border-gray-300'}`}
                     >
                       <option value="">Select Country</option>
                       <option value="all">All</option>

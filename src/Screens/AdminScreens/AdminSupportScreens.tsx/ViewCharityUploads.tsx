@@ -24,7 +24,7 @@ const ViewCharityUploads:React.FC = () => {
   return (
     <div className="sm:p-6 h-screen overflow-auto w-full items-start">
         <div className='w-full'>
-            <Navbar name='Manage Categories'/>
+            <Navbar name='Charity Updates'/>
         </div>
         <div className='mt-4 flex items-start'>
           <CharityUploadModal type='create'/>

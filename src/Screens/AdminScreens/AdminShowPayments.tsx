@@ -124,6 +124,7 @@ const AdminShowPayments: React.FC = () => {
             <div className='flex'>
             <div className='relative w-48'>
               <input
+              placeholder='Select Date'
                 type='date'
                 id='date'
                 name='date'

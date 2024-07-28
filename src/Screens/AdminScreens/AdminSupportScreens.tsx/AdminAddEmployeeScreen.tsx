@@ -187,26 +187,28 @@ const AdminAddEmployeeScreen: React.FC = () => {
                   <div className="flex flex-col">
                     <label htmlFor="employeeName" className="font-semibold">Employee Name</label>
                     <input
+                      placeholder='Enter Name'
                       type="text"
                       id="employeeName"
                       name="employeeName"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.employeeName}
-                      className={`p-2 border rounded-md ${touched.employeeName && errors.employeeName ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md  dark:text-black ${touched.employeeName && errors.employeeName ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {touched.employeeName && errors.employeeName && <div className="text-red-500 text-sm mt-1">{errors.employeeName}</div>}
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="phone" className="font-semibold">Phone</label>
                     <input
+                      placeholder='Enter Phone No'
                       type="text"
                       id="phone"
                       name="phone"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.phone}
-                      className={`p-2 border rounded-md ${touched.phone && errors.phone ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md dark:text-black ${touched.phone && errors.phone ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {touched.phone && errors.phone && <div className="text-red-500 text-sm mt-1">{errors.phone}</div>}
                   </div>
@@ -215,26 +217,28 @@ const AdminAddEmployeeScreen: React.FC = () => {
                   <div className="flex flex-col">
                     <label htmlFor="email" className="font-semibold">Email</label>
                     <input
+                      placeholder='Email'
                       type="text"
                       id="email"
                       name="email"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.email}
-                      className={`p-2 border rounded-md ${touched.email && errors.email ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md dark:text-black ${touched.email && errors.email ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {touched.email && errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="address" className="font-semibold">Address</label>
                     <input
+                      placeholder='Enter Address'
                       type="text"
                       id="address"
                       name="address"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.address}
-                      className={`p-2 border rounded-md ${touched.address && errors.address ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md dark:text-black ${touched.address && errors.address ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {touched.address && errors.address && <div className="text-red-500 text-sm mt-1">{errors.address}</div>}
                   </div>
@@ -243,26 +247,28 @@ const AdminAddEmployeeScreen: React.FC = () => {
                   <div className="flex flex-col">
                     <label htmlFor="qualifications" className="font-semibold">Qualifications</label>
                     <input
+                      placeholder='Enter Qualifications'
                       type="text"
                       id="qualifications"
                       name="qualifications"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.qualifications}
-                      className={`p-2 border rounded-md ${touched.qualifications && errors.qualifications ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md dark:text-black ${touched.qualifications && errors.qualifications ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {touched.qualifications && errors.qualifications && <div className="text-red-500 text-sm mt-1">{errors.qualifications}</div>}
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="designation" className="font-semibold">Designation</label>
                     <input
+                      placeholder='Enter Designation'
                       type="text"
                       id="designation"
                       name="designation"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.designation}
-                      className={`p-2 border rounded-md ${touched.designation && errors.designation ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`p-2 border rounded-md dark:text-black ${touched.designation && errors.designation ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {touched.designation && errors.designation && <div className="text-red-500 text-sm mt-1">{errors.designation}</div>}
                   </div>
@@ -271,20 +277,20 @@ const AdminAddEmployeeScreen: React.FC = () => {
                   <label htmlFor="coursesTaught" className="font-semibold">Courses Taught</label>
                   <div className='flex flex-row'>
                   <select
-      id="courseTaught"
-      name="courseTaught"
-      value=""
-      onChange={(e) => {
-        const newCourse = e.target.value;
-        setCoursesTaught([...coursesTaught, newCourse]);
-      }}
-      className="p-2 border rounded-md border-gray-400"
-    >
-      <option value="" disabled>Select Course</option>
-      {Courses.map((course: CourseModel) => (
-        <option key={course.id} value={course.courseName}>{course.courseName}</option>
-      ))}
-    </select>
+                    id="courseTaught"
+                    name="courseTaught"
+                    value=""
+                    onChange={(e) => {
+                      const newCourse = e.target.value;
+                      setCoursesTaught([...coursesTaught, newCourse]);
+                    }}
+                    className="p-2 border rounded-md border-gray-400 dark:text-black"
+                  >
+                    <option value="" disabled>Select Course</option>
+                    {Courses.map((course: CourseModel) => (
+                      <option key={course.id} value={course.courseName}>{course.courseName}</option>
+                    ))}
+                  </select>
                   </div>
                   <div className='flex flex-col'>
                     {coursesTaught.map((course, index) => (
@@ -307,7 +313,7 @@ const AdminAddEmployeeScreen: React.FC = () => {
                       handleImageChange(event);
                       setFieldValue('profileImage', event.currentTarget.files?.[0]);
                     }}
-                    className="hidden" />
+                    className="hidden dark:text-black" />
                   <button
                     type="button"
                     onClick={() => document.getElementById('profileImage')?.click()}
@@ -336,6 +342,7 @@ const AdminAddEmployeeScreen: React.FC = () => {
                     <div className='mr-3'>
                       <label>
                         <input
+                          placeholder='Enter Admin'
                           className=''
                           type="radio"
                           name="truefalse"
@@ -346,9 +353,10 @@ const AdminAddEmployeeScreen: React.FC = () => {
                         True
                       </label>
                     </div>
-                    <div className='mr-3'>
+                    <div className='mr-3 '>
                       <label>
                         <input
+                          
                           type="radio"
                           name="truefalse"
                           value="false"
@@ -364,13 +372,14 @@ const AdminAddEmployeeScreen: React.FC = () => {
                 <div className="flex flex-col relative">
                   <label htmlFor="password" className="font-semibold">Password</label>
                   <input
+                    placeholder='Enter Password'
                     type={showPassword ? "text" : "password"} // Toggle input type based on showPassword state
                     id="password"
                     name="password"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.password}
-                    className={`p-2 border rounded-md ${touched.password && errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`p-2 border rounded-md dark:text-black ${touched.password && errors.password ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   <button
                     type="button"
@@ -384,13 +393,14 @@ const AdminAddEmployeeScreen: React.FC = () => {
                 <div className="flex flex-col relative">
                   <label htmlFor="confirmPassword" className="font-semibold">Confirm Password</label>
                   <input
+                    placeholder='Confirm Password'
                     type={showConfirmPassword ? "text" : "password"} // Toggle input type based on showConfirmPassword state
                     id="confirmPassword"
                     name="confirmPassword"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.confirmPassword}
-                    className={`p-2 border rounded-md ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`p-2 border rounded-md dark:text-black ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   <button
                     type="button"

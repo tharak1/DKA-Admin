@@ -15,7 +15,7 @@ const PerformanceCard:React.FC<PerformanceCardProps> = ({performance,course}) =>
     }
     
   return (
-    <div className="bg-white shadow rounded-lg p-6">
+    <div className="bg-white shadow rounded-lg p-6 dark:bg-slate-700 ">
         <div className="mb-4">
             <h1 className="text-xl font-bold">{course.courseName}</h1>
             <p>{performance.startDate} to {performance.endDate}</p>
@@ -45,8 +45,8 @@ const PerformanceCard:React.FC<PerformanceCardProps> = ({performance,course}) =>
             <>
                 {(key !== 'studentName'&& key !=='studentId' && key !== 'TotalClassesAttended' && key !== 'TotalClassesTaken' && key !=='Grade' && key !=='startDate' && key !=='endDate' && key !== 'totalMarks' && key !=='totalMarksObtained') &&(
                     <div className="text-center flex justify-start items-center px-5 col-span-1" key={key}>
-                        <p className="text-gray-700 mr-3">{formatLabel(key)}</p>
-                        <div className="text-xl font-bold bg-gray-100 rounded-md px-5 py-2 border-2 border-gray-400 flex items-center justify-center">{(val as number).toString()}</div>
+                        <p className="text-white mr-3">{formatLabel(key)}</p>
+                        <div className="text-xl font-bold bg-gray-100 rounded-md px-5 py-2 border-2 border-gray-400 flex items-center justify-center dark:text-black">{(val as number).toString()}</div>
                     </div>
                 )}
 
@@ -55,11 +55,11 @@ const PerformanceCard:React.FC<PerformanceCardProps> = ({performance,course}) =>
                 </div>
 
         <div className="text-center flex justify-center items-center">
-            <p className="text-gray-700 mr-3">Total Marks Obtained  </p>
+            <p className="text-white mr-3">Total Marks Obtained  </p>
             <div className="text-2xl font-bold bg-green-100 text-green-600 rounded-md px-5 py-2 flex items-center justify-center">{performance.totalMarksObtained}</div>
         </div>
         <div className="text-center flex justify-center items-center">
-            <p className="text-gray-700 mr-3">Grade  </p>
+            <p className="text-white mr-3">Grade  </p>
             <div className="text-2xl font-bold bg-green-100 text-green-600 rounded-md px-5 py-2 flex items-center justify-center">{performance.Grade.toString().toUpperCase()}</div>
         </div>
     </div>

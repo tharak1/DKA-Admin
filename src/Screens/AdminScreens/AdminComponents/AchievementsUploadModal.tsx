@@ -87,9 +87,9 @@ const AchievementsUploadModal: React.FC<ModalProps> = ({ type, achievementsData 
         type="button"
         onClick={openModal}
         className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2"
-        disabled={achievements.length >= 5}
+        disabled={achievements.length >= 5 && type==='create'}
       >
-        {achievements.length >= 5 ? "Limit Met" : (type === 'create' ? "Add Achievement" : "Update Achievement")}
+        {achievements.length >= 5 && type==='create' ? "Limit Met" : (type === 'create' ? "Add Achievement" : "Update Achievement")}
       </button>
     </div>
 

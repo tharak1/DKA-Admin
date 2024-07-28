@@ -33,7 +33,7 @@ const ViewReviewScreen:React.FC = () => {
   return (
     <div className='w-full h-screen overflow-auto grid grid-cols-1 grid-rows-8 gap-3 sm:p-6'>
         <div className="col-span-1 row-span-1">
-            <Navbar name='Online Class Management'/>
+            <Navbar name='Reviews'/>
         </div>
 
         <div className='col-span-1 row-span-7 rounded-lg w-full h-full flex flex-col overflow-auto bg-white dark:bg-slate-700 p-4 space-y-5'>

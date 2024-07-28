@@ -115,13 +115,14 @@ const openModal = () => {
         <Navbar name='Payments' />
       </div>
 
-      <div className='col-span-2 row-span-2 flex max-sm:flex-col items-end h-full w-full rounded-lg max-sm:mt-4'>
+      <div className='col-span-2 row-span-2 flex max-sm:flex-col items-end h-full w-full rounded-lg max-sm:mt-6'>
         <form className='w-full flexmax-sm:flex-col' onSubmit={handleFilterSubmit}>
           <div className='flex w-full max-sm:flex-col justify-between'>
             
           <div className='flex '>
             <div className='relative w-48'>
               <input
+                placeholder='Select Date'
                 type='date'
                 id='date'
                 name='date'
