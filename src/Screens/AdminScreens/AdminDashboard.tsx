@@ -64,7 +64,7 @@ const AdminDashboard:React.FC = () => {
                 </div>
         
 
-                    <div className='max-sm:mt-20 max-sm:grid max-sm:grid-cols-2 max-sm:w-full max-sm:gap-2 max-sm:p-3'>
+                    <div className='max-sm:mt-20 max-sm:grid max-sm:grid-cols-2 max-sm:w-full max-sm:gap-2 w-full sm:col-span-8 sm:row-span-4 sm:grid sm:grid-cols-8 sm:grid-rows-4 sm:gap-3 max-sm:p-3'>
                         <StatsCard name= {"Total students"} count = {info.noOfStudents}  />
 
                                             
