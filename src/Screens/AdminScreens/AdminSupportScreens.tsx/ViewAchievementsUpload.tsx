@@ -20,15 +20,15 @@ const ViewAchievementsUploads: React.FC = () => {
   const achievementsUpload = useSelector(selectAchievementsUploads);
 
   return (
-    <div className="sm:p-6 h-screen overflow-auto w-full items-start">
+    <div className="sm:p-6 h-screen overflow-auto w-full items-start ">
       <div className='w-full'>
         <Navbar name='Manage Achievements' />
       </div>
-      <div className='mt-4 flex items-start'>
+      <div className='mt-4 flex items-start max-sm:mt-24 max-sm:ml-4'>
         <AchievementsUploadModal type='create' />
       </div>
 
-      <div className='grid-span-3 w-full grid sm:grid-cols-3 max-sm:grid-cols-1 gap-3 mt-4 max-sm:mt-10 max-sm:p-3'>
+      <div className='grid-span-3 w-full grid sm:grid-cols-3 max-sm:grid-cols-1 gap-3 mt-4 max-sm:mt-4 max-sm:p-3'>
         {
           loading ? <div className='w-full h-screen flex justify-center items-center'>
             <svg aria-hidden="true" className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

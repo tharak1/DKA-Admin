@@ -38,16 +38,18 @@ const AdminOnlineExamViewPort:React.FC = () => {
 
     
   return (
-    <div className='grid grid-cols-1 grid-rows-10 w-full h-screen p-6'>
+    <div className='grid grid-cols-1 grid-rows-10 w-full h-screen sm:p-6'>
       <div className='col-span-1 row-span-1'>
         <Navbar name='Online Exam'/>
       </div>
-      <div className='col-span-1 row-span-1 flex justify-start'>
-        <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={()=>{setSelectdIndex(0)}}>Attempted</button>
-        <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={()=>{setSelectdIndex(1)}}>Unattempted</button>
+      <div className='col-span-1 row-span-1 max-sm:row-span-2 max-sm:flex-col flex justify-start max-sm:px-3'>
+        <div className='flex max-sm:mt-3'>
+          <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={()=>{setSelectdIndex(0)}}>Attempted</button>
+          <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={()=>{setSelectdIndex(1)}}>Unattempted</button>
+        </div>
         
         <div>
-        <form className="w-80 " >   
+        <form className="w-80 max-sm:mt-6 " >   
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div className="relative">
                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -80,37 +82,37 @@ const AdminOnlineExamViewPort:React.FC = () => {
                   examDetails.examType === 'upload question Paper'?(
                     <div className='w-full border-b-2 grid grid-cols-6 pb-4 px-3'>
                       <div className='flex flex-col items-start col-span-2'>
-                        <h2>Student Details</h2>
+                        <h2 className='max-sm:text-xs' >Student Details</h2>
+                      </div>
+                      <div className='flex flex-col items-start col-span-1'>
+                        <p className='max-sm:text-xs' >Evaluated</p>
+                      </div>
+                      <div className='flex flex-col items-end col-span-1'>
+                        <p className='max-sm:text-xs' >Marks Obtained</p>
+                      </div>
+                      <div className='flex flex-col items-end col-span-1'>
+                        <p className='max-sm:text-xs' >No of Pages</p>
                       </div>
                       <div className='flex flex-col items-center col-span-1'>
-                        <p>Evaluated</p>
-                      </div>
-                      <div className='flex flex-col items-center col-span-1'>
-                        <p>Marks Obtained</p>
-                      </div>
-                      <div className='flex flex-col items-center col-span-1'>
-                        <p>No of Pages</p>
-                      </div>
-                      <div className='flex flex-col items-center col-span-1'>
-                        <p>Action</p>
+                        <p className='max-sm:text-xs' >Action</p>
                       </div>
                     </div>
                   ):(
                     <div className='w-full border-b-2 grid grid-cols-6 pb-4 px-3'>
                       <div className='flex flex-col items-start col-span-2'>
-                        <h2>Student Details</h2>
+                        <h2  className='max-sm:text-xs' >Student Details</h2>
                       </div>
                       <div className='flex flex-col items-center col-span-1'>
-                        <p>Answered correctly</p>
+                        <p className='max-sm:text-xs'>Answered correctly</p>
                       </div>
                       <div className='flex flex-col items-center col-span-1'>
-                        <p>Answered Incorrectly</p>
+                        <p className='max-sm:text-xs'>Answered Incorrectly</p>
                       </div>
                       <div className='flex flex-col items-center col-span-1'>
-                        <p>Not Answered</p>
+                        <p className='max-sm:text-xs'>Not Answered</p>
                       </div>
                       <div className='flex flex-col items-center col-span-1'>
-                        <p>Marks Obtained</p>
+                        <p className='max-sm:text-xs'>Marks Obtained</p>
                       </div>
                     </div>
                   )

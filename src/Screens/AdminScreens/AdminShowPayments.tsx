@@ -86,7 +86,7 @@ const AdminShowPayments: React.FC = () => {
         <Navbar name='Payments' />
       </div>
 
-      <div className='col-span-2 row-span-2 flex max-sm:flex-col items-end h-full w-full rounded-lg max-sm:mt-4'>
+      <div className='col-span-2 row-span-2 flex max-sm:flex-col items-end h-full w-full rounded-lg max-sm:mt-4 max-sm:p-2'>
         <form className='w-full flex max-sm:flex-col' onSubmit={handleFilterSubmit}>
           <div className='w-full flex max-sm:flex-col max-sm:space-y-3 justify-between'>
             <div className='flex'>
@@ -129,7 +129,7 @@ const AdminShowPayments: React.FC = () => {
                 name='date'
                 value={filters.date}
                 onChange={handleFilterChange}
-                className='ml-2 block p-2.5 w-full z-10 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg placeholder-gray-400 focus:placeholder-gray-600'
+                className='sm:ml-2 block p-2.5 w-full z-10 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg placeholder-gray-400 focus:placeholder-gray-600'
               />
             </div>
             
@@ -199,10 +199,10 @@ const AdminShowPayments: React.FC = () => {
           </div>
           {filteredPayments.map((obj) => (
             <div
-              className='w-full grid grid-cols-6 max-sm:grid-cols-2 max-sm:grid-rows-2 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600'
+              className='w-full grid grid-cols-6 max-sm:grid-cols-3 max-sm:grid-rows-2 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600'
               key={obj.paymentId}
             >
-              <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-start'>
+              <div className='col-span-2 max-sm:col-span-2 max-sm:row-span-1 flex flex-col justify-start'>
                 <h2>{obj.courseName}</h2>
                 <h2>{obj.studentName}</h2>
                 <h2>{obj.studentId}</h2>
@@ -210,7 +210,7 @@ const AdminShowPayments: React.FC = () => {
               <div className='col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center border-l-2 items-center'>
               <span className='text-xs text-gray-600 dark:text-gray-400'> Amount :</span><h2>{obj.courseAmount}</h2>
               </div>
-              <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-start items-start border-l-2'>
+              <div className='col-span-2 max-sm:col-span-2 max-sm:row-span-1 flex flex-col justify-start items-start sm:border-l-2'>
                 <h2>
                   <span className='text-xs text-gray-600 dark:text-gray-400'>Payment ID :</span> {obj.paymentId}
                 </h2>

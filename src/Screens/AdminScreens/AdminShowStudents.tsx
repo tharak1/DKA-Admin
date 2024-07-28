@@ -6,6 +6,7 @@ import { db } from '../../firebase_config';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
+import { blueGrey } from '@mui/material/colors';
 
 const AdminShowStudents: React.FC = () => {
   const [searchKey, setSearchKey] = useState<string>('');
@@ -67,7 +68,7 @@ const AdminShowStudents: React.FC = () => {
   };
 
   return (
-    <div className='grid grid-cols-3 grid-rows-7 max-sm:grid-rows-10  gap-y-10 max-sm:gap-y-5 gap-x-3 overflow-auto sm:p-6 h-screen'>
+    <div className='grid grid-cols-3 grid-rows-7 max-sm:grid-rows-10  gap-y-10 max-sm:gap-y-5 gap-x-3 overflow-auto sm:p-6 h-screen '>
       <div className='col-span-3 row-span-1'>
         <Navbar name={'Students Data'} />
       </div>
@@ -115,8 +116,9 @@ const AdminShowStudents: React.FC = () => {
         </form>
       </div>
 
-      <div className='col-span-1 max-sm:col-span-3 row-span-1 flex items-center justify-around max-sm:p-3'>
+      <div className='col-span-1 max-sm:col-span-3 row-span-1 flex items-center justify-around max-sm:p-3 dark:text-black'>
         <Select
+      
           options={options}
           onChange={changeHandler}
           value={options.find((option) => option.label === searchCountry)}

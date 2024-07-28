@@ -46,7 +46,7 @@ const AdminManageQuestionPaper:React.FC = () => {
         <div className='w-full grid grid-cols-4 max-sm:grid-cols-1 items-start gap-3 max-sm:overflow-auto max-sm:p-3'>
             {
                 Qp.length===0?(
-                    <div className='w-full h-full flex justify-center items-center text-center rounded-lg p-10 bg-white'>
+                    <div className='w-full h-full flex justify-center items-center text-center rounded-lg p-10 bg-white dark:bg-slate-700'>
                         <h2>No Draft question Papers</h2>
                     </div>
                 ):(   

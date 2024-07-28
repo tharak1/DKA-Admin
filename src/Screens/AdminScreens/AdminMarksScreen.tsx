@@ -131,7 +131,7 @@ const AdminMarksScreen: React.FC = () => {
             </div>
             <div className='flex flex-row justify-between space-x-2'>
               <div>
-                <label htmlFor="totalNoOfClasses" className="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-white">Total no of classes</label>
+                <label htmlFor="totalNoOfClasses" className="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-white">Total classes</label>
                 <input
                   id="totalNoOfClasses"
                   type="number"

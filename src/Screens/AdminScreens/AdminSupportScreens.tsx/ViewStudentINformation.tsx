@@ -85,7 +85,7 @@ const ViewStudentDataInformation: React.FC = () => {
         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
     </svg>
         </div>:
-    <div className='grid grid-cols-3 max-sm:flex max-sm:flex-col grid-rows-8 gap-9 h-screen w-full sm:p-6 max-sm:overflow-auto '>
+    <div className='grid grid-cols-3 max-sm:flex max-sm:flex-col grid-rows-8 gap-14 h-screen w-full sm:p-6 max-sm:overflow-auto '>
               <div className='col-span-3 row-span-1 z-10'>
         <Navbar name={'Students Data'} />
       </div>
@@ -120,7 +120,7 @@ const ViewStudentDataInformation: React.FC = () => {
       </div>
 
       <div className='relative col-span-1 row-span-4 bg-white dark:bg-slate-700 rounded-lg p-3 dark:text-white'>
-        <div className='absolute top-[-30px] left-1 flex justify-between w-full px-3'>
+        <div className='absolute top-[-30px] max-sm:top-[-50px] left-1 flex justify-between w-full px-3'>
           <h2 className='mb-4'>Performance:</h2>
           <p className='text-blue-600 hover:text-blue-400 cursor-pointer' onClick={goToDetail}>
             Tap to show more
@@ -166,7 +166,7 @@ const ViewStudentDataInformation: React.FC = () => {
       </div>
 
       <div className='relative col-span-2 max-sm:col-span-1 row-span-4 bg-white dark:bg-slate-700 rounded-lg p-3 dark:text-white'>
-        <div className='absolute top-[-30px] left-1 flex justify-between w-full px-3'>
+        <div className='absolute top-[-30px] max-sm:top-[-50px] left-1 flex justify-between w-full px-3'>
           <h2 className='mb-4'>Courses Registered:</h2>
           <p className='text-blue-600 hover:text-blue-400 cursor-pointer' onClick={() => { navigate(`/admin/view_all_payments?studentDataId=${studentData.id}`, { state: { user: studentData } }) }}>
             Tap to show full payment history
@@ -183,28 +183,28 @@ const ViewStudentDataInformation: React.FC = () => {
                 <div>
                   <p>
                     <span className='text-gray-700 text-xs'>Paid for:</span>{' '}
-                    <span className=''>{obj.courseName}</span>{' '}
+                    <span className='max-sm:text-xs max-sm:font-semibold'>{obj.courseName}</span>{' '}
                   </p>
                   <p>
                     <span className='text-gray-700 text-xs'>Paid on:</span>{' '}
-                    <span className=''>{obj.boughtDate}</span>{' '}
+                    <span className='max-sm:text-xs max-sm:font-semibold'>{obj.boughtDate}</span>{' '}
                   </p>
                 </div>
                 <div>
                   <p>
                     <span className='text-gray-700 text-xs'>Payment Id:</span>{' '}
-                    <span className=''>{obj.paymentId}</span>{' '}
+                    <span className='max-sm:text-xs mr-3 max-sm:font-semibold'>{obj.paymentId}</span>{' '}
                   </p>
                   <p>
                     <span className='text-gray-700 text-xs'>Status:</span>{' '}
-                    <span className=''>{obj.status}</span>{' '}
+                    <span className='max-sm:text-xs max-sm:font-semibold'>{obj.status}</span>{' '}
                   </p>
                 </div>
               </div>
               <div className='flex flex-col items-end justify-between'>
                 <p>
                   <span className='text-gray-700 text-xs'>Ends on :</span>{' '}
-                  <span className=''>{obj.endDate}</span>{' '}
+                  <span className='max-sm:text-xs max-sm:font-semibold'>{obj.endDate}</span>{' '}
                 </p>
                 <button
                   type='button'

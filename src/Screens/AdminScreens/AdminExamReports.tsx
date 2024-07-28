@@ -106,7 +106,7 @@ const AdminExamReports:React.FC = () => {
       <div className='col-span-2 row-span-1 w-full h-full'>
         <Navbar name='Exam Reports'/>
       </div>
-      <div className='row-span-1 col-span-2 w-full h-full'>
+      <div className='row-span-1 col-span-2 w-full h-full max-sm:mt-2 max-sm:p-3'>
         <form className='flex flex-row' onSubmit={handleSubmit}>
           <select
             id='courseName'
@@ -155,7 +155,7 @@ const AdminExamReports:React.FC = () => {
         </div>
       ) : examDetailsList.length !== 0 ? (
         <div className='col-span-2 row-span-11 h-full w-full rounded-lg bg-white dark:bg-slate-700 overflow-auto p-3 space-y-5'>
-          <div className='w-full grid grid-cols-6 py-5'>
+          <div className='w-full grid grid-cols-6 py-5 max-sm:hidden'>
             <div className='col-span-2 flex flex-col justify-start'>
               <div>Question Paper Details</div>
             </div>
@@ -171,29 +171,29 @@ const AdminExamReports:React.FC = () => {
           </div>
           {examDetailsList.map((obj,index) => (
             <div
-              className='w-full grid grid-cols-6 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600 hover:cursor-pointer' onClick={()=>{
+              className='w-full grid grid-cols-6 max-sm:grid-cols-1 max-sm:grid-rows-4 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600 hover:cursor-pointer' onClick={()=>{
                 navigate('/admin/online_exam_viewport', { state: { examDetails:examDetailsList[index],regStu:regStuCourse } });
               }}
               key={obj.id} 
             >
-              <div className='col-span-2 flex flex-col justify-start'>
+              <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-start'>
                 <h2>ID : {obj.id}</h2>
                 <h2>Course : {obj.course}</h2>
                 <h2>Duration : {obj.duration} min</h2>
               </div>
-              <div className='col-span-2 flex flex-col justify-center border-l-2 border-gray-500 dark:border-gray-300 items-center'>
+              <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center  sm:border-l-2 border-gray-500 dark:border-gray-300 items-center max-sm:items-start'>
                 <h2>Start : {new Date(obj.startDate).toLocaleDateString('en-IN')}-{obj.startTime}</h2>
                 <h2>End : {new Date(obj.endDate).toLocaleDateString('en-IN')}-{obj.endTime}</h2>
                 
               </div>
-              <div className='col-span-1 flex flex-col justify-center items-center border-l-2 border-gray-500 dark:border-gray-300'>
+              <div className='col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center items-center sm:border-l-2 border-gray-500 dark:border-gray-300 max-sm:items-start'>
                 <h2>
-                  <span className='text-xl text-gray-600 dark:text-gray-400'>{obj.totalMarks}</span> 
+                  <span className='text-xl text-gray-600 dark:text-gray-400'>Total Marks : {obj.totalMarks}</span> 
                 </h2>
               </div>
-              <div className={`col-span-1 flex flex-col justify-center items-start border-l-2  border-gray-500 dark:border-gray-300 px-3`}>
+              <div className={`col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center items-start sm:border-l-2  border-gray-500 dark:border-gray-300 sm:px-3 max-sm:items-start`}>
                 <h2>
-                  <span className='text-md text-gray-600 dark:text-gray-400'>Total : </span>{regStuCourse!.students.length}
+                  <span className='text-md text-gray-600 dark:text-gray-400'>Total Students : </span>{regStuCourse!.students.length}
                 </h2>
                 <h2>
                   <span className='text-md text-gray-600 dark:text-gray-400'>Attended : </span>{obj.students.length}
