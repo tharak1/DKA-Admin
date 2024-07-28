@@ -1,7 +1,6 @@
 import React from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
 import { CourseModel } from '../../../Models/CourceModel';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
 import { deleteCourse } from '../../../redux/CourcesSlice';
@@ -25,17 +24,6 @@ const CourseCard: React.FC<CourseCardProps> = ({ courseDetails, showActions = fa
         await dispatch(deleteCourse(courseDetails.id!));
     }
 
-    
-    let imageUrl: string;
-
-    if (typeof courseDetails.image === 'string') {
-        // If it's a string, use it directly as the URL
-        imageUrl = courseDetails.image;
-    } else {
-        // If it's a File, create an object URL for it
-        imageUrl = courseDetails.image!;
-
-    }
     return (
         // <div className="flex flex-row w-full">
         //     <div className="bg-white rounded-lg shadow-md p-4 mb-6 flex w-full dark:bg-slate-700 dark:text-white">
