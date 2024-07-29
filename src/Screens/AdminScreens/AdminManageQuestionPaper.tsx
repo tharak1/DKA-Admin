@@ -20,7 +20,7 @@ const AdminManageQuestionPaper:React.FC = () => {
 
   return (
     <div className='h-screen overflow-auto sm:p-6'>
-        <Navbar name='Manage Question Paper'/>
+        <Navbar name='Online Exam'/>
 
 
         <div className='col-span-1 mt-4 mb-5 flex flex-row max-sm:mt-24 max-sm:px-3'>
