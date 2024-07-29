@@ -62,7 +62,7 @@ const Navbar: React.FC<Navbarprops> = ({ name }) => {
     }, []);
 
     return (
-        <div className="flex flex-row justify-between items-center space-x-2 sm:rounded-lg bg-white dark:bg-slate-700 px-4 py-1 max-sm:h-20 max-sm:fixed max-sm:w-full z-50">
+        <div className="flex flex-row justify-between items-center space-x-2 sm:rounded-lg bg-white dark:bg-slate-700 px-4 py-1 max-sm:h-20 max-sm:fixed max-sm:w-full z-30">
             <div className='flex'>
                 <div className="mr-4 flex justify-center items-center sm:hidden" onClick={handleToggle}>
                     <IoMenu size={28} />
