@@ -72,12 +72,12 @@ const AdminShowStudents: React.FC = () => {
         <Navbar name={'Students Data'} />
       </div>
 
-      <div className='col-span-1 max-sm:col-span-3 row-span-1 max-sm:p-3'>
+      <div className='col-span-1 max-sm:col-span-3 row-span-1 max-sm:p-3 z-10'>
         <form className='max-w-md' onSubmit={findStudent}>
           <label htmlFor='default-search' className='mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white'>
             Search
           </label>
-          <div className='relative'>
+          <div className='relative z-10'>
             <div className='absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none'>
               <svg
                 className='w-4 h-4 text-gray-500 dark:text-gray-400'

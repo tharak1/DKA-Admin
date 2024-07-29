@@ -34,8 +34,8 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
 
 
   return (
-    <div className="w-full h-screen overflow-auto p-5">
-        <div className="flex flex-col ">
+    <div className="w-full h-screen max-sm:h-full overflow-auto sm:p-5 max-sm:pt-12 ">
+        <div className="flex flex-col max-sm:items-center">
         <label htmlFor="courseType" className="max-w-xs block mb-2 text-sm font-medium text-gray-900 ">Select a course</label>
             <select id="courseType" value={questionPaper.course} onChange={(event)=>{setQuestionPaper({...questionPaper,course: event.target.value})}} className="max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
             <option value="">-- Select course --</option>

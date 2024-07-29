@@ -9,23 +9,14 @@ import { databaseStorage } from '../../../firebase_config';
 import { useSelector } from 'react-redux';
 import uploadImage from '../../../hooks/UploadImage';
 import SideBarForAdmin from '../AdminComponents/SideBarForAdminExams';
+import { MdOutlineMenuOpen } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 
 
 const baseUrl = "https://firebasestorage.googleapis.com/v0/b/divya-kala-academy.appspot.com/o/";
 
 const CreateQuestionPaper: React.FC = () => {
-
-
-
-
-
-
-
-
-
-
-
-
+  
   const [questionPaper, setQuestionPaper] = useState<QuestionPaper>({
     id:'',
     course: '',
@@ -78,6 +69,9 @@ const CreateQuestionPaper: React.FC = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<ImagePreview[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
+  const [drawer, setDrawer] = useState<boolean>(false);
+
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -192,8 +186,8 @@ const CreateQuestionPaper: React.FC = () => {
           {
             questionPaper.examType==="upload question Paper"?(
 
-            <div className=" col-span-3 col-start-1 grid grid-cols-2 grid-rows-6 h-full  w-full p-10 row-span-7">
-              <div className='row-start-1 row-span-1'>
+            <div className="relative col-span-3 col-start-1 grid grid-cols-2 grid-rows-6 max-sm:grid-rows-12 h-full  w-full max-sm:p-3 p-10 row-span-8 max-sm:col-span-4 dark:bg-slate-900">
+              <div className='row-start-1 row-span-1 max-sm:col-span-2'>
                 <input
                   type="file"
                   accept="image/*"
@@ -219,13 +213,13 @@ const CreateQuestionPaper: React.FC = () => {
                 <p>Selected {selectedFiles.length} file(s)</p>
               )}
 
-              <div className="mt-4 col-span-1 col-start-1 row-start-2 row-span-6 overflow-auto">
+              <div className="mt-4 col-span-1 max-sm:col-span-2 col-start-1 row-start-2 row-span-6 max-sm:row-span-5 overflow-auto">
                 {imagePreviews && imagePreviews.length === 0 ? (
                   <h2>No images selected</h2>
                 ) : (
                   imagePreviews.map((image, index) => (
                     <div key={index} className="flex items-center mb-4">
-                      <img src={image.preview} alt={`preview-${index}`} className="w-20 h-20 object-cover mr-2" />
+                      <img src={image.preview} alt={`preview-${index}`} className="sm:w-20 sm:h-20 max-sm:w-15 max-sm:h-15 object-cover mr-2" />
                       <button
                         className="bg-red-500 px-2 py-1 rounded-md text-white"
                         onClick={() => handleRemoveImage(index)}
@@ -238,7 +232,7 @@ const CreateQuestionPaper: React.FC = () => {
 
               </div>
 
-              <div className="mt-4 col-span-1 col-start-2 row-start-2 row-span-7  overflow-auto">
+              <div className="mt-4 col-span-1 max-sm:col-span-2 sm:col-start-2  row-start-2 row-span-7 max-sm:row-start-7 max-sm:row-span-6 overflow-auto">
 
               {
                 <p className='mb-3' >Uploaded {questionPaper.questionsImages!.length} file(s)</p>
@@ -262,12 +256,17 @@ const CreateQuestionPaper: React.FC = () => {
                 )}
               </div>
 
+              <div className={`sm:hidden absolute ${drawer?"top-5 left-5 z-20":"top-5 right-5 "} `}>
+                <button type="button" onClick={()=>{setDrawer(!drawer)}} className={`text-white bg-blue-700  hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`}>{drawer?<IoMdClose size={28}/>:<MdOutlineMenuOpen size={28}/>}</button>
+              </div>
+
 
             </div>
             )
             
             :(
-          <div className="col-span-3 w-full pl-9 pr-9 pt-4 pb-4 row-span-8 overflow-auto">
+              <div className='relative sm:col-span-3 max-sm:col-span-4 w-full row-span-8 grid grid-cols-1 grid-rows-8 dark:bg-slate-900'>
+          <div className=" sm:col-span-1 max-sm:col-span-1 w-full px-9 max-sm:p-3 py-4 row-span-8 overflow-auto">
             {questionPaper.questions.map((_question, index) => (
               <div key={index} className="mb-4">
                 <QuestionForm
@@ -311,11 +310,27 @@ const CreateQuestionPaper: React.FC = () => {
             <button onClick={printQuestions} className="bg-slate-500 px-4 py-1 rounded-md ml-4 mt-2">
               Print questions
             </button>
+
+
           </div>
+            <div className={`sm:hidden absolute ${drawer?"top-5 left-5 z-20":"top-5 right-5 "} `}>
+              <button type="button" onClick={()=>{setDrawer(!drawer)}} className={`text-white bg-blue-700  hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`}>{drawer?<IoMdClose size={28}/>:<MdOutlineMenuOpen size={28}/>}</button>
+            </div>
+          </div>
+          
+
           )}
-          <div className="col-span-1 overflow-auto row-start-1 col-start-4 row-span-8">
+
+          <div className="sm:col-span-1 overflow-auto sm:row-start-1 sm:col-start-4 sm:row-span-8 max-sm:hidden">
             <SideBarForAdmin questionPaper={questionPaper} setQuestionPaper={setQuestionPaper} />
           </div>
+
+          <div className= {`${drawer?"sm:hidden":"max-sm:hidden sm:hidden"} z-10  max-sm:w-full max-sm:h-screen max-sm:flex col-span-4 row-span-8 justify-end bg-white`} style={{ backgroundColor: 'rgba(255, 255, 255, 255 )' }}>
+            <div className='w-full h-full bg-white  dark:bg-slate-700'>
+              <SideBarForAdmin questionPaper={questionPaper} setQuestionPaper={setQuestionPaper} />
+            </div>
+          </div>
+           
         </>
       )}
     </div>

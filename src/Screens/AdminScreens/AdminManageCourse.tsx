@@ -36,6 +36,10 @@ const AdminManageCourse: React.FC = () => {
     );
   });
 
+
+  // const isOpen = useSelector((state: RootState) => state.drawer.isOpen);
+
+
   return (
    
     <div className='grid grid-cols-1 grid-rows-10  gap-y-4 items-start sm:p-6 h-screen overflow-auto'>
@@ -52,7 +56,7 @@ const AdminManageCourse: React.FC = () => {
             <label htmlFor="search-category" className="sr-only">Select Category</label>
             <select
               id="search-category"
-              className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none"
+              className=" inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-2 focus:outline-none"
               value={selectedCategory}
               onChange={handleCategoryChange}
             >
@@ -61,11 +65,12 @@ const AdminManageCourse: React.FC = () => {
                 <option value={obj.name} key={obj.id}>{obj.name}</option>
               ))}
             </select>
-            <div className="relative w-96">
+            
+            <div className={`relative w-96`}>
               <input
                 type="search"
                 id="search-dropdown"
-                className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border border-gray-300 placeholder-gray-400 focus:placeholder-gray-600"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-r-lg border border-gray-300 placeholder-gray-400 focus:placeholder-gray-600"
                 placeholder="Search courses..."
                 value={searchInput}
                 onChange={handleSearchInputChange}
@@ -93,6 +98,7 @@ const AdminManageCourse: React.FC = () => {
                 <span className="sr-only">Search</span>
               </button>
             </div>
+            
           </div>
         </form>
       </div>

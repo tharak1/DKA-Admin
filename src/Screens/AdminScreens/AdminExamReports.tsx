@@ -184,6 +184,8 @@ const AdminExamReports:React.FC = () => {
               <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center  sm:border-l-2 border-gray-500 dark:border-gray-300 items-center max-sm:items-start'>
                 <h2>Start : {new Date(obj.startDate).toLocaleDateString('en-IN')}-{obj.startTime}</h2>
                 <h2>End : {new Date(obj.endDate).toLocaleDateString('en-IN')}-{obj.endTime}</h2>
+                <h2>Exam Type : {obj.examType ==="create question paper"?"Multi correct":"written"}</h2>
+
                 
               </div>
               <div className='col-span-1 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-center items-center sm:border-l-2 border-gray-500 dark:border-gray-300 max-sm:items-start'>
