@@ -87,7 +87,7 @@ const AddExamModal:React.FC = () => {
                             >
                                 <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl p-2 text-left align-middle shadow-xl transition-all bg-gray-50">
                                     <section>
-                                        <div className="flex flex-col items-center justify-center p-8 mx-auto lg:py-0">
+                                        <div className="flex flex-col items-center justify-center  mx-auto lg:py-0">
                                             <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0">
                                                 <div className='w-full flex justify-end items-center mt-2 hover:cursor-pointer' onClick={closeModal} ><IoMdClose size={28}/></div>
                                                 <div className="px-6 space-y-4 md:space-y-6 sm:p-8">
