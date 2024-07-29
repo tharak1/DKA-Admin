@@ -170,7 +170,7 @@ const AdminExamReports:React.FC = () => {
             </div>
           </div>
           {examDetailsList.map((obj,index) => (
-            <div
+            <div 
               className='w-full grid grid-cols-6 max-sm:grid-cols-1 max-sm:grid-rows-4 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600 hover:cursor-pointer' onClick={()=>{
                 navigate('/admin/online_exam_viewport', { state: { examDetails:examDetailsList[index],regStu:regStuCourse } });
               }}

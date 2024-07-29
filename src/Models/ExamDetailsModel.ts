@@ -20,10 +20,10 @@ interface CreateQuestionPaperPerformance {
   interface ExamDetails {
     id:string;
     course: string;
-    startDate: string;  // Consider using Date type if you are working with date objects
-    startTime: string;  // Consider using Date type if you are working with time objects
-    endDate: string;    // Consider using Date type if you are working with date objects
-    endTime: string;    // Consider using Date type if you are working with time objects
+    startDate: string;  
+    startTime: string;  
+    endDate: string;    
+    endTime: string;    
     duration: number;
     totalMarks: number;
     examType: string;

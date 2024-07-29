@@ -36,9 +36,9 @@ const LoginScreen: React.FC = () => {
             if (fetchedUser) {
                 dispatch(loginUser(fetchedUser));
                 if ((fetchedUser as EmployeeModel).isAdmin) {
-                    navigate('/admin/dashboard');
+                    navigate('/admin/dashboard',{replace:true});
                 } else {
-                    navigate('/admin/manage_questionPaper');
+                    navigate('/admin/manage_questionPaper',{replace:true});
                 }
                 console.log(fetchedUser);
             } else {

@@ -85,9 +85,6 @@ function App() {
                     <Route path="/admin/payments" element={<AdminShowPayments />} />
                     <Route path="/admin/other" element={<AdminOtherThings />} />
                     <Route path="/admin/view_student_details" element={<ViewStudentDataInformation />} />
-
-
-                    
                   </>
                 )}
               </Route>
