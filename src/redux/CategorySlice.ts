@@ -11,7 +11,7 @@ interface CategorySlice{
 
 const initialState : CategorySlice ={
     Categories:[],
-    status: 'idle',
+    status: 'idle', 
     error: null,
 };
 

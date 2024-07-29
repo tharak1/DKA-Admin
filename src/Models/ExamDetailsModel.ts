@@ -16,7 +16,7 @@ interface CreateQuestionPaperPerformance {
   }
   
   type StudentPerformance = CreateQuestionPaperPerformance | UploadQuestionPaperPerformance;
-  
+   
   interface ExamDetails {
     id:string;
     course: string;
