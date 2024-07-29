@@ -154,7 +154,7 @@ const AdminOnlineExamViewPort:React.FC = () => {
 
                 {
                   filteredStudents.map((obj,index)=>(
-                    <DisplayOnlineExamMarks stuMarks={obj} key={index} QpId={examDetails.id} noOfQuestions={examDetails.noOfQuestions}/>
+                    <DisplayOnlineExamMarks stuMarks={obj} key={index} QpId={examDetails.id} noOfQuestions={examDetails.noOfQuestions} course={examDetails.course}/>
                   ))
                 }
                 </>

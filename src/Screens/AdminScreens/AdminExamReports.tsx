@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../firebase_config';
 import Navbar from './AdminComponents/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { GetUser } from '../../redux/UserSlice';
 import { EmployeeModel } from '../../Models/EmployeeModel';
 import { GetCourses } from '../../redux/CourcesSlice';
 import { CourseModel } from '../../Models/CourceModel';
+import { useAppDispatch } from '../../redux/PersistanceStorage';
+import { fetchOnlineExamResults, selectOnlineExamResults } from '../../redux/ExamReportsSlice';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../firebase_config';
 
 const AdminExamReports:React.FC = () => {
   const [courseName, setCourseName] = useState<string>("");
@@ -18,12 +20,17 @@ const AdminExamReports:React.FC = () => {
 
   const navigate = useNavigate();
 
+
+  const dispatch = useAppDispatch();
+
+  const examResults = useSelector(selectOnlineExamResults);
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const querySnapshot = await getDocs(query(collection(db, "Online-exam-results"),where("course","==",courseName)));
       
       const regStuCourseSnapshot = await getDocs(query(collection(db, "regStuByCourse"),where("courseName","==",courseName)));
 
@@ -35,55 +42,15 @@ const AdminExamReports:React.FC = () => {
       }));
     
       setRegStuCourse(regStuByCourse[0]);
+      dispatch(fetchOnlineExamResults(courseName));
 
-      const fetchedExamDetails: ExamDetails[] = [];
+      if(examResults){
+        setExamDetailsList(examResults);
+      }
+      else{
+        setExamDetailsList([]);
+      }
 
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const students: StudentPerformance[] = data.students.map((studentData: any) => {
-          if (data.examType === "create question paper") {
-            return {
-              correctAnswers: studentData.correctAnswers,
-              incorrectAnswers: studentData.incorrectAnswers,
-              marksObtained: studentData.marksObtained,
-              studentId: studentData.studentId,
-              studentName: studentData.studentName,
-              unanswered: studentData.unanswered
-            } as CreateQuestionPaperPerformance;
-          } else if (data.examType === "upload question Paper") {
-            console.log(studentData);
-            
-            return {
-              evaluated: studentData.evaluated,
-              marksObtained: studentData.marksObtained,
-              studentId: studentData.studentId,
-              studentName: studentData.studentName,
-              uploadedPagesUrl: studentData.uploadedPagesUrl
-            } as UploadQuestionPaperPerformance;
-          }
-          return {} as StudentPerformance;
-        });
-
-        const examDetails: ExamDetails = {
-          id:doc.id,
-          course: data.course,
-          startDate: data.startDate,
-          startTime: data.startTime,
-          endDate: data.endDate,
-          endTime: data.endTime,
-          duration: data.duration,
-          totalMarks: data.totalMarks,
-          examType: data.examType,
-          noOfQuestions: data.noOfQuestions,
-          students: students
-        };
-
-        fetchedExamDetails.push(examDetails);
-      });
-      console.log(fetchedExamDetails);
-
-      setExamDetailsList(fetchedExamDetails);
-      
 
     } catch (error) {
       console.error("Error fetching documents: ", error);
@@ -93,6 +60,16 @@ const AdminExamReports:React.FC = () => {
       setLoading(false);
     }
   };
+
+
+
+
+  // useEffect(()=>{
+  //   setLoading(true);
+  //   dispatch(fetchOnlineExamResults(courseName));
+  //   setLoading(true);
+  //   setError("");
+  // },[]);
 
   const user = useSelector(GetUser) as EmployeeModel;
   const courses = user.isAdmin? useSelector(GetCourses).map((obj:CourseModel)=>obj.courseName!) : user.coursesTaught;

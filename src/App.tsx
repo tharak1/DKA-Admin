@@ -8,7 +8,6 @@ import AdminShowPendingPayments from './Screens/AdminScreens/AdminShowPendingPay
 import AdminMarksScreen from './Screens/AdminScreens/AdminMarksScreen';
 import ResultsScreen from './Screens/Client_screens/ResultsScreen';
 import AdminOnlineExamViewPort from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminOnlineExamViewPort';
-import AdminEvaluationScreen from './Screens/AdminScreens/AdminEvaluationScreen';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import AdminViewFullPaymentHistory from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminViewFullPaymentHistory';
 import LoginScreen from './Screens/LoginScreen';
@@ -33,6 +32,7 @@ import ViewCharityDonationsScreen from './Screens/AdminScreens/AdminSupportScree
 import ViewCharityUploads from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewCharityUploads';
 import ViewAchievementsUploads from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewAchievementsUpload';
 import ViewStudentDataInformation from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewStudentINformation';
+import AdminEvaluationScreen from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminEvaluationScreen';
 
 function App() {
   const user = useSelector(GetUser) as EmployeeModel;

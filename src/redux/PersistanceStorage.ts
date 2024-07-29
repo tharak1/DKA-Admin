@@ -10,6 +10,7 @@ import userReducer from './UserSlice';
 import drawerReducer from './DrawerSlice';
 import charityUploadsReducer from './CharityUploadSlice';
 import achievementsUploadsReducer from './AchievementsUploadSlice';
+import onlineExamResultsReducer from './ExamReportsSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 
@@ -28,7 +29,8 @@ const reducer = combineReducers({
     user:userReducer,
     drawer:drawerReducer,
     charityUploads:charityUploadsReducer,
-    achievementsUploads:achievementsUploadsReducer
+    achievementsUploads:achievementsUploadsReducer,
+    onlineExamResults:onlineExamResultsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig,reducer);

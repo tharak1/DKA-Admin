@@ -6,10 +6,11 @@ type StudentPerformance = CreateQuestionPaperPerformance | UploadQuestionPaperPe
 interface DisplayOnlineExamMarksProps {
   stuMarks: StudentPerformance;
   QpId:string;
-  noOfQuestions:number
+  noOfQuestions:number;
+  course:string;
 }
 
-const DisplayOnlineExamMarks: React.FC<DisplayOnlineExamMarksProps> = ({ stuMarks,QpId,noOfQuestions }) => {
+const DisplayOnlineExamMarks: React.FC<DisplayOnlineExamMarksProps> = ({ stuMarks,QpId,noOfQuestions,course }) => {
   console.log(noOfQuestions);
   
   const isCreateQuestionPaperPerformance = (
@@ -53,7 +54,7 @@ const DisplayOnlineExamMarks: React.FC<DisplayOnlineExamMarksProps> = ({ stuMark
           </div>
           <div className="flex flex-col items-center justify-center max-sm:justify-end max-sm:items-start col-span-1">
             <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 max-sm:px-2 py-2.5 max-sm:py-2 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" 
-            onClick={()=>{navigate('/admin/online_exam_evaluation', { state: { stuSubmission:stuMarks ,QpId:QpId,noOfQuestions:noOfQuestions} });}}
+            onClick={()=>{navigate('/admin/online_exam_evaluation', { state: { stuSubmission:stuMarks ,QpId:QpId,noOfQuestions:noOfQuestions,course} });}}
             >{stuMarks.evaluated ? 'Re Evaluate' : 'Evaluate'}</button>
           </div>
         </>
