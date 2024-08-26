@@ -113,7 +113,7 @@ const AdminAddCourseScreen: React.FC = () => {
         console.log(filePath);
         await deleteObject(desertRef);
 
-        const imageUrl = await uploadImage(imageFile!, values.courseName!, "courses");
+        const imageUrl = await uploadImage(imageFile!,"Course", "courses");
         await dispatch(editCourse({ ...formValues, image: imageUrl  }))
       }
       else{
