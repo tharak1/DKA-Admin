@@ -130,7 +130,7 @@ const AdminAddCourseScreen: React.FC = () => {
         return;
       }
       setLoading(true);
-      const imageUrl = await uploadImage(imageFile!, values.courseName!, "courses");
+      const imageUrl = await uploadImage(imageFile!, "Course", "courses");
       await dispatch(CreateCourse({ ...formValues, image: imageUrl }));
       setLoading(false);
       openSubmit();
