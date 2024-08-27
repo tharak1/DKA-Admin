@@ -36,6 +36,10 @@ const AdminMarksScreen: React.FC = () => {
       const docRef = doc(db, 'performances', courseName);
       const fetchedData = await getDoc(docRef);
 
+      console.log('====================================');
+      console.log(fetchedData.data()!);
+      console.log('====================================');
+
       if (fetchedData.exists()) {
         setStudentPerformances(fetchedData.data()!.students);
         setFetched(true);

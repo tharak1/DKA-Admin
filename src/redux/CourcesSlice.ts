@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {CourseModel} from "../Models/CourceModel";
-import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase_config";
 
 
@@ -65,6 +65,7 @@ export const editCourse = createAsyncThunk(
     async(UpdatedCourseData:CourseModel)=>{
         const courseId = UpdatedCourseData.id; 
         const courseRef = doc(db, 'courses',courseId!);
+        await updateDoc(doc(db,'performances',UpdatedCourseData.id!),{performanceTemplate:convertListToObject(UpdatedCourseData.coursePerformance!)});
         await setDoc(courseRef,UpdatedCourseData, { merge: true });
         return UpdatedCourseData;
     }

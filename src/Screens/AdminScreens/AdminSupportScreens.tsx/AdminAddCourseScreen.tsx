@@ -163,7 +163,7 @@ const AdminAddCourseScreen: React.FC = () => {
     if (inputElement) {
       const newPerformance = inputElement.value;
       if (!performance.includes(newPerformance)) {
-        setPerformance([...performance, newPerformance]);
+        setPerformance([...performance, newPerformance]); 
       }
       inputElement.value = "";
     }
