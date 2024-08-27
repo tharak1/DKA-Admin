@@ -36,7 +36,7 @@ const CharityUploadCard:React.FC<CharityUploadCardProps> = ({CharityUploadData})
   return (
     <div className="card h-[370px] relative bg-white dark:bg-slate-700 dark:text-white rounded-md p-4 flex flex-col justify-center items-start">
       <div>
-        <h2 className="text-lg font-bold">{CharityUploadData.description}</h2>
+        <h2 className="text-lg font-bold ellipsis">{CharityUploadData.description}</h2>
         <p className="text-sm">Date Created : {CharityUploadData.date}</p>
       </div>
 
