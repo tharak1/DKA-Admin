@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import CategoryModel from "../Models/CategoryModel";
-import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase_config";
+import { CourseModel } from "../Models/CourceModel";
 
 interface CategorySlice{
     Categories: CategoryModel[];
@@ -40,14 +41,34 @@ export const CreateCategory = createAsyncThunk(
 
 export const editCategory = createAsyncThunk(
     'categories/editCategory',
-    async(UpdatedCategoryData:CategoryModel)=>{
-        const courseId = UpdatedCategoryData.id; 
-        const courseRef = doc(db, 'categories',courseId!);
-        setDoc(courseRef,UpdatedCategoryData, { merge: true });
+    async (UpdatedCategoryData: CategoryModel) => {
+        const courseId = UpdatedCategoryData.id;
+        
+        console.log('====================================');
+        console.log( UpdatedCategoryData.prevCatName!);
+        console.log('====================================');
+
+        const q = query(collection(db, "courses"), where("category", "==", UpdatedCategoryData.prevCatName!));
+        const querySnapshot = await getDocs(q);
+        const courses: CourseModel[] = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        })) as CourseModel[];
+
+
+
+        for (const course of courses) {
+            const courseRef = doc(db, "courses", course.id!);
+            await updateDoc(courseRef, { category: UpdatedCategoryData.name });
+        }
+
+        const categoryRef = doc(db, 'categories', courseId!);
+        await setDoc(categoryRef, UpdatedCategoryData, { merge: true });
 
         return UpdatedCategoryData;
     }
 );
+
 
 export const deleteCategory = createAsyncThunk(
     'categories/deleteCategory',

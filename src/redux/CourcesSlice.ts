@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {CourseModel} from "../Models/CourceModel";
-import { addDoc, collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase_config";
 
 
@@ -60,16 +60,55 @@ export const fetchCourses = createAsyncThunk(
     }
   );
 
+// export const editCourse = createAsyncThunk(
+//     'course/editCourse',
+//     async(UpdatedCourseData:CourseModel)=>{
+//         const courseId = UpdatedCourseData.id; 
+//         const courseRef = doc(db, 'courses',courseId!);
+
+//         await updateDoc(doc(db,'performances',UpdatedCourseData.id!),{performanceTemplate:convertListToObject(UpdatedCourseData.coursePerformance!)});
+//         await setDoc(courseRef,UpdatedCourseData, { merge: true });
+//         return UpdatedCourseData;
+//     }
+// );
+
 export const editCourse = createAsyncThunk(
     'course/editCourse',
-    async(UpdatedCourseData:CourseModel)=>{
-        const courseId = UpdatedCourseData.id; 
-        const courseRef = doc(db, 'courses',courseId!);
-        await updateDoc(doc(db,'performances',UpdatedCourseData.id!),{performanceTemplate:convertListToObject(UpdatedCourseData.coursePerformance!)});
-        await setDoc(courseRef,UpdatedCourseData, { merge: true });
+    async (UpdatedCourseData: CourseModel) => {
+        const courseId = UpdatedCourseData.id;
+        const courseRef = doc(db, 'courses', courseId!);
+
+        // Update the course data in Firestore
+        await setDoc(courseRef, UpdatedCourseData, { merge: true });
+
+        // Fetch the performance document associated with the course
+        const performanceRef = doc(db, 'performances', courseId!);
+        const performanceSnapshot = await getDoc(performanceRef);
+
+        if (performanceSnapshot.exists()) {
+            const performanceData = performanceSnapshot.data();
+
+            // Update the performance template
+            const updatedPerformanceTemplate = convertListToObject(UpdatedCourseData.coursePerformance!);
+            performanceData.performanceTemplate = updatedPerformanceTemplate;
+
+            // Update all students in the performance document with the new template values
+            const updatedStudents = performanceData.students.map((student: any) => ({
+                ...student,
+                ...updatedPerformanceTemplate,
+            }));
+
+            // Save the updated performance data
+            await updateDoc(performanceRef, {
+                performanceTemplate: updatedPerformanceTemplate,
+                students: updatedStudents
+            });
+        }
+
         return UpdatedCourseData;
     }
 );
+
 
 export const deleteCourse = createAsyncThunk(
     'course/deleteCourse',

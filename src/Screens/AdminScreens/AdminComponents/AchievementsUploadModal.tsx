@@ -1,14 +1,12 @@
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { formatDate } from '../../../hooks/DateFormater';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import { databaseStorage } from '../../../firebase_config';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
-import { createAchievementsUpload, editAchievementsUpload, selectAchievementsUploads } from '../../../redux/AchievementsUploadSlice';
+import { createAchievementsUpload, editAchievementsUpload } from '../../../redux/AchievementsUploadSlice';
 import { AchievementsUploadModel } from '../../../Models/CharityModel';
-import { useSelector } from 'react-redux';
-
 interface ModalProps {
   type: string;
   achievementsData?: AchievementsUploadModel;
@@ -16,22 +14,21 @@ interface ModalProps {
 
 const AchievementsUploadModal: React.FC<ModalProps> = ({ type, achievementsData }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [achievement, setAchievement] = useState<{ description: string; image: File | null }>({ description: '', image: null });
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [achievement, setAchievement] = useState<{ description: string; image: string | null }>({ description: achievementsData?achievementsData.description:'', image:achievementsData?achievementsData.image: null });
+  const [imagePreview, setImagePreview] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  const achievements = useSelector(selectAchievementsUploads);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result as string);
+        setImagePreview(file);
       };
-      reader.readAsDataURL(file);
-      setAchievement((prev) => ({ ...prev, image: file }));
+      setImagePreview(file);
+
     }
   };
 
@@ -44,9 +41,10 @@ const AchievementsUploadModal: React.FC<ModalProps> = ({ type, achievementsData 
   };
 
   const uploadImage = async (): Promise<string> => {
-    if (!achievement.image) return '';
+    if (!imagePreview) return '';
     const imageRef = ref(databaseStorage, `achievements/${uuidv4()}`);
-    const snapshot = await uploadBytes(imageRef, achievement.image);
+    const snapshot = await uploadBytes(imageRef, imagePreview);
+
     return await getDownloadURL(snapshot.ref);
   };
 
@@ -67,13 +65,36 @@ const AchievementsUploadModal: React.FC<ModalProps> = ({ type, achievementsData 
 
   const updateAchievement = async () => {
     setLoading(true);
-    const obj = {
-      description: achievement.description,
-      date: formatDate(new Date()),
-      image: achievementsData?.image || '',
-      id: achievementsData?.id,
-    };
-    dispatch(editAchievementsUpload(obj));
+
+    if(imagePreview){
+      const baseUrl = "https://firebasestorage.googleapis.com/v0/b/divya-kala-academy.appspot.com/o/";
+      const filePath = decodeURIComponent(achievementsData!.image.split(baseUrl)[1].split("?")[0]);
+      const desertRef = ref(databaseStorage, filePath);
+      console.log(filePath);
+      await deleteObject(desertRef);
+
+      const imageUrl = await uploadImage();
+      const obj = {
+        description: achievement.description,
+        date: formatDate(new Date()),
+        image: imageUrl,
+        id: achievementsData?.id,
+      };
+      dispatch(editAchievementsUpload(obj));
+    }
+    else{
+
+      const obj = {
+        description: achievement.description,
+        date: formatDate(new Date()),
+        image: achievementsData?.image || '',
+        id: achievementsData?.id,
+      };
+      dispatch(editAchievementsUpload(obj));
+
+    }
+
+
     setLoading(false);
     setAchievement({ description: '', image: null });
     setImagePreview(null);
@@ -87,9 +108,8 @@ const AchievementsUploadModal: React.FC<ModalProps> = ({ type, achievementsData 
         type="button"
         onClick={openModal}
         className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2"
-        disabled={achievements.length >= 5 && type==='create'}
       >
-        {achievements.length >= 5 && type==='create' ? "Limit Met" : (type === 'create' ? "Add Achievement" : "Update Achievement")}
+        {type==='create'? "Add achivements":"Update"}
       </button>
     </div>
 
@@ -128,15 +148,8 @@ const AchievementsUploadModal: React.FC<ModalProps> = ({ type, achievementsData 
                               <label htmlFor="achievementDescription" className="block mb-2 text-sm font-medium text-gray-900">
                                 Achievement Description
                               </label>
-{                             
- type === 'update'?<textarea
- value={achievementsData?.description}
- onChange={(e) => setAchievement((prev) => ({ ...prev, description: e.target.value }))}
- name="achievementDescription"
- id="achievementDescription"
- className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
- required
-/>:<textarea
+                              {                             
+                                <textarea
                                 value={achievement.description}
                                 onChange={(e) => setAchievement((prev) => ({ ...prev, description: e.target.value }))}
                                 name="achievementDescription"
@@ -161,12 +174,12 @@ const AchievementsUploadModal: React.FC<ModalProps> = ({ type, achievementsData 
                             </div>
                             {type === 'create' && imagePreview && (
                               <div>
-                                <img src={imagePreview} alt="Achievement Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
+                                <img src={URL.createObjectURL(imagePreview)} alt="Achievement Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
                               </div>
                             )}
                             {type === 'update' && achievementsData?.image && (
                               <div>
-                                <img src={achievementsData.image} alt="Achievement Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
+                                <img src={imagePreview?URL.createObjectURL(imagePreview): achievementsData.image} alt="Achievement Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
                               </div>
                             )}
                           </form>

@@ -1,13 +1,13 @@
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import { CreateCategory, editCategory, fetchCategories } from '../../../redux/CategorySlice';
+import { Fragment, useState } from 'react';
+import { CreateCategory, editCategory } from '../../../redux/CategorySlice';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
 import { formatDate } from '../../../hooks/DateFormater';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import { databaseStorage } from '../../../firebase_config';
 import { v4 as uuidv4 } from 'uuid';
 import CategoryModel from '../../../Models/CategoryModel';
-
+ 
 interface ModalProps{
     type:string;
     categoryData?:CategoryModel
@@ -16,23 +16,24 @@ interface ModalProps{
 const Modal:React.FC<ModalProps> = ({type,categoryData})=> {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState(false);
-    const [category, setCategory] = useState<{ name: string; image: File | null }>({ name: '', image: null });
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [category, setCategory] = useState<{ name: string; image: string | null }>({ name: categoryData ? categoryData.name:'' , image:categoryData ? categoryData.image : null });
+    const [imagePreview, setImagePreview] = useState<File | null>(null);
     const [loading,setLoading] = useState<boolean>(false);
 
-    useEffect(()=>{
-        dispatch(fetchCategories());
-    },[])
+
+    // useEffect(()=>{
+    //     dispatch(fetchCategories());
+    // },[])
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImagePreview(reader.result as string);
+                setImagePreview(file);
             };
             reader.readAsDataURL(file);
-            setCategory((prev) => ({ ...prev, image: file }));
+            setImagePreview(file);
         }
     };
 
@@ -45,9 +46,9 @@ const Modal:React.FC<ModalProps> = ({type,categoryData})=> {
     };
 
     const uploadImage = async (): Promise<string> => {
-        if (!category.image) return '';
+        if (!imagePreview) return '';
         const imageRef = ref(databaseStorage, `categories/${category.name + uuidv4()}`);
-        const snapshot = await uploadBytes(imageRef, category.image);
+        const snapshot = await uploadBytes(imageRef, imagePreview!);
         return await getDownloadURL(snapshot.ref);
     };
 
@@ -69,13 +70,39 @@ const Modal:React.FC<ModalProps> = ({type,categoryData})=> {
 
     const updateCategory = async() =>{
         setLoading(true);
-        const obj = {
-            name: category.name,
-            date: formatDate(new Date()),
-            image: categoryData?.image!,
-            id:categoryData?.id
-        };
-        await dispatch(editCategory(obj));
+        if(imagePreview){
+            const baseUrl = "https://firebasestorage.googleapis.com/v0/b/divya-kala-academy.appspot.com/o/";
+            console.log('====================================');
+            console.log(category.image);
+            console.log('====================================');
+            const filePath = decodeURIComponent(category.image!.split(baseUrl)[1].split("?")[0]);
+            const desertRef = ref(databaseStorage, filePath);
+            console.log(filePath);
+            await deleteObject(desertRef);
+
+            const imageUrl = await uploadImage();
+            const obj = {
+                name: category.name,
+                date: formatDate(new Date()),
+                image: imageUrl,
+                id:categoryData?.id,
+                prevCatName:categoryData?.name,
+            }; 
+
+
+
+            await dispatch(editCategory(obj));
+        }
+        else{
+            const obj = {
+                name: category.name,
+                date: formatDate(new Date()),
+                image: categoryData?.image!,
+                id:categoryData?.id,
+                prevCatName:categoryData?.name,
+            };
+            await dispatch(editCategory(obj));
+        }
         setLoading(false);
         setCategory({name: '', image: null })
         setImagePreview(null);
@@ -156,11 +183,11 @@ const Modal:React.FC<ModalProps> = ({type,categoryData})=> {
 
                                                         imagePreview && (
                                                             <div>
-                                                                <img src={imagePreview} alt="Category Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
+                                                                <img src={URL.createObjectURL(imagePreview)} alt="Category Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
                                                             </div>
                                                         ):
                                                         <div>
-                                                        <img src={categoryData?.image!} alt="Category Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
+                                                        <img src={imagePreview ?URL.createObjectURL(imagePreview) :categoryData?.image!} alt="Category Preview" className="object-contain w-full h-48 mt-4 rounded-lg" />
                                                     </div>
                                                     
                                                         }
