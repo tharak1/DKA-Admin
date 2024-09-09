@@ -33,6 +33,7 @@ import ViewCharityUploads from './Screens/AdminScreens/AdminSupportScreens.tsx/V
 import ViewAchievementsUploads from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewAchievementsUpload';
 import ViewStudentDataInformation from './Screens/AdminScreens/AdminSupportScreens.tsx/ViewStudentINformation';
 import AdminEvaluationScreen from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminEvaluationScreen';
+import AdminEditAboutUsScreen from './Screens/AdminScreens/AdminSupportScreens.tsx/AdminEditAboutUsScreen';
 
 function App() {
   const user = useSelector(GetUser) as EmployeeModel;
@@ -85,6 +86,8 @@ function App() {
                     <Route path="/admin/payments" element={<AdminShowPayments />} />
                     <Route path="/admin/other" element={<AdminOtherThings />} />
                     <Route path="/admin/view_student_details" element={<ViewStudentDataInformation />} />
+                    <Route path="/admin/texts" element={<AdminEditAboutUsScreen />} /> 
+
                   </>
                 )}
               </Route>
