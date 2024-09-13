@@ -26,7 +26,7 @@ const ViewCharityUploads:React.FC = () => {
         <div className='w-full'>
             <Navbar name='Charity Updates'/>
         </div>
-        <div className='mt-4 flex items-start'>
+        <div className='mt-4 max-sm:mt-24 max-sm:ml-4 flex items-start'>
           <CharityUploadModal type='create'/>
         </div>
 
