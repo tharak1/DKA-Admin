@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 
 const AdminOtherThings:React.FC = () => {
   return (
-    <div className='w-full h-screen grid sm:grid-cols-4 max-sm:grid-cols-1 grid-rows-9 sm:p-6 gap-3 overflow-auto '>
+    <div className='w-full h-screen grid sm:grid-cols-4 max-sm:grid-cols-1 sm:p-6 gap-3 overflow-auto '>
         <div className="col-span-4 max-sm:col-span-1 row-span-1 ">
             <Navbar name='Others'/>
         </div>
 
-        <div className="col-span-1 row-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 max-sm:m-3">
+        <div className="col-span-1  p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 max-sm:mb-3 max-sm:mx-3 max-sm:mt-20 ">
             <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Reviews</h5>
             </a>
@@ -23,7 +23,7 @@ const AdminOtherThings:React.FC = () => {
         </div>
 
 
-        <div className="col-span-1 row-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  max-sm:m-3">
+        <div className="col-span-1  p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  max-sm:m-3">
             <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Charity Donations</h5>
             </a>
@@ -37,7 +37,7 @@ const AdminOtherThings:React.FC = () => {
         </div>
 
 
-        <div className="col-span-1 row-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 max-sm:m-3">
+        <div className="col-span-1  p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 max-sm:m-3 ">
             <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Charity Update</h5>
             </a>
@@ -50,7 +50,7 @@ const AdminOtherThings:React.FC = () => {
             </Link>
         </div>
 
-        <div className="col-span-1 row-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 max-sm:m-3">
+        <div className="col-span-1  p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 max-sm:m-3">
             <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Achievements</h5>
             </a>
@@ -63,7 +63,7 @@ const AdminOtherThings:React.FC = () => {
             </Link>
         </div>
 
-        <div className="col-span-1 row-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 max-sm:m-3">
+        <div className="col-span-1  p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 max-sm:m-3">
             <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Text</h5>
             </a>
