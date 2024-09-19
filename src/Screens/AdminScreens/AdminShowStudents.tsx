@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './AdminComponents/Navbar';
 import { UserModel } from '../../Models/UserModel';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs} from 'firebase/firestore';
 import { db } from '../../firebase_config';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
@@ -10,60 +10,130 @@ import countryList from 'react-select-country-list';
 const AdminShowStudents: React.FC = () => {
   const [searchKey, setSearchKey] = useState<string>('');
   const [student, setStudent] = useState<UserModel[]>([]);
+  const [filteredStudent, setFilteredStudent] = useState<UserModel[]>([]);
+
   const [loading, setLoading] = useState<boolean>(false);
   const options = countryList().getData();
   const [searchCountry, setSearchCountry] = useState<string>('');
 
   const navigate = useNavigate();
 
-  const findStudent = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const findStudent = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     let studentsQuery;
+  //     const idPattern = /^DKA\d{5}$/;
+
+  //     if (searchCountry) {
+  //       // If a country is selected, include it in the query
+  //       studentsQuery = query(
+  //         collection(db, 'students'),
+  //         where('country', '==', searchCountry)
+  //       );
+  //     } else if (idPattern.test(searchKey)) {
+  //       // Search by ID if searchKey matches the ID pattern
+  //       studentsQuery = query(
+  //         collection(db, 'students'),
+  //         where('id', '==', searchKey)
+  //       );
+  //     } else {
+  //       // Search by name for non-ID pattern searchKey
+  //       studentsQuery = query(
+  //         collection(db, 'students'),
+  //         where('name', '>=', searchKey),
+  //         where('name', '<=', searchKey + '\uf8ff')
+  //       );
+  //     }
+
+      // const querySnapshot = await getDocs(studentsQuery);
+
+      // const studentsList: UserModel[] = [];
+      // querySnapshot.forEach((doc) => {
+      //   studentsList.push(doc.data() as UserModel);
+      // });
+
+      // setStudent(studentsList);
+  //   } catch (error) {
+  //     console.error('Error fetching student data:', error);
+  //     setStudent([]);
+  //   }
+
+  //   setLoading(false);
+  // };
+
+  useEffect(()=>{
+    getAllStudents();
+  },[]);
+
+  const getAllStudents = async () => {
     setLoading(true);
-
+  
     try {
-      let studentsQuery;
-      const idPattern = /^DKA\d{5}$/;
-
-      if (searchCountry) {
-        // If a country is selected, include it in the query
-        studentsQuery = query(
-          collection(db, 'students'),
-          where('country', '==', searchCountry)
-        );
-      } else if (idPattern.test(searchKey)) {
-        // Search by ID if searchKey matches the ID pattern
-        studentsQuery = query(
-          collection(db, 'students'),
-          where('id', '==', searchKey)
-        );
-      } else {
-        // Search by name for non-ID pattern searchKey
-        studentsQuery = query(
-          collection(db, 'students'),
-          where('name', '>=', searchKey),
-          where('name', '<=', searchKey + '\uf8ff')
-        );
-      }
-
-      const querySnapshot = await getDocs(studentsQuery);
-
+      const querySnapshot = await getDocs(collection(db, 'students'));
+  
       const studentsList: UserModel[] = [];
+  
       querySnapshot.forEach((doc) => {
-        studentsList.push(doc.data() as UserModel);
+        const data = doc.data();
+        
+        // Type checking for UserModel properties
+        if (isValidUserModel(data)) {
+          studentsList.push(data as UserModel);
+        }
       });
-
+  
       setStudent(studentsList);
     } catch (error) {
-      console.error('Error fetching student data:', error);
-      setStudent([]);
+      console.error("Error fetching students: ", error);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
+  
+  // Helper function to validate UserModel
+  const isValidUserModel = (data: any): data is UserModel => {
+    return (
+      typeof data.id === 'string' &&
+      typeof data.name === 'string' &&
+      typeof data.fatherName === 'string' &&
+      typeof data.motherName === 'string' &&
+      typeof data.dob === 'string' &&
+      typeof data.gender === 'string' &&
+      typeof data.address === 'string' &&
+      typeof data.contactNo === 'string' &&
+      typeof data.schoolName === 'string' &&
+      typeof data.class === 'string' &&
+      typeof data.hearAbout === 'string' &&
+      typeof data.password === 'string' &&
+      typeof data.imageUrl === 'string' &&
+      Array.isArray(data.registeredCourses) && // Additional check for registeredCourses
+      typeof data.email === 'string' &&
+      typeof data.country === 'string' &&
+      (typeof data.feedback === 'undefined' || typeof data.feedback === 'string')
+    );
+  };
+
+  useEffect(() => {
+    console.log('====================================');
+    console.log(searchKey, searchCountry);
+    console.log('====================================');
+  
+    let x = student.filter(student => 
+      (student.id.toLowerCase().includes(searchKey.toLowerCase()) || 
+      student.name.toLowerCase().includes(searchKey.toLowerCase())) &&
+      (searchCountry === '' || student.country.toLowerCase() === searchCountry.toLowerCase())
+    );
+  
+    setFilteredStudent(x);
+  
+  }, [searchKey, searchCountry, student]);
+  
+
 
   const changeHandler = (value: any) => {
     setSearchCountry(value.label);
-    
   };
 
   return (
@@ -73,7 +143,7 @@ const AdminShowStudents: React.FC = () => {
       </div>
 
       <div className='col-span-1 max-sm:col-span-3 row-span-1 max-sm:p-3 z-10'>
-        <form className='max-w-md' onSubmit={findStudent}>
+        <form className='max-w-md' >
           <label htmlFor='default-search' className='mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white'>
             Search
           </label>
@@ -105,12 +175,13 @@ const AdminShowStudents: React.FC = () => {
                 setSearchKey(e.target.value);
               }}
             />
-            <button
+            {/* <button
               type='submit'
               className='text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             >
               Search
-            </button>
+            </button> */}
+
           </div>
         </form>
       </div>
@@ -124,7 +195,7 @@ const AdminShowStudents: React.FC = () => {
           className='mt-1 w-full'
           placeholder='Filter by Country'
         />
-        <form onSubmit={findStudent}>
+        <form >
             <button
               type='submit'
               className='text-white ml-5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
@@ -154,7 +225,7 @@ const AdminShowStudents: React.FC = () => {
             />
           </svg>
         </div>
-      ) : student.length > 0 ? (
+      ) : filteredStudent.length > 0 ? (
         <div className='col-span-3 row-span-8 bg-white dark:bg-slate-700 rounded-lg p-3 overflow-auto space-y-5'>
           <div className='w-full grid grid-cols-6 max-sm:grid-cols-2 py-5'>
             <div className='col-span-2 flex flex-col justify-start'>
@@ -170,7 +241,7 @@ const AdminShowStudents: React.FC = () => {
               <div>Courses Registered</div>
             </div>
           </div>
-          {student.map((obj) => (
+          {filteredStudent.map((obj) => (
             <div
               className='w-full grid grid-cols-6 max-sm:grid-cols-2 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600 hover:cursor-pointer'
               key={obj.id}
@@ -196,7 +267,7 @@ const AdminShowStudents: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className='col-span-3 row-span-5 flex items-center justify-center dark:text-white'>
+        <div className='col-span-3 row-span-8 bg-white dark:bg-slate-700 rounded-lg p-3 overflow-auto space-y-5 flex items-center justify-center dark:text-white'>
           No results found
         </div>
       )}

@@ -39,10 +39,12 @@ const AdminShowPendingPayments: React.FC = () => {
 
     useEffect(() => {
         if (PendingStudents) {
+            
             const filtered = PendingStudents.filter(student => 
                 student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 student.id.toLowerCase().includes(searchQuery.toLowerCase())
             );
+
             setFilteredStudents(filtered);
         }
     }, [searchQuery, PendingStudents]);
