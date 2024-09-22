@@ -29,7 +29,8 @@ const AddExamModal:React.FC = () => {
         totalMarks:0,
         questions : [],
         questionsImages:[],
-
+        level:"",
+        selectedStudents:[],
     })
     const user = useSelector(GetUser) as EmployeeModel;
     const courses = user.isAdmin? useSelector(GetCourses).map((obj:CourseModel)=>obj.courseName!) : user.coursesTaught;
@@ -113,8 +114,27 @@ const AddExamModal:React.FC = () => {
                                                                 <option value="All Students">All Students</option>
                                                                 <option value="Online Students">Online Students</option>
                                                                 <option value="Offline Students">Offline Students</option>
+                                                                <option value="Select Students">Select Students</option>
+
                                                             </select>
                                                         </div>
+
+                                                        {
+                                                            questionPaper.for === "Select Students" &&(
+                                                                
+                                                                <div>
+                                                                    <label htmlFor="level" className=" block mb-2 text-sm font-medium text-gray-900">Enter level</label>
+                                                                    <input
+                                                                        id="level"
+                                                                        type="text"
+                                                                        value={questionPaper.level}
+                                                                        onChange={(event)=>{setQuestionPaper({...questionPaper,level : event.target.value})}}
+                                                                        className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                                    />
+                                                                </div>
+                                                            )
+
+                                                        }
 
                                                         <div>
                                                             <label htmlFor="ExamType" className=" block mb-2 text-sm font-medium text-gray-900 ">Select exam type</label>

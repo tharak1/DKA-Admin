@@ -9,6 +9,9 @@ import { RootState, useAppDispatch } from '../../../redux/PersistanceStorage';
 import { GetCourses } from '../../../redux/CourcesSlice';
 import { replaceTempQuestionPaperById, uploadQuestionPaper } from '../../../redux/QuestionPaperSlice';
 import { CourseModel } from '../../../Models/CourceModel';
+import SelectStudentsModal from './SelectStudentsModal';
+import NotificationModal from './NotificationModal';
+
 
 interface SideBarForAdminProps{
     questionPaper: QuestionPaper;
@@ -23,14 +26,36 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
     const [dtafting,setDrafting] = React.useState<boolean>(false)
     const loading = useSelector((state: RootState) => state.questionPaper.status === 'loading');
 
+
+
+
+
     const draftPaper = () =>{
         setDrafting(true);
             dispatch(replaceTempQuestionPaperById({ id: questionPaper.id!, newQuestionPaper: questionPaper }));
             setDrafting(false);
     }
-    const uploadPaper = () =>{
-        dispatch(uploadQuestionPaper(questionPaper))
+
+    const uploadPaper = async () => {
+        await dispatch(uploadQuestionPaper(questionPaper));
+        openSubmit();
+    };
+    
+
+    let [isOpenSubmit, setIsOpenSubmit] = React.useState(false)
+
+    function openSubmit() {
+      setIsOpenSubmit(true)
     }
+  
+    function closeSubmit() {
+      setIsOpenSubmit(false)
+      navigate('/admin/manage_questionPaper');
+    }
+
+
+
+
 
 
   return (
@@ -52,6 +77,7 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
                 <option value="All Students">All Students</option>
                 <option value="Online Students">Online Students</option>
                 <option value="Offline Students">Offline Students</option>
+                <option value="Select Students">Select Students</option>
             </select>
 
 
@@ -124,7 +150,11 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
 
             {/* <h2 className="max-w-xs block mt-2 mb-2 text-sm font-medium text-gray-900">{`Total Marks : ${questionPaper.totalMarks}`}</h2> */}
 
-
+        {
+            questionPaper.for === "Select Students" &&(
+                <SelectStudentsModal questionPaper={questionPaper} setQuestionPaper={setQuestionPaper}/>
+            )
+        }
         <button  className="bg-slate-500 px-4 py-1 rounded-md ml-4 mt-4" onClick={draftPaper}>
           {dtafting ?"Drafting...":"Draft Paper"}
         </button>
@@ -136,6 +166,8 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
            Write Demo exam
         </button>
         </div>
+        <NotificationModal isOpen={isOpenSubmit} onClose={closeSubmit} heading={'Paper Uploaded'} body={"Paper has been uploaded successfully."} type='none'/>
+
     </div>
   )
 }

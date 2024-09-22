@@ -151,9 +151,9 @@ const CreateQuestionPaper: React.FC = () => {
     }));
   };
 
-  const printQuestions = () => {
-    console.log(questionPaper.questions);
-  };
+  // const printQuestions = () => {
+  //   console.log(questionPaper.questions);
+  // };
 
   useEffect(() => {
     if (questionPaper.examType !== "upload question Paper" && questionPaper.examType !== "" ) {
@@ -307,9 +307,9 @@ const CreateQuestionPaper: React.FC = () => {
             <button onClick={addQuestionForm} className="bg-sky-600 px-4 py-1 rounded-md ml-4 mt-2">
               Add question
             </button>
-            <button onClick={printQuestions} className="bg-slate-500 px-4 py-1 rounded-md ml-4 mt-2">
+            {/* <button onClick={printQuestions} className="bg-slate-500 px-4 py-1 rounded-md ml-4 mt-2">
               Print questions
-            </button>
+            </button> */}
 
 
           </div>

@@ -39,7 +39,7 @@ const AdminShowPendingPayments: React.FC = () => {
 
     useEffect(() => {
         if (PendingStudents) {
-            
+
             const filtered = PendingStudents.filter(student => 
                 student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 student.id.toLowerCase().includes(searchQuery.toLowerCase())
@@ -126,7 +126,7 @@ const AdminShowPendingPayments: React.FC = () => {
                     </div>
                 </div>
             ) : filteredStudents !== null ? (
-                <div className='col-span-2 row-span-8 h-full w-full bg-white dark:bg-slate-700 rounded-lg p-3'>
+                <div className='col-span-2 row-span-8 h-full w-full bg-white dark:bg-slate-700 rounded-lg p-3 space-y-4 overflow-auto'>
                     <div className='w-full grid grid-cols-6 py-5'>
                         <div className='col-span-2 flex flex-col justify-start'>
                             <div>Purchase</div>
@@ -143,7 +143,7 @@ const AdminShowPendingPayments: React.FC = () => {
                     </div>
                     {filteredStudents.map((obj,index) => (
                         <div
-                            className='w-full grid grid-cols-6 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600'
+                            className='w-full grid grid-cols-6  py-5  bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600'
                             key={obj.paymentId}
                         >
                             <div className='col-span-2 flex flex-col justify-start'>

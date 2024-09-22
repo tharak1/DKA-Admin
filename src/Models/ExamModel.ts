@@ -24,6 +24,7 @@ interface QuestionPaper{
     uploaded?:boolean;
     editing?:boolean;
     id?:string, 
+    level?:string, 
     examType?:string;
     uploadedPdfURL?:string,
     course:string,
@@ -36,7 +37,9 @@ interface QuestionPaper{
     totalMarks:number,
     questions : Questions[];
     questionsImages? : ImagePreview[];
-    noOfQuestions?:number
+    noOfQuestions?:number;
+    selectedStudents?:string[];
+    courseId?:string;
 }
 
 export type {options,QuestionPaper,Questions,ImagePreview}

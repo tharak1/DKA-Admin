@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 const AdminOtherThings:React.FC = () => {
   return (
     <div className='w-full h-screen grid sm:grid-cols-4 max-sm:grid-cols-1 sm:p-6 gap-3 overflow-auto '>
+
         <div className="col-span-4 max-sm:col-span-1 row-span-1 ">
             <Navbar name='Others'/>
         </div>

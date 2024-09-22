@@ -13,8 +13,8 @@ interface NotificationModalProps{
 const NotificationModal:React.FC<NotificationModalProps> = ({isOpen,onClose,heading,body,type,ActionFunction}) => {
   return (
     <Transition appear show={isOpen}>
-        <Dialog as="div" className="relative z-10 focus:outline-none" onClose={onClose}>
-          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <Dialog as="div" className="relative z-10 focus:outline-none" onClose={onClose}> 
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black bg-opacity-25">
             <div className="flex min-h-full items-center justify-center p-4">
               <TransitionChild
                 enter="ease-out duration-300"
