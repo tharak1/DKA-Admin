@@ -13,6 +13,11 @@ const ResultsScreen: React.FC = () => {
     const [totalMarks, setTotalMarks] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const Homeonclick = () => {
+        // window.location.replace("http://localhost:5174/admin/manage_questionPaper");
+        window.location.replace("https://dka-admin.vercel.app/manage_questionPaper");
+    }
+
     useEffect(() => {
         calculateMarks();
     }, [answers]);
@@ -95,6 +100,11 @@ const ResultsScreen: React.FC = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className='w-full flex justify-center items-center'>
+                
+                <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onClick={Homeonclick}>Home</button>
+
             </div>
         </div>
     );

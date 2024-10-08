@@ -25,7 +25,14 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
     const courses = useSelector(GetCourses);
     const [dtafting,setDrafting] = React.useState<boolean>(false)
     const loading = useSelector((state: RootState) => state.questionPaper.status === 'loading');
+    const [notification, setNotification] = React.useState<{
+        heading: string;
+        body: string;
 
+    }>({
+        heading: 'Paper Uploaded',
+        body: 'Paper has been uploaded successfully.',
+    });
 
 
 
@@ -33,11 +40,20 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
     const draftPaper = () =>{
         setDrafting(true);
             dispatch(replaceTempQuestionPaperById({ id: questionPaper.id!, newQuestionPaper: questionPaper }));
-            setDrafting(false);
+            setTimeout(() => {
+                setDrafting(false);
+                openSubmit();
+            }, 1000); 
+            setNotification({heading:'Paper Drafted', body:'Paper has been drafted successfully.'})
+  
     }
 
     const uploadPaper = async () => {
         await dispatch(uploadQuestionPaper(questionPaper));
+        setNotification({
+            heading: 'Paper Uploaded',
+            body: 'Paper has been uploaded successfully.',
+        });
         openSubmit();
     };
     
@@ -166,7 +182,7 @@ const SideBarForAdmin: React.FC<SideBarForAdminProps> = ({questionPaper, setQues
            Write Demo exam
         </button>
         </div>
-        <NotificationModal isOpen={isOpenSubmit} onClose={closeSubmit} heading={'Paper Uploaded'} body={"Paper has been uploaded successfully."} type='none'/>
+        <NotificationModal isOpen={isOpenSubmit} onClose={closeSubmit} heading={notification.heading} body={notification.body} type='none'/>
 
     </div>
   )

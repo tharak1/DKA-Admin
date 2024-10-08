@@ -347,11 +347,17 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ index, question, updateQues
         setQuestionImagePreview(null);
     };
 
+
     const handleCaptureData = async () => {
         const questionObject = await generateQuestionObject();
         updateQuestion(index, questionObject);
-        setDrafting(false);
+    
+
+        setTimeout(() => {
+            setDrafting(false);
+        }, 500);
     };
+    
 
     const handleDeleteData = () => {
         deleteQuestion(index);
@@ -470,6 +476,23 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ index, question, updateQues
         };
     };
 
+
+    const [inputValue, setInputValue] = useState<string>(question.correctAnswer.join(", "));
+    const [warning, setWarning] = useState<string>("");
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        // Regular expression to allow only numbers and commas
+        const isValid = /^[0-9, ]*$/.test(value);
+
+        if (isValid) {
+            setInputValue(value);
+            setWarning(""); // Clear warning if input is valid
+        } else {
+            setWarning("Only numerical values and commas are allowed.");
+        }
+    };
+
     return (
         <div id='question-form' className="bg-white rounded-lg shadow p-6 w-full sm:m-4 border-2 dark:bg-slate-700 dark:border-slate-500 ">
             <div className="flex flex-col justify-between items-center mb-4">
@@ -525,7 +548,20 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ index, question, updateQues
             <div className="flex justify-between items-center mt-4">
                 <div>
                     <label htmlFor="ans_key" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Answer key</label>
-                    <input type="text" id={`ans_key${index}`} defaultValue={question.correctAnswer.join(", ")} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-600 dark:text-gray-200" placeholder="option or ans" required />
+                    {/* <input type="text" id={`ans_key${index}`} defaultValue={question.correctAnswer.join(", ")} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-600 dark:text-gray-200" placeholder="option or ans" required /> */}
+                    <input
+                        type="text"
+                        id={`ans_key${index}`}
+                        value={inputValue}
+                        onChange={handleChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-600 dark:text-gray-200"
+                        placeholder="option or ans"
+                        required
+                    />
+
+                    {warning && (
+                        <p className="text-red-600 text-sm mt-1">{warning}</p>
+                    )}
                 </div>
 
                 <div>
