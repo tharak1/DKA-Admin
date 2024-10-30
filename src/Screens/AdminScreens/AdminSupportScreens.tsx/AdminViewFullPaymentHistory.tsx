@@ -6,7 +6,6 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../firebase_config';
 import Navbar from '../AdminComponents/Navbar';
 import { useLocation } from 'react-router-dom';
-import AddCashCourse from '../AdminComponents/AddCashCourse';
 import { UserModel } from '../../../Models/UserModel';
 
 interface AdminViewFullPaymentHistoryProps{
@@ -88,17 +87,7 @@ const AdminViewFullPaymentHistory:React.FC = () => {
     })
   };
 
-  const [isOpen, setIsOpen] = useState(false);
 
-  const closeModal = () => {
-    setIsOpen(false);
-    loadPayments();
-
-};
-
-const openModal = () => {
-    setIsOpen(true);
-};
 
 
   return (
@@ -150,18 +139,6 @@ const openModal = () => {
               Clear Filter
             </button>
 
-            <div>
-              <div className=" text-center rounded-lg text-white font-bold ml-3">
-                  <button
-                      type="button"
-                      onClick={openModal}
-                      className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2"
-                  >
-                      Add Course
-                  </button>
-              </div>
-              <AddCashCourse user={user} isOpen={isOpen} closeModal={closeModal}/>
-            </div>
             </div>
 
           </div>
