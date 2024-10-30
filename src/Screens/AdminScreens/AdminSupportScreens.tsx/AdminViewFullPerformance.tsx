@@ -24,8 +24,7 @@ const AdminViewFullPerformance: React.FC = () => {
     return <div>Error: Invalid data.</div>;
   }
 
-  console.log(student);
-  console.log(performances);
+
 
   return (
     <>

@@ -40,7 +40,7 @@ export const fetchOnlineExamResults = createAsyncThunk(
             marksObtained: studentData.marksObtained,
             studentId: studentData.studentId,
             studentName: studentData.studentName,
-            uploadedPagesUrl: studentData.uploadedPagesUrl
+            uploadedPagesUrl: studentData.uploadedPagesUrl 
           } as UploadQuestionPaperPerformance;
         }
         return {} as StudentPerformance;
@@ -133,5 +133,7 @@ const onlineExamResultsSlice = createSlice({
 });
 
 export const selectOnlineExamResults = (state: any) => state.onlineExamResults.onlineExamResults;
+
+export const resultsStatus = (state: any) => state.onlineExamResults.status;
 
 export default onlineExamResultsSlice.reducer;

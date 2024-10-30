@@ -18,7 +18,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose ,answeredQuestions,totalQ
     const navigate = useNavigate();
 
     const getMarks = () => {
-        navigate('/results', { state: { answers: answers } });
+        navigate('/admin/results', { state: { answers: answers } });
     }
 
   return (

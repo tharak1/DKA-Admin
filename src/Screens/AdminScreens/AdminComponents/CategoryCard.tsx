@@ -19,12 +19,11 @@ const CategoryCard: React.FC<CategoryCardProps> = ({CategorryData}) => {
   const categoryDelete = async() =>{
     close();
     setDelete(true);
-    console.log(CategorryData.id);
     await dispatch(deleteCategory(CategorryData.id!));
     setDelete(false);
   }
 
-  let [isOpen, setIsOpen] = useState(false)
+  let [isOpen, setIsOpen] = useState(false) 
 
   function open() {
     setIsOpen(true)

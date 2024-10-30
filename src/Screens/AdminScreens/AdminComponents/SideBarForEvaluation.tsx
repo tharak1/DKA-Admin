@@ -148,7 +148,7 @@
 // };
 
 // export default SideBarForEvaluation;
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { db } from '../../../firebase_config';
 import NotificationModal from './NotificationModal';
@@ -156,6 +156,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../redux/PersistanceStorage';
 import { fetchOnlineExamResults, selectOnlineExamResults } from '../../../redux/ExamReportsSlice';
 import { useSelector } from 'react-redux';
+import { GetCourses } from '../../../redux/CourcesSlice';
+import { CourseModel } from '../../../Models/CourceModel';
 
 interface SideBarForEvaluationProps {
     stuSubmission: UploadQuestionPaperPerformance;
@@ -163,6 +165,7 @@ interface SideBarForEvaluationProps {
     noOfQuestions: number;
     course: string;
 }
+
 
 const SideBarForEvaluation: React.FC<SideBarForEvaluationProps> = ({ stuSubmission, QpId, noOfQuestions, course }) => {
     const [marks, setMarks] = useState<number[]>(new Array<number>(noOfQuestions).fill(0));
@@ -174,6 +177,8 @@ const SideBarForEvaluation: React.FC<SideBarForEvaluationProps> = ({ stuSubmissi
     const dispatch = useAppDispatch();
     const examReports = useSelector(selectOnlineExamResults);
     const [regStuCourse, setRegStuCourse] = useState<regStuByCourse>();
+    const courses = useSelector(GetCourses) as CourseModel[];
+
 
     const open = () => {
         setIsOpen(true);
@@ -224,14 +229,18 @@ const SideBarForEvaluation: React.FC<SideBarForEvaluationProps> = ({ stuSubmissi
 
                 await updateDoc(docRef, { students: updatedStudents });
                 await dispatch(fetchOnlineExamResults(course));
-                
-                const regStuCourseSnapshot = await getDocs(query(collection(db, "regStuByCourse"), where("courseName", "==", course)));
-                const regStuByCourse = regStuCourseSnapshot.docs.map((doc: any) => ({
-                    courseName: doc.data().courseName,
-                    students: doc.data().students
-                }));
 
-                setRegStuCourse(regStuByCourse[0]);
+                const courseId = courses.find((coursess:CourseModel) => coursess.courseName === course)?.id
+                
+                // const regStuCourseSnapshot = await getDocs(query(collection(db, "regStuByCourse"), where("courseName", "==", course)));
+                // const regStuByCourse = regStuCourseSnapshot.docs.map((doc: any) => ({
+                //     courseName: doc.data().courseName,
+                //     students: doc.data().students
+                // }));
+
+                const regstu =await getDoc(doc(db,"regStuByCourse",courseId!));
+
+                setRegStuCourse( regstu.data() as regStuByCourse );
 
                 console.log("Marks updated successfully!");
                 setLoading(false);

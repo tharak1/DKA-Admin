@@ -50,7 +50,7 @@ export const fetchCourses = createAsyncThunk(
         const docRef = await addDoc(collection(db, 'courses'), CourseData);
 
         await setDoc(doc(db,'performances',docRef.id),{performanceTemplate:convertListToObject(CourseData.coursePerformance!),students:[]});
-        await setDoc(doc(db,'regStuByCourse',docRef.id),{couseName:CourseData.courseName,students:[]})
+        await setDoc(doc(db,'regStuByCourse',docRef.id),{courseName:CourseData.courseName,students:[]})
 
         return { id: docRef.id, ...CourseData };
       } catch (error) {
@@ -78,27 +78,27 @@ export const editCourse = createAsyncThunk(
         const courseId = UpdatedCourseData.id;
         const courseRef = doc(db, 'courses', courseId!);
 
-        // Update the course data in Firestore
         await setDoc(courseRef, UpdatedCourseData, { merge: true });
 
-        // Fetch the performance document associated with the course
+
+        await updateDoc(doc(db,'regStuByCourse',courseId!),{couseName:UpdatedCourseData.courseName})
+
         const performanceRef = doc(db, 'performances', courseId!);
         const performanceSnapshot = await getDoc(performanceRef);
+
+        
 
         if (performanceSnapshot.exists()) {
             const performanceData = performanceSnapshot.data();
 
-            // Update the performance template
             const updatedPerformanceTemplate = convertListToObject(UpdatedCourseData.coursePerformance!);
             performanceData.performanceTemplate = updatedPerformanceTemplate;
 
-            // Update all students in the performance document with the new template values
             const updatedStudents = performanceData.students.map((student: any) => ({
                 ...student,
                 ...updatedPerformanceTemplate,
             }));
 
-            // Save the updated performance data
             await updateDoc(performanceRef, {
                 performanceTemplate: updatedPerformanceTemplate,
                 students: updatedStudents
@@ -114,6 +114,9 @@ export const deleteCourse = createAsyncThunk(
     'course/deleteCourse',
     async(courseId:string)=>{
         await deleteDoc(doc(db, "courses", courseId!));
+        await deleteDoc(doc(db, 'performances', courseId!))
+        await deleteDoc(doc(db, 'regStuByCourse', courseId!))
+
         return courseId;
     }
 );

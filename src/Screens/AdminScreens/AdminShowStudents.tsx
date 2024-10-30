@@ -116,12 +116,9 @@ const AdminShowStudents: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('====================================');
-    console.log(searchKey, searchCountry);
-    console.log('====================================');
   
     let x = student.filter(student => 
-      (student.id.toLowerCase().includes(searchKey.toLowerCase()) || 
+      (student.id.toLowerCase().includes(searchKey.toLowerCase()) ||  
       student.name.toLowerCase().includes(searchKey.toLowerCase())) &&
       (searchCountry === '' || student.country.toLowerCase() === searchCountry.toLowerCase())
     );

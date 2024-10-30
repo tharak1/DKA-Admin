@@ -58,7 +58,7 @@ const DisplayOnlineExamMarks: React.FC<DisplayOnlineExamMarksProps> = ({ stuMark
             >{stuMarks.evaluated ? 'Re Evaluate' : 'Evaluate'}</button>
           </div>
         </>
-      )}
+      )} 
     </div>
   );
 };

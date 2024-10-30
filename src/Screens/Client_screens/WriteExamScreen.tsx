@@ -112,7 +112,7 @@ const WriteExamScreen: React.FC = () => {
   };
 
 const handleTimerFinish = () => {
-  navigate('/results', { state: { answers: processedQuestions } });
+  navigate('/admin/results', { state: { answers: processedQuestions } });
 
 }
 

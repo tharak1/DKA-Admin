@@ -42,9 +42,6 @@ const AdminViewFullPaymentHistory:React.FC = () => {
       })) as Payment[];
       setPayments(paymentsData);
       setFilteredPayments(paymentsData);  
-      console.log('====================================');
-      console.log(paymentsData);
-      console.log('====================================');
       setLoading(false);
     } catch (error) {
       console.error('Error loading payments:', error);
@@ -73,16 +70,11 @@ const AdminViewFullPaymentHistory:React.FC = () => {
   }, [filters]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    console.log('====================================');
-    console.log(e.target.value);
-    console.log('====================================');
     setFilters({
       ...filters,
       [e.target.name]: e.target.value,
     });
-    console.log('====================================');
-    console.log(filters);
-    console.log('====================================');
+
   };
 
   const handleFilterSubmit = (e: React.FormEvent) => {
@@ -159,15 +151,15 @@ const openModal = () => {
             </button>
 
             <div>
-            <div className=" text-center rounded-lg text-white font-bold ml-3">
-                <button
-                    type="button"
-                    onClick={openModal}
-                    className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2"
-                >
-                    Add Course
-                </button>
-            </div>
+              <div className=" text-center rounded-lg text-white font-bold ml-3">
+                  <button
+                      type="button"
+                      onClick={openModal}
+                      className="px-3 bg-violet-600 py-2 text-center rounded-lg text-white font-bold p-2"
+                  >
+                      Add Course
+                  </button>
+              </div>
               <AddCashCourse user={user} isOpen={isOpen} closeModal={closeModal}/>
             </div>
             </div>

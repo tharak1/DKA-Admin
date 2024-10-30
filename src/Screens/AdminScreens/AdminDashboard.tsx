@@ -64,38 +64,19 @@ const AdminDashboard:React.FC = () => {
                 </div>
         
 
-                    <div className='max-sm:mt-20 max-sm:grid max-sm:grid-cols-2 max-sm:w-full max-sm:gap-2 w-full sm:col-span-8 sm:row-span-4 sm:grid sm:grid-cols-8 sm:grid-rows-4 sm:gap-3 max-sm:p-3'>
+                    <div className='max-sm:mt-20 max-sm:grid max-sm:grid-cols-2 max-sm:w-full max-sm:gap-2 w-full sm:col-span-12 sm:row-span-2 sm:grid sm:grid-cols-10 sm:grid-rows-2 sm:gap-3 max-sm:p-3'>
                         <StatsCard name= {"Total students"} count = {info.noOfStudents}  />
-
-                                            
+               
                         <StatsCard name= {"Foreign Strudents"} count = {info.foreignStudents}/>
-
 
                         <StatsCard name= {"courses sold"} count = {info.payments}/>
                                         
-
                         <StatsCard name= {"Total courses"} count = {courses.length}/>
 
-
-                        <StatsCard name= {"Total Visits"} count = {20}/>
-
-
-                        <StatsCard name= {"Total Feedbacks"} count = {20}/>
-
-
                         <StatsCard name= {"Total Employees"} count = {employees.length}/>
-
-
-                        <StatsCard name= {"Total Branches"} count = {20}/>
                     </div>
-        
-                    <div className="bg-white shadow rounded-lg dark:bg-gray-800 col-span-8 row-start-6 row-span-6 overflow-auto scrollbar-rounded max-sm:h-[45vh] max-sm:mx-3">
-                        <h1 className="mt-4 ml-4">Sales Last 6 months</h1>
-                        {/* <MyResponsiveBar/> */}
-                    </div>
-        
-        
-                    <div className="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800 sm:col-start-9 sm:col-span-4 sm:row-start-2 sm:row-span-7 max-sm:h-[45vh] max-sm:mx-3 max-sm:mb-4">
+           
+                    <div className="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800  sm:col-span-8 sm:row-span-7 max-sm:h-[45vh] max-sm:mx-3 max-sm:mb-4">
                         <h1 className="mt-4 ml-4">Students-Courses Contribution :</h1>
                         <MyResponsivePie/>
                     </div>

@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import { doc, getDoc, updateDoc } from 'firebase/firestore'; // Adjust the import path based on your project structure
 import { db } from '../firebase_config';
-import { formatDate } from './DateFormater';
 
 interface UserModel {
     registeredCourses: Array<{
@@ -34,7 +33,7 @@ const useAddExtraDays = () => {
 
             let currentDate = new Date();
             currentDate.setDate(currentDate.getDate() + 3);
-            course.endDate = formatDate(currentDate);
+            course.endDate = currentDate.toISOString().split('T')[0];
 
             await updateDoc(doc(db, 'students', studentId), {
                 registeredCourses: student.registeredCourses

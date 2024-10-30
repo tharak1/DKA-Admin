@@ -43,11 +43,6 @@ export const editCategory = createAsyncThunk(
     'categories/editCategory',
     async (UpdatedCategoryData: CategoryModel) => {
         const courseId = UpdatedCategoryData.id;
-        
-        console.log('====================================');
-        console.log( UpdatedCategoryData.prevCatName!);
-        console.log('====================================');
-
         const q = query(collection(db, "courses"), where("category", "==", UpdatedCategoryData.prevCatName!));
         const querySnapshot = await getDocs(q);
         const courses: CourseModel[] = querySnapshot.docs.map((doc) => ({

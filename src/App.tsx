@@ -50,7 +50,6 @@ function App() {
         </div>}>
           <Routes>
             <Route path='/' element={<LoginScreen />} />
-            <Route path='/results' element={<ResultsScreen/>}/>
 
             {
               user!=null&&(
@@ -68,6 +67,8 @@ function App() {
                 <Route path="/admin/exam_reports" element={<AdminExamReports />} />
                 <Route path="/admin/marks_entry" element={<AdminMarksScreen />} />
                 <Route path="/admin/writeExam" element={<WriteExamScreen />} /> 
+                <Route path='/admin/results' element={<ResultsScreen/>}/>
+
 
 
                 {user.isAdmin && (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import Navbar from './AdminComponents/Navbar';
 import { useNavigate } from 'react-router-dom';
@@ -6,77 +6,118 @@ import { GetUser } from '../../redux/UserSlice';
 import { EmployeeModel } from '../../Models/EmployeeModel';
 import { GetCourses } from '../../redux/CourcesSlice';
 import { CourseModel } from '../../Models/CourceModel';
-import { useAppDispatch } from '../../redux/PersistanceStorage';
-import { fetchOnlineExamResults, selectOnlineExamResults } from '../../redux/ExamReportsSlice';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { useAppDispatch, useAppSelector } from '../../redux/PersistanceStorage';
+import { fetchOnlineExamResults, resultsStatus, selectOnlineExamResults } from '../../redux/ExamReportsSlice';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase_config';
 
 const AdminExamReports:React.FC = () => {
-  const [courseName, setCourseName] = useState<string>("");
+  const [courseId, setcourseId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [examDetailsList, setExamDetailsList] = useState<ExamDetails[]>([]);
   const [regStuCourse,setRegStuCourse] = useState<regStuByCourse>();
 
+  // const navigate = useNavigate();
+  // const dispatch = useAppDispatch();
+
+  // const user = useSelector(GetUser) as EmployeeModel;
+  // const examResults = useAppSelector(selectOnlineExamResults);
+
+  // const stat = useSelector(resultsStatus);
+
+
+  // const courses = user.isAdmin 
+  // ? useSelector(GetCourses) 
+  // : useSelector(GetCourses).filter((obj: CourseModel) => 
+  //     user.coursesTaught.includes(obj.courseName!)
+  //   );
+
+
+  // const ddd = async() => {
+  //   await dispatch(fetchOnlineExamResults(courses.find((obj: CourseModel) => obj.id === courseId)?.courseName));
+  // }
+
+  
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  
+  //   try {
+  //     const regStuCourseSnapshot = await getDoc(doc(db, "regStuByCourse", courseId));
+  //     setRegStuCourse(regStuCourseSnapshot.data() as regStuByCourse);
+
+
+  
+  //     // Fetch exam results
+  //     await ddd();
+
+
+  //     if(examResults){
+  //       setExamDetailsList(examResults)
+  //     }else{
+  //       setExamDetailsList([]);
+  //     }
+
+  
+  //   } catch (error) {
+  //     console.error("Error fetching documents: ", error);
+  //     setError(error as string);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
   const navigate = useNavigate();
-
-
   const dispatch = useAppDispatch();
 
-  const examResults = useSelector(selectOnlineExamResults);
+  const user = useSelector(GetUser) as EmployeeModel;
+  const examResults = useAppSelector(selectOnlineExamResults);
+  const stat = useSelector(resultsStatus);
 
+  // const [loading, setLoading] = useState(false);
+  const [awaitingStatus, setAwaitingStatus] = useState(false);
+  // const [examDetailsList, setExamDetailsList] = useState([]);
+
+  const courses = user.isAdmin 
+    ? useSelector(GetCourses) 
+    : useSelector(GetCourses).filter((obj: CourseModel) => 
+        user.coursesTaught.includes(obj.courseName!)
+      );
+
+  // Function to dispatch and wait for status
+  const ddd = async () => {
+    setAwaitingStatus(true);
+    await dispatch(fetchOnlineExamResults(courses.find((obj: CourseModel) => obj.id === courseId)?.courseName));
+  };
+
+  // useEffect to monitor `stat` and update `examDetailsList` when ready
+  useEffect(() => {
+    if (awaitingStatus && stat === "succeeded") {
+      setExamDetailsList(examResults || []);
+      setAwaitingStatus(false);
+    }
+  }, [stat, examResults, awaitingStatus]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      
-      const regStuCourseSnapshot = await getDocs(query(collection(db, "regStuByCourse"),where("courseName","==",courseName)));
+      const regStuCourseSnapshot = await getDoc(doc(db, "regStuByCourse", courseId));
+      setRegStuCourse(regStuCourseSnapshot.data() as regStuByCourse);
 
-
-      // Extract the document data
-      const regStuByCourse = regStuCourseSnapshot.docs.map((doc: any) => ({
-        courseName: doc.data().courseName,
-        students: doc.data().students
-      }));
-    
-      setRegStuCourse(regStuByCourse[0]);
-      dispatch(fetchOnlineExamResults(courseName));
-
-      if(examResults){
-        setExamDetailsList(examResults);
-      }
-      else{
-        setExamDetailsList([]);
-      }
-
+      // Fetch exam results and wait for 'succeeded' status
+      await ddd();
 
     } catch (error) {
       console.error("Error fetching documents: ", error);
       setError(error as string);
-     
     } finally {
       setLoading(false);
     }
   };
-
-
-
-
-  // useEffect(()=>{
-  //   setLoading(true);
-  //   dispatch(fetchOnlineExamResults(courseName));
-  //   setLoading(true);
-  //   setError("");
-  // },[]);
-
-  const user = useSelector(GetUser) as EmployeeModel;
-  const courses = user.isAdmin? useSelector(GetCourses).map((obj:CourseModel)=>obj.courseName!) : user.coursesTaught;
-
-
-
-
 
   return (
     <div className='grid grid-cols-2 grid-rows-10 sm:p-6 w-full h-screen'>
@@ -86,16 +127,16 @@ const AdminExamReports:React.FC = () => {
       <div className='row-span-1 col-span-2 w-full h-full max-sm:mt-2 max-sm:p-3'>
         <form className='flex flex-row' onSubmit={handleSubmit}>
           <select
-            id='courseName'
-            name='courseName'
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
+            id='courseId'
+            name='courseId'
+            value={courseId}
+            onChange={(e) => setcourseId(e.target.value)}
             className='flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-2 focus:outline-none'
           >
             <option value=''>Select Course</option>
-            {courses.map((obj:string) => (
-              <option value={obj} key={obj}>
-                {obj}
+            {courses.map((obj:CourseModel) => (
+              <option value={obj.id} key={obj.id}>
+                {obj.courseName}
               </option>
             ))}
           </select>
@@ -146,11 +187,12 @@ const AdminExamReports:React.FC = () => {
               <div>Status</div>
             </div>
           </div>
-          {examDetailsList.map((obj,index) => (
+          { examDetailsList.map((obj,index) => (
             <div 
               className='w-full grid grid-cols-6 max-sm:grid-cols-1 max-sm:grid-rows-4 py-5 bg-slate-200 dark:bg-slate-800 rounded-lg px-3 hover:shadow-md hover:shadow-gray-600 hover:cursor-pointer' onClick={()=>{
                 navigate('/admin/online_exam_viewport', { state: { examDetails:examDetailsList[index],regStu:regStuCourse } });
               }}
+
               key={obj.id} 
             >
               <div className='col-span-2 max-sm:col-span-1 max-sm:row-span-1 flex flex-col justify-start'>
@@ -204,3 +246,11 @@ const AdminExamReports:React.FC = () => {
 }
 
 export default AdminExamReports
+
+
+
+
+
+
+
+

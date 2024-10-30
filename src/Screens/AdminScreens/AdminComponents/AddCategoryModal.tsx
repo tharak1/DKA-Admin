@@ -13,17 +13,22 @@ interface ModalProps{
     categoryData?:CategoryModel
 }
 
+interface CatModal{
+    name: string; 
+    image: string | null
+}
+
 const Modal:React.FC<ModalProps> = ({type,categoryData})=> {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState(false);
-    const [category, setCategory] = useState<{ name: string; image: string | null }>({ name: categoryData ? categoryData.name:'' , image:categoryData ? categoryData.image : null });
+    // const [category, setCategory] = useState<{ name: string; image: string | null }>({ name: categoryData ? categoryData.name:'' , image:categoryData ? categoryData.image : null });
+    const [category, setCategory] = useState<CatModal>({
+        name:"",
+        image:""
+    })
     const [imagePreview, setImagePreview] = useState<File | null>(null);
     const [loading,setLoading] = useState<boolean>(false);
 
-
-    // useEffect(()=>{
-    //     dispatch(fetchCategories());
-    // },[])
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -72,12 +77,8 @@ const Modal:React.FC<ModalProps> = ({type,categoryData})=> {
         setLoading(true);
         if(imagePreview){
             const baseUrl = "https://firebasestorage.googleapis.com/v0/b/divya-kala-academy.appspot.com/o/";
-            console.log('====================================');
-            console.log(category.image);
-            console.log('====================================');
             const filePath = decodeURIComponent(category.image!.split(baseUrl)[1].split("?")[0]);
             const desertRef = ref(databaseStorage, filePath);
-            console.log(filePath);
             await deleteObject(desertRef);
 
             const imageUrl = await uploadImage();
@@ -104,7 +105,7 @@ const Modal:React.FC<ModalProps> = ({type,categoryData})=> {
             await dispatch(editCategory(obj));
         }
         setLoading(false);
-        setCategory({name: '', image: null })
+        setCategory({name: category.name, image: null })
         setImagePreview(null);
         closeModal();
     }

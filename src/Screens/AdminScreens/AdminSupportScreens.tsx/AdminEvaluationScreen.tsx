@@ -34,7 +34,7 @@ const AdminEvaluationScreen:React.FC = () => {
         }
 
       </div>
-
+ 
       <div className='col-span-1 max-sm:hidden row-span-10 w-full h-full'>
         <SideBarForEvaluation stuSubmission={stuSubmission} QpId={QpId} noOfQuestions={noOfQuestions} course={course}/>
       </div>

@@ -12,9 +12,11 @@ interface AddCashCourseProps {
     user: UserModel;
     isOpen:boolean;
     closeModal:()=>void;
+    refreshStudentData:() => void;
+
 }
 
-const AddCashCourse: React.FC<AddCashCourseProps> = ({ user,isOpen ,closeModal}) => {
+const AddCashCourse: React.FC<AddCashCourseProps> = ({ user,isOpen,closeModal, refreshStudentData}) => {
     const categories = useSelector(Categories);
     const [filter, setFilter] = useState<string>("");
     const courses = useSelector(GetCourses);
@@ -76,7 +78,7 @@ const AddCashCourse: React.FC<AddCashCourseProps> = ({ user,isOpen ,closeModal})
                                                     </div>
                                                     <div className='h-[580px] overflow-auto w-full p-2'>
                                                         {filteredCourses.map((course: CourseModel) => (
-                                                            <AddCashCourseCard course={course} user={user} key={course.id}/>
+                                                            <AddCashCourseCard course={course} user={user} key={course.id} refreshStudentData={refreshStudentData}/>
                                                         ))}
                                                     </div>
                                                 </div>

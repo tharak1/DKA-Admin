@@ -20,7 +20,7 @@ const AdminShowPendingPayments: React.FC = () => {
             const userssnap = await getDocs(collection(db, "students"));
             const students: UserModel[] = userssnap.docs.map(doc => ({
                 id: doc.id,
-                ...doc.data(),
+                ...doc.data(), 
             })) as UserModel[];
             const filteredData = filterAndTransformUserData(students);
             setPendingStudents(filteredData);

@@ -477,7 +477,11 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ index, question, updateQues
     };
 
 
-    const [inputValue, setInputValue] = useState<string>(question.correctAnswer.join(", "));
+    // const [inputValue, setInputValue] = useState<string>(question.correctAnswer.join(", "));
+    const [inputValue, setInputValue] = useState<string>(
+        question.correctAnswer.map((answer) => answer + 1).join(", ")
+      );
+      
     const [warning, setWarning] = useState<string>("");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
