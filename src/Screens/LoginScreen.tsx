@@ -5,7 +5,7 @@ import { EmployeeModel } from '../Models/EmployeeModel';
 import { loginUser } from '../redux/UserSlice';
 import { useAppDispatch } from '../redux/PersistanceStorage';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../firebase_config';
+import { auth, db } from '../firebase_config'; 
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
 const LoginScreen: React.FC = () => {
