@@ -60,10 +60,10 @@ const MyResponsivePie:React.FC = () => {
         ]
       }}
       arcLinkLabelsSkipAngle={10}
-      arcLinkLabelsTextColor="#333333"
+      arcLinkLabelsTextColor="#FF4500"
       arcLinkLabelsThickness={2}
       arcLinkLabelsColor={{ from: 'color' }}
-      arcLabelsSkipAngle={10}
+      arcLabelsSkipAngle={10} 
       arcLabelsTextColor={{
         from: 'color',
         modifiers: [
@@ -72,7 +72,7 @@ const MyResponsivePie:React.FC = () => {
             2
           ]
         ]
-      }}
+}}
       defs={[
         {
           id: 'dots',
@@ -143,31 +143,32 @@ const MyResponsivePie:React.FC = () => {
           id: 'lines'
         }
       ]}
-      // legends={[
-      //     {
-      //         anchor: 'bottom',
-      //         direction: 'row',
-      //         justify: false,
-      //         translateX: 0,
-      //         translateY: 0,
-      //         itemsSpacing: 0,
-      //         itemWidth: 50,
-      //         itemHeight: 18,
-      //         itemTextColor: '#999',
-      //         itemDirection: 'left-to-right',
-      //         itemOpacity: 1,
-      //         symbolSize: 18,
-      //         symbolShape: 'circle',
-      //         effects: [
-      //             {
-      //                 on: 'hover',
-      //                 style: {
-      //                     itemTextColor: '#000'
-      //                 }
-      //             }
-      //         ]
-      //     }
-      // ]}
+      legends={[
+          {
+            
+              anchor: 'right',
+              direction: 'column',
+              justify: false,
+              translateX: 0,
+              translateY: 0,
+              itemsSpacing: 2,
+              itemWidth: 50,
+              itemHeight: 18,
+              itemTextColor: '#FF4500',
+              itemDirection: 'right-to-left',
+              itemOpacity: 1,
+              symbolSize: 15,
+              symbolShape: 'circle',
+              effects: [
+                  {
+                      on: 'hover',
+                      style: {
+                          itemTextColor: '#000'
+                      }
+                  }
+              ]
+          }
+      ]}
     />
   );
 };

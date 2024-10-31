@@ -76,7 +76,7 @@ const AdminDashboard:React.FC = () => {
                         <StatsCard name= {"Total Employees"} count = {employees.length}/>
                     </div>
            
-                    <div className="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800  sm:col-span-8 sm:row-span-7 max-sm:h-[45vh] max-sm:mx-3 max-sm:mb-4">
+                    <div className="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800  sm:col-span-12 sm:row-span-7 max-sm:h-[45vh] max-sm:mx-3 max-sm:mb-4 dark:text-black">
                         <h1 className="mt-4 ml-4">Students-Courses Contribution :</h1>
                         <MyResponsivePie/>
                     </div>
