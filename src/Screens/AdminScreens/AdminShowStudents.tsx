@@ -247,7 +247,7 @@ const AdminShowStudents: React.FC = () => {
               <div className='col-span-2 flex flex-col justify-start'>
                 <h2>ID : {obj.id}</h2>
                 <h2>Name : {obj.name}</h2>
-                <h2>Contact No : {obj.contactNo} min</h2>
+                <h2>Contact No : {obj.contactNo}</h2>
               </div>
               <div className='col-span-2 max-sm:hidden flex flex-col justify-center border-l-2 border-gray-500 dark:border-gray-300 items-center'>
                 <h2>{obj.country}</h2>

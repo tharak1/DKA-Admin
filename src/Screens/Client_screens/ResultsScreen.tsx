@@ -15,7 +15,7 @@ const ResultsScreen: React.FC = () => {
 
     const Homeonclick = () => {
         // window.location.replace("http://localhost:5174/admin/manage_questionPaper");
-        window.location.replace("https://dka-admin.vercel.app/manage_questionPaper");
+        window.location.replace("https://dka-admin.vercel.app/admin/manage_questionPaper");
     }
 
     useEffect(() => {

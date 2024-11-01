@@ -45,7 +45,7 @@ const MarksEntryCard:React.FC<MarksEntryCardProps> = ({performance,index,student
 
     <div>
     <div className="text-center grid grid-cols-2 justify-start items-center my-1 ">
-            <p className=" mr-3">Total Marks :</p>
+            <p className=" mr-3">Total Marks Obtained :</p>
             <input
               value={performance.totalMarksObtained}
               onChange={(e) => {

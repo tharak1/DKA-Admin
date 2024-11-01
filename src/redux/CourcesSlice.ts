@@ -60,17 +60,6 @@ export const fetchCourses = createAsyncThunk(
     }
   );
 
-// export const editCourse = createAsyncThunk(
-//     'course/editCourse',
-//     async(UpdatedCourseData:CourseModel)=>{
-//         const courseId = UpdatedCourseData.id; 
-//         const courseRef = doc(db, 'courses',courseId!);
-
-//         await updateDoc(doc(db,'performances',UpdatedCourseData.id!),{performanceTemplate:convertListToObject(UpdatedCourseData.coursePerformance!)});
-//         await setDoc(courseRef,UpdatedCourseData, { merge: true });
-//         return UpdatedCourseData;
-//     }
-// );
 
 export const editCourse = createAsyncThunk(
     'course/editCourse',

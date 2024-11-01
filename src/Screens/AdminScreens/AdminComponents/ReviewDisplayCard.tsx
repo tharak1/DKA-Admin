@@ -47,7 +47,7 @@ const ReviewDisplayCard:React.FC<ReviewDisplayCardProps> = ({reviewObj,onDelete}
                     "Delete"
                 )
             }
-            </button>
+        </button>
     </div>
   </div>
   )

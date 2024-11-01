@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../AdminComponents/Navbar'
-import ReviewDisplayCard from '../AdminComponents/ReviewDisplayCard'
+// import Navbar from '../AdminComponents/Navbar'
+// import ReviewDisplayCard from '../AdminComponents/ReviewDisplayCard'
 import ReviewModel from '../../../Models/ReviewModel'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../../../firebase_config'
+import Navbar from '../AdminComponents/Navbar'
+import ReviewDisplayCard from '../AdminComponents/ReviewDisplayCard'
 
 const ViewReviewScreen:React.FC = () => {
 

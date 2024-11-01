@@ -13,7 +13,7 @@ interface AddCashCourseCardProps{
 
 const AddCashCourseCard:React.FC<AddCashCourseCardProps> = ({ course,user,refreshStudentData }) => {
     const [selectedSession, setSelectedSession] = useState<string>("");
-    const [selectedClassType, setSelectedClassType] = useState<string>("");
+    // const [selectedClassType, setSelectedClassType] = useState<string>("");
     const [loading,setLoading] = useState<boolean>(false);
     const [renewLoading,setRenewLoading] = useState<boolean>(false);
     const [result,setresult] = useState<string>("");
@@ -31,7 +31,6 @@ const AddCashCourseCard:React.FC<AddCashCourseCardProps> = ({ course,user,refres
             courseName: course.courseName,
             courseImageUrl: course.image,
             courseAmount: course.price,
-            courseType: selectedClassType,
             courseSession: selectedSession,
             branch: "hyd",
             parentName: user.fatherName,
@@ -42,7 +41,6 @@ const AddCashCourseCard:React.FC<AddCashCourseCardProps> = ({ course,user,refres
             status: "Cash"
         };
 
-        if(selectedClassType !=='' && selectedClassType !==''){
 
             const oneMonthFromNow = new Date();
             oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
@@ -68,7 +66,7 @@ const AddCashCourseCard:React.FC<AddCashCourseCardProps> = ({ course,user,refres
                     courseName: course.courseName!,
                     boughtDate: new Date().toISOString().split('T')[0],
                     paymentId: "cash",
-                    courseType: selectedClassType as "offline" | "online",
+                    courseType: "offline",
                     courseSession: selectedSession,
                     branch: "hyd",
                     endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0],
@@ -89,11 +87,8 @@ const AddCashCourseCard:React.FC<AddCashCourseCardProps> = ({ course,user,refres
 
                 setLoading(false);
             }
-        }else{
-            setError("session or type not selected");
-            setLoading(false);
+            setError("");
 
-        }
         refreshStudentData();
     };
 
@@ -174,31 +169,6 @@ const AddCashCourseCard:React.FC<AddCashCourseCardProps> = ({ course,user,refres
         </div>
         <div className='w-full flex flex-col justify-center items-start'>
 
-        <label htmlFor="sessions" className='text-lg mt-2'>Select ClassType :</label>
-        <div className=' '>
-            <input 
-                type="radio" 
-                name={`classtype-${course.id}`} 
-                id={`classtype-online-${course.id}`} 
-                value="online" 
-                checked={selectedClassType === "online"} 
-                onChange={() => setSelectedClassType("online")} 
-                className="mr-2"
-            />
-            <label htmlFor={`classtype-online-${course.id}`} className="dark:text-white">Online</label>
-        </div>
-        <div>
-            <input 
-                type="radio" 
-                name={`classtype-${course.id}`} 
-                id={`classtype-offline-${course.id}`} 
-                value="offline" 
-                checked={selectedClassType === "offline"} 
-                onChange={() => setSelectedClassType("offline")} 
-                className="mr-2"
-            />
-            <label htmlFor={`classtype-offline-${course.id}`} className="dark:text-white">Offline</label>
-        </div>
         </div>
             <div className='w-full text-red'>
                  {error}

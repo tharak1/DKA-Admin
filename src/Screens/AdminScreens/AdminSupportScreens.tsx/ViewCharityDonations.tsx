@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../AdminComponents/Navbar'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../../../firebase_config'
-import CharityDisplayCard from '../AdminComponents/CharityDisplayCard'
 import { CharityModel } from '../../../Models/CharityModel'
+import Navbar from '../AdminComponents/Navbar'
+import CharityDisplayCard from '../AdminComponents/CharityDisplayCard'
 
 const ViewCharityDonationsScreen:React.FC = () => {
 
@@ -25,6 +25,10 @@ const ViewCharityDonationsScreen:React.FC = () => {
     setLoading(false);
   }
 
+  const handleDelete = (deletedReviewId: string) => {
+    setReviews(reviews.filter(review => review.id !== deletedReviewId));
+};
+
 
   return (
     <div className='w-full h-screen overflow-auto grid grid-cols-1 grid-rows-8 gap-3 sm:p-6'>
@@ -34,7 +38,7 @@ const ViewCharityDonationsScreen:React.FC = () => {
 
         <div className='col-span-1 row-span-7 rounded-lg w-full h-full flex flex-col overflow-auto bg-white dark:bg-slate-700 p-4 space-y-5'>
           <div className='w-full grid grid-cols-6 py-5'>
-            <div className='col-span-2 max-sm:col-span-3 flex flex-col justify-start'>
+            <div className='col-span-1 max-sm:col-span-3 flex flex-col justify-start'>
               <div>Name & Purpose & date</div>
             </div>
             <div className='col-span-2 flex flex-col justify-center items-center'>
@@ -42,6 +46,9 @@ const ViewCharityDonationsScreen:React.FC = () => {
             </div>
             <div className='col-span-1 flex flex-col justify-center items-center'>
               <div>Amount</div>
+            </div>
+            <div className='col-span-1 flex flex-col justify-center items-center'>
+              <div>Image</div>
             </div>
             <div className='max-sm:hidden col-span-1 flex flex-col justify-center items-center'>
               <div>Action</div>
@@ -62,7 +69,7 @@ const ViewCharityDonationsScreen:React.FC = () => {
                 </div>
               ):(
                 reviews.map((review)=>(
-                  <CharityDisplayCard charityObj={review}/>
+                  <CharityDisplayCard charityObj={review} onDelete={handleDelete}/>
                 ))
               )
             )
