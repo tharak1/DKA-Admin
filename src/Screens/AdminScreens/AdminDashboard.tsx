@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import StatsCard from './AdminComponents/StatsCard'
-import Navbar from './AdminComponents/Navbar';
 import { useSelector } from 'react-redux';
 import { GetEmployees, fetchEmployees } from '../../redux/EmployeeSlice';
 import { useAppDispatch } from '../../redux/PersistanceStorage';
@@ -8,6 +6,8 @@ import { fetchCategories } from '../../redux/CategorySlice';
 import { GetCourses, fetchCourses } from '../../redux/CourcesSlice';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase_config';
+import Navbar from './AdminComponents/Navbar';
+import StatsCard from './AdminComponents/StatsCard';
 import MyResponsivePie from './AdminComponents/PieChart';
 
 
