@@ -25,7 +25,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ courseDetails, showActions = fa
     const courseDelete = async()=>{
         close()
         setDelete(true);
-        await dispatch(deleteCourse(courseDetails.id!));
+        await dispatch(deleteCourse(courseDetails));
         setDelete(false);
     }
 

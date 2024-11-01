@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {CourseModel} from "../Models/CourceModel";
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc, writeBatch } from "firebase/firestore";
 import { db } from "../firebase_config";
+import { UserModel } from "../Models/UserModel";
+import { deleteImage } from "../hooks/DeleteImageHook";
 
 
 const convertListToObject = (list: string[]): Record<string, string> => {
@@ -99,14 +101,90 @@ export const editCourse = createAsyncThunk(
 );
 
 
+// export const deleteCourse = createAsyncThunk(
+//     'course/deleteCourse',
+//     async(course:CourseModel)=>{
+
+//         const studentsRefSnap = await getDocs(collection(db,"students"));
+
+
+//         const usersMailResultori: UserModel[] = studentsRefSnap.docs.map((doc) => ({
+//             id: doc.id,
+//             ...doc.data(),
+//         } as UserModel));
+
+//         const batch = writeBatch(db);
+//         usersMailResultori.forEach(user => {
+//             const updatedCourses = user.registeredCourses.filter(course1 => course1.courseId !== course.id!);
+
+//             if (updatedCourses.length !== user.registeredCourses.length) {
+//                 const userRef = doc(db, "students", user.id);
+//                 batch.update(userRef, { registeredCourses: updatedCourses });
+//             }
+//         });
+
+//         await batch.commit();
+
+
+//         await deleteDoc(doc(db, "courses", course.id!));
+//         await deleteDoc(doc(db, 'performances', course.id!))
+//         await deleteDoc(doc(db, 'regStuByCourse', course.id!))
+
+//         await deleteImage(course.image!);
+
+
+//         return course.id;
+//     }
+// );
+
+
 export const deleteCourse = createAsyncThunk(
     'course/deleteCourse',
-    async(courseId:string)=>{
-        await deleteDoc(doc(db, "courses", courseId!));
-        await deleteDoc(doc(db, 'performances', courseId!))
-        await deleteDoc(doc(db, 'regStuByCourse', courseId!))
+    async (course: CourseModel, { rejectWithValue }) => {
+        try {
+            const studentsRefSnap = await getDocs(collection(db, "students"));
 
-        return courseId;
+            const usersMailResultori: UserModel[] = studentsRefSnap.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            } as UserModel));
+
+            const batch = writeBatch(db);
+            usersMailResultori.forEach(user => {
+
+                if(user.registeredCourses && user.registeredCourses.length > 0 ){
+
+                    const updatedCourses = user.registeredCourses.filter(
+                        (course1) => course1.courseId !== course.id!
+                    );
+
+                    if (updatedCourses.length !== user.registeredCourses.length) {
+                        const userRef = doc(db, "students", user.id);
+                        batch.update(userRef, { registeredCourses: updatedCourses });
+                    }
+                }
+
+            });
+
+            // Commit the batched updates
+            await batch.commit();
+
+            // Delete course documents
+            await Promise.all([
+                deleteDoc(doc(db, "courses", course.id!)),
+                deleteDoc(doc(db, "performances", course.id!)),
+                deleteDoc(doc(db, "regStuByCourse", course.id!)),
+            ]);
+
+            // Delete course image
+            await deleteImage(course.image!);
+
+            return course.id;
+        } catch (error) {
+            console.error("Error deleting course:", error);
+            // Return a specific error message
+            return rejectWithValue("Failed to delete the course. Please try again.");
+        }
     }
 );
 

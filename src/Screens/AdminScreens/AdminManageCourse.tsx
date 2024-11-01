@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import Navbar from './AdminComponents/Navbar';
+// import Navbar from './AdminComponents/Navbar';
 import AddIcon from '@mui/icons-material/Add';
-import CourseCard from './AdminComponents/CourseCard';
+// import CourseCard from './AdminComponents/CourseCard';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { GetCourses } from '../../redux/CourcesSlice';
 import { CourseModel } from '../../Models/CourceModel';
 import { Categories } from '../../redux/CategorySlice';
 import CategoryModel from '../../Models/CategoryModel';
+import CourseCard from './AdminComponents/CourseCard';
+import Navbar from './AdminComponents/Navbar';
 
 const AdminManageCourse: React.FC = () => {
   const navigate = useNavigate();
